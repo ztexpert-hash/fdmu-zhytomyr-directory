@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1B2B5E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Податки">
+<meta name="description" content="Розрахунок податків при продажу нерухомості в Україні 2026">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RY054NG4Q5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RY054NG4Q5');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700;800&display=swap" rel="stylesheet">
+<title>Калькулятор податків 2026</title>
+<style>
+:root {
+  --navy:#1B2B5E; --navy-l:#243470;
+  --gold:#D4A017; --gold-l:#F0C040;
+  --bg:#F0F3FA; --card:#FFFFFF; --border:#E2E8F0;
+  --text:#1E293B; --text-2:#64748B; --text-3:#94A3B8;
+  --green:#16A34A; --green-l:#DCFCE7; --green-t:#15803D;
+  --amber:#B45309; --amber-l:#FEF3C7;
+  --red:#B91C1C; --red-l:#FEE2E2;
+  --blue:#1D4ED8; --blue-l:#DBEAFE;
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bot:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+button{touch-action:manipulation;-webkit-touch-callout:none}
+html,body{background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',sans-serif;color:var(--text);overscroll-behavior:none}
+.app-header{background:var(--navy);padding:calc(var(--safe-top) + 18px) 20px 20px;position:relative;overflow:hidden}
+.app-header::after{content:'';position:absolute;right:-50px;top:-50px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.05);pointer-events:none}
+.header-top{display:flex;align-items:center;gap:12px;margin-bottom:8px;position:relative}
+.header-icon{width:44px;height:44px;border-radius:12px;background:rgba(240,192,64,.15);border:1px solid rgba(240,192,64,.3);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.logo-wrap{display:flex;flex-direction:row;align-items:center;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:12px;position:relative;gap:14px}
+.logo-img{height:70px;width:auto;filter:brightness(0) invert(1);flex-shrink:0}
+.logo-company{display:flex;flex-direction:column;gap:3px;flex:1}
+.logo-company .company-name{font-size:18px;font-weight:800;color:#fff;letter-spacing:.15em;font-family:'Raleway',sans-serif;text-transform:uppercase;line-height:1.2}
+.logo-company .company-sub{font-size:11px;color:#A0B4E8;letter-spacing:.05em;font-weight:400}
+.header-contacts{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+
+/* Рекламний акцент послуг — заголовок + кнопка в один рядок */
+.services-ad-row{margin-top:8px;padding-top:6px;border-top:1px solid rgba(240,192,64,.25);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.services-ad{flex:1;min-width:140px}
+.services-headline{font-size:17px;font-weight:800;color:#F0C040;letter-spacing:.06em;line-height:1.1;text-transform:uppercase}
+.services-sub{font-size:10.5px;color:#A0B4E8;margin-top:3px;letter-spacing:.02em;line-height:1.3}
+
+/* Кнопка дзвінка справа */
+.call-btn{display:flex;align-items:center;gap:8px;background:#16A34A;color:#fff;padding:8px 12px;border-radius:10px;text-decoration:none;font-family:inherit;touch-action:manipulation;box-shadow:0 2px 8px rgba(22,163,74,.3);transition:transform .12s,box-shadow .12s;flex-shrink:0}
+.call-btn:active{transform:scale(.97);box-shadow:0 1px 4px rgba(22,163,74,.3)}
+.call-icon{font-size:18px;flex-shrink:0}
+.call-text{display:flex;flex-direction:column;line-height:1.1}
+.call-label{font-size:11px;font-weight:700;letter-spacing:.04em;color:#DCFCE7;text-transform:uppercase}
+.call-number{font-size:12px;font-weight:700;letter-spacing:.02em;color:#fff;white-space:nowrap}
+
+.email-link{font-size:11px;color:#A0B4E8;text-decoration:none;font-weight:500;margin-top:4px;display:inline-block}
+.email-link:active{opacity:.7}
+
+/* На дуже вузьких екранах кнопка переходить під заголовок */
+@media(max-width:380px){
+  .call-number{font-size:13px}
+  .services-headline{font-size:15px}
+}
+.header-title h1{font-size:20px;font-weight:700;color:#fff;line-height:1.25;letter-spacing:.01em}
+.header-title p{font-size:12px;color:#A0B4E8;margin-top:2px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;position:relative;margin-top:6px}
+.chip{padding:3px 10px;border-radius:20px;border:1px solid rgba(240,192,64,.35);font-size:11px;font-weight:600;color:var(--gold-l);letter-spacing:.03em}
+.scroll-body{overflow-y:auto;padding:16px 16px calc(var(--safe-bot) + 16px);-webkit-overflow-scrolling:touch}
+.card{background:var(--card);border-radius:14px;border:.5px solid var(--border);padding:16px;margin-bottom:12px}
+.section-label{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-3);margin-bottom:10px}
+.input-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
+.field label{font-size:12px;color:var(--text-2);display:block;margin-bottom:5px}
+.field input{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);font-size:15px;font-family:inherit;color:var(--text);background:#F8FAFC;outline:none;transition:border-color .15s;-webkit-appearance:none}
+.field input:focus{border-color:#93C5FD;background:#fff}
+
+/* Currency input wrapper */
+.cur-input-wrap{position:relative}
+.cur-input-wrap input{padding-right:78px !important}
+.cur-input-selector{position:absolute;right:6px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:2px;background:#fff;border:1px solid var(--border);border-radius:7px;padding:3px;cursor:pointer;user-select:none}
+.cur-pill{padding:3px 8px;border-radius:5px;font-size:12px;font-weight:700;color:#94A3B8;cursor:pointer;transition:all .15s;touch-action:manipulation}
+.cur-pill.active{background:#1B2B5E;color:#F0C040}
+.cur-equiv{font-size:11px;color:#64748B;margin-top:4px;display:flex;align-items:center;gap:6px;min-height:14px}
+.cur-equiv .eq-val{font-weight:700;color:#1B2B5E}
+.cur-equiv .eq-rate{color:#94A3B8;font-size:10px}
+.cur-equiv .eq-swap{cursor:pointer;color:#D4A017;font-weight:700;padding:0 4px;touch-action:manipulation}
+.field-badge{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;margin-bottom:5px}
+.badge-house{background:#EDE9FE;color:#6D28D9}
+.badge-land{background:#D1FAE5;color:#065F46}
+.hint{font-size:11px;color:var(--text-3);margin-top:5px}
+.toggle-row{display:flex;gap:6px;flex-wrap:wrap}
+.tog{padding:8px 14px;border-radius:10px;border:1px solid var(--border);font-size:13px;cursor:pointer;background:#F8FAFC;color:var(--text-2);transition:all .15s;font-family:inherit;min-height:44px;display:flex;align-items:center;touch-action:manipulation;-webkit-touch-callout:none;user-select:none}
+.tog:active{transform:scale(.97)}
+.tog.on{background:#EBF4FF;color:#185FA5;border-color:#93C5FD;font-weight:600}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.rcard{background:#F8FAFC;border-radius:10px;padding:12px}
+.rcard .rl{font-size:11px;color:var(--text-2);margin-bottom:3px}
+.rcard .rv{font-size:16px;font-weight:700;color:var(--navy)}
+.total-box{background:#EBF4FF;border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.total-box .tl{font-size:12px;font-weight:600;color:#185FA5}
+.total-box .tv{font-size:22px;font-weight:700;color:#0C447C}
+.total-box .tc{font-size:11px;color:#378ADD;margin-top:2px}
+.zero-box{background:var(--green-l);border-radius:12px;padding:16px;text-align:center;font-size:16px;font-weight:700;color:var(--green-t);margin-bottom:10px}
+.note{background:var(--amber-l);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:10px 14px;font-size:12px;color:var(--amber);font-weight:500;line-height:1.65;margin-top:10px}
+.note strong{color:var(--amber);font-weight:700}
+.info-note{background:#EDE9FE;border-left:3px solid #7C3AED;border-radius:0 8px 8px 0;padding:10px 14px;font-size:12px;color:#5B21B6;font-weight:500;line-height:1.65;margin-top:8px}
+.side-note{background:#D1FAE5;border-left:3px solid #059669;border-radius:0 8px 8px 0;padding:10px 14px;font-size:12px;color:#065F46;font-weight:500;line-height:1.65;margin-top:10px;display:none}
+.comm-note{background:var(--amber-l);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:10px 14px;font-size:12px;color:#92400E;line-height:1.65;margin-top:10px;display:none}
+.obj-block{background:#F8FAFC;border-radius:10px;padding:12px;margin-bottom:8px;border:.5px solid var(--border)}
+.obj-block:last-child{margin-bottom:0}
+.obj-title{font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.sale-badge{font-size:11px;background:#E0E7FF;color:#3730A3;padding:2px 7px;border-radius:4px;font-weight:600}
+.sc-row{display:flex;align-items:center;gap:8px;font-size:12px;padding:9px 0;border-bottom:.5px solid #F1F5F9}
+.sc-row:last-child{border:none}
+.sc-row .sn{flex:1;color:var(--text-2);line-height:1.4}
+.sc-row .sv{font-weight:600;color:var(--text);min-width:90px;text-align:right;font-size:13px}
+.sc-row .sp{min-width:32px;text-align:right;color:var(--text-3);font-size:11px}
+.sc-row.active .sn{color:#185FA5;font-weight:600}
+.sc-row.active .sv{color:#0C447C}
+.sc-row.active .sp{color:#378ADD}
+.rates-btn{width:100%;display:flex;align-items:center;gap:10px;background:var(--navy);color:#fff;border:none;border-radius:14px;padding:13px 16px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:0;text-align:left;transition:background .15s}
+.rates-bar{background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px 14px;margin-bottom:10px}
+.charity-banner{background:linear-gradient(135deg,#1B2B5E 0%,#243470 100%);border-radius:14px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden;border:2px solid #D4A017}
+.charity-banner::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,#0057B7 50%,#FFD500 50%)}
+.cb-flag{font-size:32px;flex-shrink:0;padding-left:6px}
+.cb-content{flex:1;min-width:0;color:#fff}
+.cb-title{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#F0C040;margin-bottom:3px}
+.cb-text{font-size:12px;line-height:1.4;margin-bottom:6px;color:#E8ECF5}
+.cb-text strong{color:#fff;font-weight:700}
+.cb-stats{font-size:11px;color:#A0B4E8;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.cb-stats strong{color:#F0C040;font-weight:700}
+.cb-divider{opacity:.5}
+.cb-btn{background:#D4A017;color:#1B2B5E;border:none;border-radius:8px;padding:8px 12px;font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap;flex-shrink:0;cursor:pointer;font-family:inherit;touch-action:manipulation;transition:background .15s;text-align:center}
+.cb-btn:active{background:#B8910F}
+@media(max-width:480px){
+  .charity-banner{flex-direction:column;align-items:stretch;text-align:left;gap:10px}
+  .cb-flag{align-self:flex-start;font-size:28px;padding-left:0}
+  .cb-btn{width:100%;padding:10px}
+}
+.rates-bar-content{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.rates-bar-item{display:flex;align-items:center;gap:6px;flex:1;min-width:0}
+.rates-bar-divider{width:1px;height:20px;background:var(--border);flex-shrink:0}
+.rb-flag{font-size:14px;flex-shrink:0}
+.rb-label{font-size:12px;color:var(--text-2);font-weight:600;flex-shrink:0}
+.rb-val{font-size:14px;color:var(--navy);font-weight:700;flex-shrink:0}
+.rb-source{font-size:10px;font-weight:700;color:var(--gold);letter-spacing:.05em;background:#FFF8E7;padding:2px 6px;border-radius:4px}
+.rb-date{font-size:10px;color:var(--text-3);margin-left:4px}
+@media(max-width:380px){.rb-label{display:none}.rates-bar-content{gap:6px}}
+.rates-btn:active{background:var(--navy-l);transform:scale(.99)}
+.rates-btn-icon{font-size:18px;flex-shrink:0}
+.rates-btn-text{flex:1;color:#fff;font-size:14px}
+.rates-btn-arrow{font-size:12px;color:var(--gold-l);transition:transform .2s;flex-shrink:0}
+.rates-btn.open{border-radius:14px 14px 0 0}
+.rates-btn.open .rates-btn-arrow{transform:rotate(180deg)}
+.rates-drawer{display:none;margin-bottom:12px}
+.rates-drawer.open{display:block}
+.rt{width:100%;border-collapse:collapse;font-size:12px}
+.rt th{background:var(--navy);color:#fff;font-weight:600;padding:7px 8px;text-align:center;font-size:11px}
+.rt th:first-child{text-align:left;border-radius:6px 0 0 0}
+.rt th:last-child{border-radius:0 6px 0 0}
+.rt td{padding:7px 8px;border-bottom:.5px solid var(--border);text-align:center;font-weight:600}
+.rt td:first-child{text-align:left;font-weight:400;color:var(--text-2)}
+.rt tr:last-child td{border-bottom:none}
+.rt tr.active-row td{background:#EBF4FF}
+.rt tr.active-row td:first-child{color:#185FA5;font-weight:500}
+.c-green{color:var(--green)}.bg-green{background:var(--green-l)}
+.c-amber{color:var(--amber)}.bg-amber{background:var(--amber-l)}
+.c-red{color:var(--red)}.bg-red{background:var(--red-l)}
+.c-blue{color:var(--blue)}.bg-blue{background:var(--blue-l)}
+.rt-note{font-size:12px;color:var(--text-2);margin-top:10px;line-height:1.65;font-weight:500;background:var(--amber-l);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:9px 12px}
+.install-banner{background:linear-gradient(135deg,#1B2B5E,#243470);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:12px;cursor:pointer}
+.install-banner .ib-text{flex:1}
+.install-banner .ib-title{font-size:13px;font-weight:600;color:#fff}
+.install-banner .ib-sub{font-size:11px;color:#A0B4E8;margin-top:2px}
+.install-banner .ib-btn{background:var(--gold);color:var(--navy);padding:7px 14px;border-radius:8px;font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0}
+.footer{text-align:center;font-size:10px;color:var(--text-3);padding:8px 0 4px;line-height:1.6}
+.buyer-grid{display:flex;flex-direction:column;gap:0}
+.buyer-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:9px 0;border-bottom:.5px solid var(--border)}
+.buyer-row:last-child{border:none}
+.buyer-row .bl{color:var(--text-2);flex:1;line-height:1.4}
+.buyer-row .bpct{font-size:11px;color:var(--text-3);margin:0 6px}
+.buyer-row .bv{font-weight:600;color:var(--text);white-space:nowrap}
+.buyer-total{display:flex;justify-content:space-between;align-items:center;background:#1B2B5E;border-radius:10px;padding:12px 14px;margin-top:10px}
+.buyer-total .btl{font-size:12px;font-weight:600;color:#A0B4E8}
+.buyer-total .btv{font-size:20px;font-weight:700;color:#fff}
+.save-bar{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
+.save-btn{display:flex;align-items:center;justify-content:center;gap:5px;padding:12px 6px;border-radius:12px;border:none;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;transition:opacity .15s;background:#1B2B5E;color:#fff}
+.save-btn:active{opacity:.8;transform:scale(.98)}
+.save-btn-outline{background:#fff;color:#1B2B5E;border:1.5px solid #1B2B5E}
+.save-icon{font-size:16px}
+@media print{
+  body{background:#fff!important}
+  .app-header,.rates-btn,.rates-drawer,.scroll-body>.card:not(#result-block),.save-bar,.footer,.scenarios-card,.install-banner{display:none!important}
+  #result-block{display:block!important;box-shadow:none;border:.5px solid #ddd}
+  .scroll-body{padding:0}
+  #print-header{display:block!important}
+}
+@media(max-width:480px){.input-grid{grid-template-columns:1fr}}
+.paywall-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,20,50,.85);z-index:9000;align-items:center;justify-content:center;padding:20px}
+.paywall-box{background:#fff;border-radius:20px;padding:28px 22px;max-width:380px;width:100%;text-align:center}
+.paywall-logo{font-size:13px;font-weight:800;color:#1B2B5E;letter-spacing:.15em;font-family:'Raleway',sans-serif;margin-bottom:4px}
+.paywall-icon{font-size:48px;margin:12px 0}
+.paywall-title{font-size:20px;font-weight:700;color:#1B2B5E;margin-bottom:8px;line-height:1.3}
+.paywall-sub{font-size:13px;color:#64748B;line-height:1.6;margin-bottom:20px}
+.paywall-price{background:#1B2B5E;border-radius:14px;padding:16px;margin-bottom:16px}
+.paywall-price .pp-label{font-size:11px;color:#A0B4E8;margin-bottom:4px;letter-spacing:.05em}
+.paywall-price .pp-val{font-size:32px;font-weight:800;color:#F0C040}
+.paywall-price .pp-period{font-size:13px;color:#A0B4E8}
+.paywall-features{text-align:left;margin-bottom:20px;display:flex;flex-direction:column;gap:8px}
+.paywall-feat{display:flex;align-items:center;gap:8px;font-size:13px;color:#334155}
+.paywall-feat .pf-dot{width:18px;height:18px;border-radius:50%;background:#DCFCE7;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px}
+.paywall-btn{width:100%;padding:15px;border-radius:12px;border:none;background:#D4A017;color:#1B2B5E;font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;margin-bottom:10px;letter-spacing:.02em}
+.paywall-btn:active{opacity:.85}
+.paywall-contact{font-size:12px;color:#64748B}
+.paywall-contact a{color:#1B2B5E;font-weight:600;text-decoration:none}
+.counter-bar{background:#1B2B5E;color:#A0B4E8;font-size:11px;text-align:center;padding:6px;letter-spacing:.03em}
+.counter-bar span{color:#F0C040;font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="logo-wrap">
+    <img class="logo-img" src="data:image/png;base64,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" alt="Експертна Думка">
+    <div class="logo-company">
+      <div class="company-name">Експертна Думка</div>
+      <div class="company-sub">Житомир</div>
+      <div class="services-ad-row">
+        <div class="services-ad">
+          <div class="services-headline">ОЦІНКА НЕРУХОМОСТІ</div>
+          <div class="services-sub">для нотаріусів · банків · спадщини · застави</div>
+        </div>
+        <a href="tel:+380979213772" class="call-btn">
+          <span class="call-icon">📞</span>
+          <span class="call-text">
+            <span class="call-label">Замовити оцінку</span>
+            <span class="call-number">097 921 37 72</span>
+          </span>
+        </a>
+      </div>
+      <a href="mailto:zt.expert@gmail.com" class="email-link">✉️ zt.expert@gmail.com</a>
+    </div>
+  </div>
+  <div class="header-top" style="justify-content:center;text-align:center">
+    <div class="header-title">
+      <h1>Калькулятор податків при продажу нерухомості</h1>
+      <p>Україна · 2026</p>
+    </div>
+  </div>
+  <div class="chips" style="justify-content:center">
+    <span class="chip">ПДФО</span>
+    <span class="chip">Військ. збір</span>
+    <span class="chip">Нотар. оформлення</span>
+  </div>
+</div>
+<div class="counter-bar" id="counter-bar"></div>
+
+<div class="scroll-body">
+
+  <div id="install-banner" class="install-banner" style="display:none" onclick="installApp()">
+    <div class="ib-text"><div class="ib-title">Встановити як додаток</div><div class="ib-sub">Працює без інтернету</div></div>
+    <div class="ib-btn">Встановити</div>
+  </div>
+
+  <!-- БЛАГОДІЙНИЙ БАНЕР -->
+  <div class="charity-banner" id="charity-banner">
+    <div class="cb-flag">🇺🇦</div>
+    <div class="cb-content">
+      <div class="cb-title">Акційний запуск · до 30 липня</div>
+      <div class="cb-text">Усі кошти від підписок (250 ₴) — <strong>Силам оборони України</strong></div>
+      <div class="cb-stats">
+        <span class="cb-collected">Зібрано: <strong id="charity-amount">0 ₴</strong></span>
+        <span class="cb-divider">·</span>
+        <span class="cb-supporters"><strong id="charity-count">0</strong> підтримали</span>
+      </div>
+    </div>
+    <a href="#" id="charity-btn" class="cb-btn" target="_blank" rel="noopener">
+      Підтримати ЗСУ →
+    </a>
+  </div>
+
+  <!-- ВИБІР ВАЛЮТИ ВВЕДЕННЯ (прихований - залишено для сумісності) -->
+  <div class="card" id="currency-selector-card" style="display:none">
+    <button class="tog on" id="cur-uah" onclick="setInputCurrency('UAH')">₴</button>
+    <button class="tog" id="cur-usd" onclick="setInputCurrency('USD')">$</button>
+    <button class="tog" id="cur-eur" onclick="setInputCurrency('EUR')">€</button>
+    <div id="currency-conversion-info"></div>
+  </div>
+
+  <!-- КУРС НБУ -->
+  <div class="rates-bar" id="rates-bar">
+    <div class="rates-bar-content">
+      <div class="rates-bar-item">
+        <span class="rb-flag">🇺🇸</span>
+        <span class="rb-label">USD</span>
+        <span class="rb-val" id="rate-usd">—</span>
+      </div>
+      <div class="rates-bar-divider"></div>
+      <div class="rates-bar-item">
+        <span class="rb-flag">🇪🇺</span>
+        <span class="rb-label">EUR</span>
+        <span class="rb-val" id="rate-eur">—</span>
+      </div>
+      <div class="rates-bar-divider"></div>
+      <div class="rates-bar-item">
+        <span class="rb-source" id="rate-source">НБУ</span>
+        <span class="rb-date" id="rate-date">завантаження...</span>
+      </div>
+    </div>
+  </div>
+
+  <button class="rates-btn" id="rates-toggle" onclick="toggleRates()">
+    <span class="rates-btn-icon">📊</span>
+    <span class="rates-btn-text">Таблиця ставок оподаткування</span>
+    <span class="rates-btn-arrow">▼</span>
+  </button>
+  <div class="rates-drawer" id="rates-body">
+    <div class="card" style="margin-bottom:0;border-radius:0 0 14px 14px;border-top:none">
+      <table class="rt"><thead><tr><th>Ситуація</th><th>ПДФО</th><th>Військ. збір</th><th>Разом</th></tr></thead>
+      <tbody id="rates-tbody"></tbody></table>
+      <div class="rt-note">Окремо від податків: плата за нотаріальне оформлення та внесок до Пенсійного фонду — уточнюйте при оформленні</div>
+    </div>
+  </div>
+
+  <!-- ТИП ОБ'ЄКТА -->
+  <div class="card">
+    <div class="section-label">Тип об'єкта</div>
+    <div class="toggle-row">
+      <button class="tog on" id="t-zhytlova"    onclick="setType('zhytlova')">🏢 Квартира</button>
+      <button class="tog"    id="t-budynok"     onclick="setType('budynok')">🏡 Будинок + ділянка</button>
+      <button class="tog"    id="t-osg"         onclick="setType('osg')">🌾 Ділянка ОСГ</button>
+      <button class="tog"    id="t-komertsiina" onclick="setType('komertsiina')">🏪 Комерційна</button>
+      <button class="tog"    id="t-spadkuv"     onclick="setType('spadkuv')">📜 Спадкування</button>
+    </div>
+    <div class="comm-note" id="comm-note"><strong>Комерційна:</strong> ПДФО 5% + військ. збір 5% = 10% — незалежно від терміну та кількості продажів.</div>
+    <div class="side-note" id="osg-note"><strong>Земельна ділянка ОСГ:</strong> оподатковується як житлова нерухомість. 0% якщо 1-й продаж і у власності &gt; 3 роки, інакше ПДФО 5% + військ. збір 5%.</div>
+  </div>
+
+  <!-- СТАНДАРТНІ ПОЛЯ (квартира / ОСГ / комерційна) -->
+  <div id="standard-inputs">
+    <div class="card">
+      <div class="section-label">Вартість об'єкта</div>
+      <div class="input-grid">
+        <div class="field">
+          <label>Договірна ціна, грн</label>
+          <input type="number" id="price" value="" placeholder="Введіть суму" inputmode="numeric" oninput="mirrorPrice();calc()">
+        </div>
+        <div class="field">
+          <label>Оціночна вартість, грн</label>
+          <input type="number" id="eval_val" value="" placeholder="= договірній ціні" inputmode="numeric" oninput="calc()">
+        </div>
+      </div>
+      <div class="hint">База = максимум з двох значень</div>
+    </div>
+  </div>
+
+  <!-- СПАДКУВАННЯ -->
+  <div id="spadkuv-inputs" style="display:none">
+    <div class="card">
+      <div class="section-label">Ступінь споріднення зі спадкодавцем</div>
+      <div class="toggle-row" style="flex-wrap:wrap">
+        <button class="tog on" id="sp-1"        onclick="setSpStep(1)">1-й ступінь</button>
+        <button class="tog"    id="sp-2"        onclick="setSpStep(2)">2-й ступінь</button>
+        <button class="tog"    id="sp-other"    onclick="setSpStep(3)">Інші родичі</button>
+        <button class="tog"    id="sp-nonres"   onclick="setSpStep(4)">Нерезидент</button>
+        <button class="tog"    id="sp-льгота"   onclick="setSpStep(5)">Пільгова категорія</button>
+      </div>
+      <div id="sp-hint" class="info-note" style="margin-top:10px"></div>
+      <div class="info-note" style="margin-top:8px;background:#EBF4FF;border-color:#378ADD;color:#185FA5">
+        <strong>Діє для будь-якого типу нерухомості</strong> — житлової, комерційної, земельної ділянки. При спадкуванні ставка визначається виключно ступенем споріднення та резидентством, а не типом майна (ст. 174.2 ПКУ).
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-label">Оціночна вартість майна</div>
+      <div class="input-grid">
+        <div class="field">
+          <label>Договірна ціна / вартість, грн</label>
+          <input type="number" id="sp-price" value="" placeholder="Введіть суму" inputmode="numeric" oninput="mirrorSp();calcSpadkuv()">
+        </div>
+        <div class="field">
+          <label>Оціночна вартість, грн</label>
+          <input type="number" id="sp-eval" value="" placeholder="= договірній ціні" inputmode="numeric" oninput="calcSpadkuv()">
+        </div>
+      </div>
+      <div class="hint">База = максимум з двох значень. Оцінка обов'язкова при ставці 5% та 18%</div>
+    </div>
+  </div>
+
+  <!-- БУДИНОК + ДІЛЯНКА -->
+  <div id="house-inputs" style="display:none">
+
+    <!-- ОБ'ЄКТ 1: БУДИНОК + ДІЛЯНКА ПІД НИМ = 1 об'єкт -->
+    <div class="card">
+      <div class="section-label">🏡 Будинок + ділянка під будинком — 1 об'єкт</div>
+      <div class="info-note" style="margin-bottom:10px">Будинок і земельна ділянка під ним є єдиним об'єктом оподаткування</div>
+
+      <div class="input-grid">
+        <div class="field">
+          <span class="field-badge badge-house">Будинок</span>
+          <label>Договірна ціна, грн</label>
+          <input type="number" id="house-price" value="" placeholder="Введіть суму" inputmode="numeric" oninput="mirrorHouse();calc()">
+        </div>
+        <div class="field">
+          <span class="field-badge badge-house">Будинок</span>
+          <label>Оціночна вартість, грн</label>
+          <input type="number" id="house-eval" value="" placeholder="= договірній ціні" inputmode="numeric" oninput="calc()">
+        </div>
+      </div>
+      <div class="hint">База = максимум з двох значень. Пенсійний фонд 1% стягується тільки з будинку</div>
+      <div style="margin-top:10px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#94A3B8;margin-bottom:6px">Вартість земельної ділянки під будинком</div>
+        <div class="input-grid">
+          <div class="field">
+            <span class="field-badge badge-land">Ділянка</span>
+            <label>Договірна ціна, грн</label>
+            <input type="number" id="land-price" value="" placeholder="Введіть суму" inputmode="numeric" oninput="mirrorLand();calc()">
+          </div>
+          <div class="field">
+            <span class="field-badge badge-land">Ділянка</span>
+            <label>Оціночна вартість, грн</label>
+            <input type="number" id="land-eval" value="" placeholder="= договірній ціні" inputmode="numeric" oninput="calc()">
+          </div>
+        </div>
+        <div class="hint">Сума будинку + ділянки = база 1-го об'єкта</div>
+      </div>
+    </div>
+
+    <!-- ДОДАТКОВІ ДІЛЯНКИ -->
+    <div class="card">
+      <div class="section-label">Додаткові об'єкти (за наявності)</div>
+      <div class="toggle-row">
+        <button class="tog" id="osg-toggle-btn" onclick="toggleOSG()">🌾 + Ділянка ОСГ</button>
+        <button class="tog" id="zabud-toggle-btn" onclick="toggleZabud()">🏗 + Ділянка під забудову</button>
+      </div>
+    </div>
+
+    <!-- ОСГ inputs -->
+    <div id="osg-inputs" style="display:none">
+      <div class="card">
+        <div class="section-label">🌾 Земельна ділянка ОСГ — 2-й об'єкт</div>
+        <div style="margin-bottom:10px">
+          <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#94A3B8;margin-bottom:6px">Оподаткування ділянки ОСГ</div>
+          <div class="toggle-row" style="flex-wrap:wrap">
+            <button class="tog on" id="osg-priv-yes" onclick="setOSGPrivatized(true)">Звільнена (ст. 172.1)</button>
+            <button class="tog"    id="osg-priv-no"  onclick="setOSGPrivatized(false)">Оподатковується як наступний продаж</button>
+          </div>
+          <div id="osg-exempt-note" class="note" style="margin-top:8px;background:#DCFCE7;border-color:#16A34A;color:#15803D">
+            <strong>Приватизована ОСГ (об'єкт п. 172.1).</strong> Звільнена 0% лише якщо це <u>перший продаж</u> за рік. Якщо будинок продано першим — ОСГ стає 2-м продажем і оподатковується 5%+5% (п. 172.2 ПКУ).
+          </div>
+          <div id="osg-taxed-note" class="note" style="margin-top:8px;background:#FEF3C7;border-color:#F59E0B;color:#92400E;display:none">
+            <strong>ОСГ оподатковується за чергою продажу.</strong> 2-й об'єкт — 5% ПДФО + 5% ВЗ, 3-й і наступні — 18% + 5% (п. 172.2 ПКУ).
+          </div>
+        </div>
+        <div class="input-grid">
+          <div class="field">
+            <span class="field-badge" style="background:#FEF3C7;color:#92400E">ОСГ</span>
+            <label>Договірна ціна, грн</label>
+            <input type="number" id="osg-price" value="" placeholder="Введіть суму" inputmode="numeric" oninput="mirrorOSG();calc()">
+          </div>
+          <div class="field">
+            <span class="field-badge" style="background:#FEF3C7;color:#92400E">ОСГ</span>
+            <label>Оціночна / норм. вартість, грн</label>
+            <input type="number" id="osg-eval" value="" placeholder="= договірній ціні" inputmode="numeric" oninput="calc()">
+          </div>
+        </div>
+        <div class="hint">База = максимум з двох значень</div>
+      </div>
+    </div>
+
+    <!-- ДІЛЯНКА ПІД ЗАБУДОВУ inputs -->
+    <div id="zabud-inputs" style="display:none">
+      <div class="card">
+        <div class="section-label">🏗 Земельна ділянка під забудову — окремий об'єкт</div>
+        <div class="info-note" style="margin-bottom:10px;background:#EBF4FF;border-color:#378ADD;color:#185FA5">
+          Нормативна грошова оцінка для ділянок під забудову не застосовується. База = договірна або оціночна вартість.
+        </div>
+        <div class="input-grid">
+          <div class="field">
+            <span class="field-badge" style="background:#DBEAFE;color:#1D4ED8">Забудова</span>
+            <label>Договірна ціна, грн</label>
+            <input type="number" id="zabud-price" value="" placeholder="Введіть суму" inputmode="numeric" oninput="mirrorZabud();calc()">
+          </div>
+          <div class="field">
+            <span class="field-badge" style="background:#DBEAFE;color:#1D4ED8">Забудова</span>
+            <label>Оціночна вартість, грн</label>
+            <input type="number" id="zabud-eval" value="" placeholder="= договірній ціні" inputmode="numeric" oninput="calc()">
+          </div>
+        </div>
+        <div class="hint">База = максимум з двох значень (без нормативної)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ТЕРМІН / ПРОДАЖ (квартира, ОСГ, комерційна) -->
+  <div id="residential-opts">
+    <div class="card">
+      <div class="section-label">Термін у власності</div>
+      <div class="toggle-row">
+        <button class="tog on" id="y-more"      onclick="setYears('more')">Більше 3 років</button>
+        <button class="tog"    id="y-less"      onclick="setYears('less')">Менше 3 років</button>
+        <button class="tog"    id="y-inherited" onclick="setYears('inherited')">Спадщина</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-label">Який продаж за цей рік?</div>
+      <div class="toggle-row">
+        <button class="tog on" id="s-1" onclick="setSale(1)">Перший</button>
+        <button class="tog"    id="s-2" onclick="setSale(2)">Другий</button>
+        <button class="tog"    id="s-3" onclick="setSale(3)">Третій і більше</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ТЕРМІН / ПОПЕРЕДНІ ПРОДАЖІ (будинок) -->
+  <div id="house-opts" style="display:none">
+    <div class="card">
+      <div class="section-label">Термін у власності (обох об'єктів)</div>
+      <div class="toggle-row">
+        <button class="tog on" id="hy-more"      onclick="setHouseYears('more')">Більше 3 років</button>
+        <button class="tog"    id="hy-less"      onclick="setHouseYears('less')">Менше 3 років</button>
+        <button class="tog"    id="hy-inherited" onclick="setHouseYears('inherited')">Спадщина</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-label">Чи були інші продажі цього року до цієї угоди?</div>
+      <div class="toggle-row">
+        <button class="tog on" id="hs-0" onclick="setHousePriorSales(0)">Ні, це перші</button>
+        <button class="tog"    id="hs-1" onclick="setHousePriorSales(1)">Був 1 продаж</button>
+        <button class="tog"    id="hs-2" onclick="setHousePriorSales(2)">Були 2+ продажі</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="result-block"></div>
+
+  <div class="card" id="scenarios-card">
+    <div class="section-label">Усі сценарії</div>
+    <div id="all-scenarios"></div>
+  </div>
+
+  <!-- КНОПКИ ДІЙ -->
+  <div class="save-bar">
+    <button class="save-btn" id="btn-pdf" type="button">
+      <span class="save-icon">📄</span> PDF
+    </button>
+    <button class="save-btn" id="btn-share" type="button">
+      <span class="save-icon">📤</span> Текст
+    </button>
+    <button class="save-btn" id="btn-image" type="button">
+      <span class="save-icon">🖼</span> Картинка
+    </button>
+  </div>
+
+  <div id="print-area" style="display:none"></div>
+
+  <!-- PAYWALL OVERLAY -->
+  <div class="paywall-overlay" id="paywall-overlay">
+    <div class="paywall-box">
+      <div class="paywall-logo">ЕКСПЕРТНА ДУМКА</div>
+      <div class="paywall-icon">🔒</div>
+      <div class="paywall-title">Ви використали 5 безкоштовних розрахунків</div>
+      <div class="paywall-sub">Для необмеженого доступу — оформіть річну підписку</div>
+      <div style="background:linear-gradient(135deg,#1B2B5E 0%,#243470 100%);border-radius:14px;padding:14px;margin-bottom:12px;border:2px solid #D4A017;text-align:center">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.05em;color:#F0C040;margin-bottom:4px">🇺🇦 АКЦІЯ · ДО 30 ЛИПНЯ</div>
+        <div style="font-size:32px;font-weight:800;color:#F0C040;margin-bottom:2px">250 <span style="font-size:18px">₴</span></div>
+        <div style="font-size:12px;color:#A0B4E8">/ рік · усі кошти на <strong style="color:#fff">Сили оборони України</strong></div>
+        <div style="font-size:11px;color:#A0B4E8;margin-top:4px">Звичайна ціна — 500 ₴</div>
+      </div>
+      <div class="paywall-features">
+        <div class="paywall-feat"><div class="pf-dot">✓</div>Квартира, будинок, ділянка, спадкування</div>
+        <div class="paywall-feat"><div class="pf-dot">✓</div>Збереження PDF та поділитись результатом</div>
+        <div class="paywall-feat"><div class="pf-dot">✓</div>Курс НБУ та розрахунок у валютах</div>
+        <div class="paywall-feat"><div class="pf-dot">✓</div>Необмежена кількість розрахунків</div>
+        <div class="paywall-feat"><div class="pf-dot">✓</div>Оновлення при зміні законодавства</div>
+      </div>
+      <a href="https://send.monobank.ua/jar/9KnaSnmkdK" target="_blank" rel="noopener" class="paywall-btn" style="display:block;text-align:center;text-decoration:none;margin-bottom:8px;background:#16A34A;color:#fff">
+        💚 Оплатити через банку Monobank →
+      </a>
+      <button class="paywall-btn" onclick="requestAccess()" style="background:#D4A017">Я вже маю код →</button>
+      <div id="code-input-wrap" style="margin-bottom:12px;display:none">
+        <input type="text" id="access-code-input" placeholder="Введіть код доступу" style="width:100%;padding:12px;border-radius:10px;border:1.5px solid #E2E8F0;font-size:15px;text-align:center;font-family:inherit;margin-bottom:8px;outline:none">
+        <button class="paywall-btn" onclick="submitCode()" style="margin-bottom:0">Підтвердити →</button>
+        <div id="code-error" style="font-size:12px;color:#B91C1C;margin-top:6px;display:none">Невірний код. Зверніться: +38 097 921 3772</div>
+      </div>
+      <div class="paywall-contact">
+        Після оплати надішліть квитанцію — отримаєте код:<br>
+        <a href="tel:+380979213772">+38 097 921 3772</a> ·
+        <a href="mailto:zt.expert@gmail.com">zt.expert@gmail.com</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    © ТОВ «Експертна Думка» · Калькулятор податків при продажу нерухомості<br>
+    Розраховано відповідно до ПКУ України · 2026 р.<br>
+    Лише для орієнтовних розрахунків. Проконсультуйтесь з нотаріусом.<br>
+    <button id="update-btn" type="button" style="margin-top:10px;padding:8px 16px;border-radius:8px;border:1px solid #D4A017;background:#FFF8E7;color:#92400E;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;touch-action:manipulation">
+      🔄 Перевірити оновлення
+    </button>
+    <div style="font-size:9px;color:#94A3B8;margin-top:6px">Версія 2026.05.1</div>
+  </div>
+
+</div>
+
+<script>
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js')}
+
+// PAYWALL SYSTEM
+const FREE_LIMIT = 5;
+const MASTER_CODE = 'EXPERT_ADMIN'; // твій особистий — ніколи не змінюється
+
+// СПИСОК КОДІВ КЛІЄНТІВ — додавай/видаляй тут
+// Формат: 'КОД': 'Ім'я клієнта'
+const CLIENT_CODES = {
+  'ED-2026-PRO':       'Загальний код',
+  'ED-STS-2026-HQZ5':  'Сташків Ірина, 0979370915, Кєнт, опл. 13.05.2026',
+  'ED-STS-2026-A754':  'Сташків Роман, 0672543604, Кєнт, опл. 15.05.2026',
+  'ED-PTR-2026-L2UU':  'Петришин Євген, 0970775000, Кєнт, опл. 13.05.2026',
+  'ED-DHT-2026-KAQR':  'Дехтієвська Тетяна, 0673663352, Кєнт, опл. 13.05.2026',
+  'ED-NNM-2026-CCNC':  'Анна Мертенс Сірач, 0978784189, Ріелтор, опл. 13.05.2026',
+  'ED-SRC-2026-XGX7':  'Сірач Володимир, 0979541738, Адвокат, опл. 13.05.2026',
+  'ED-PTR-2026-FTYQ':  'Петрикович Сергій, 0671219496, Бухгалтер, опл. 13.05.2026',
+  'ED-CLV-2026-VLM8':  'Цаль Василь, 0672485362, Друг, опл. 13.05.2026',
+  'ED-PSC-2026-SGJD':  'Пащенко Наталія, 0672485209, Кєнт, опл. 13.05.2026',
+  'ED-NCH-2026-U77R':  'Янчук Максим, 0677724447, Кєнт, опл. 14.05.2026',
+  'ED-LKM-2026-BB49':  'Лукомська Наталія, 0984760658, Ріелтор, опл. 18.05.2026',
+  'ED-STR-2026-DP4K':  'Стражник Ксенія, +436787901741, BOSS, опл. 18.05.2026',
+};
+
+function getDeviceId(){
+  let id=localStorage.getItem('ed_device_id');
+  if(!id){
+    // Генеруємо унікальний ID пристрою
+    id='DEV-'+Math.random().toString(36).substr(2,9).toUpperCase()+'-'+Date.now().toString(36).toUpperCase();
+    localStorage.setItem('ed_device_id',id);
+  }
+  return id;
+}
+
+function getUsage(){
+  try{
+    const d=JSON.parse(localStorage.getItem('ed_usage')||'{}');
+    return {count:d.count||0, unlocked:d.unlocked||false, code:d.code||null, deviceId:d.deviceId||null};
+  }catch(e){return {count:0,unlocked:false,code:null,deviceId:null}}
+}
+function saveUsage(data){
+  try{localStorage.setItem('ed_usage',JSON.stringify(data))}catch(e){}
+}
+function isUnlocked(){return getUsage().unlocked}
+
+// Перевірка чи код вже використаний на іншому пристрої
+// Зберігаємо прив'язку: код → deviceId в окремому ключі
+function getCodeBindings(){
+  try{return JSON.parse(localStorage.getItem('ed_bindings')||'{}')}catch(e){return {}}
+}
+function saveCodeBinding(code,deviceId){
+  try{
+    const b=getCodeBindings();
+    b[code]=deviceId;
+    localStorage.setItem('ed_bindings',JSON.stringify(b));
+  }catch(e){}
+}
+function isCodeBoundToThisDevice(code){
+  // Майстер-код — завжди дозволений
+  if(code===MASTER_CODE) return true;
+  const b=getCodeBindings();
+  const deviceId=getDeviceId();
+  // Якщо код ще не прив'язаний — дозволяємо (перший вхід)
+  if(!b[code]) return true;
+  // Якщо прив'язаний до цього пристрою — дозволяємо
+  return b[code]===deviceId;
+}
+
+function incrementCalc(){
+  if(isUnlocked()) return;
+  // Рахуємо тільки коли є реальний результат (сума > 0)
+  const base=getCurrentBase();
+  if(!base || base===0) return;
+  
+  // Скасовуємо попередній таймер
+  if(window._calcDebounce) clearTimeout(window._calcDebounce);
+  
+  // Лічимо лише через 2 секунди після останньої зміни
+  // Це дає клієнту час ввести повну суму
+  window._calcDebounce = setTimeout(()=>{
+    if(isUnlocked()) return;
+    const currentBase=getCurrentBase();
+    if(!currentBase || currentBase===0) return;
+    
+    // Не рахуємо двічі ту саму суму
+    const lastBase=window._lastCountedBase||0;
+    if(currentBase===lastBase) return;
+    window._lastCountedBase=currentBase;
+    
+    const u=getUsage();
+    u.count++;
+    saveUsage(u);
+    updateCounter();
+    // Відправляємо подію в Google Analytics
+    if(typeof gtag!=='undefined'){
+      gtag('event','calculation',{
+        'event_category':'Калькулятор',
+        'event_label': propType||'zhytlova',
+        'value': Math.round(currentBase)
+      });
+    }
+    if(u.count>=FREE_LIMIT) showPaywall();
+  }, 2000);
+}
+
+function updateCounter(){
+  const bar=document.getElementById('counter-bar');
+  if(!bar) return;
+  if(isUnlocked()){
+    const u=getUsage();
+    const name=u.clientName?(' · '+u.clientName):'';
+    bar.innerHTML='✓ Повний доступ активовано'+name+' · ТОВ «Експертна Думка»';
+    bar.style.background='#0F6E56';
+    return;
+  }
+  const u=getUsage();
+  const left=Math.max(0,FREE_LIMIT-u.count);
+  if(left>0){
+    bar.innerHTML=`Безкоштовний доступ · залишилось безкоштовних розрахунків: <span>${left}</span> з ${FREE_LIMIT}`;
+  } else {
+    bar.innerHTML='Безкоштовні розрахунки вичерпано · <span>Оформіть підписку</span>';
+    bar.style.background='#A32D2D';
+  }
+}
+
+function showPaywall(){
+  document.getElementById('paywall-overlay').style.display='flex';
+  if(typeof gtag!=='undefined'){
+    gtag('event','paywall_shown',{'event_category':'Монетизація'});
+  }
+}
+
+function hidePaywall(){
+  document.getElementById('paywall-overlay').style.display='none';
+}
+
+function requestAccess(){
+  const wrap=document.getElementById('code-input-wrap');
+  wrap.style.display='block';
+  document.getElementById('access-code-input').focus();
+  document.querySelector('.paywall-btn').style.display='none';
+}
+
+function submitCode(){
+  const input=document.getElementById('access-code-input');
+  const c=input.value.trim().toUpperCase();
+  const err=document.getElementById('code-error');
+  const errMsg=document.getElementById('code-error');
+
+  const isMaster=c===MASTER_CODE;
+  const clientName=CLIENT_CODES[c];
+
+  if(isMaster||clientName){
+    // Перевіряємо прив'язку до пристрою
+    if(!isCodeBoundToThisDevice(c)){
+      // Код вже використовується на іншому пристрої
+      err.textContent='Цей код вже активовано на іншому пристрої. Зверніться: +38 097 921 3772';
+      err.style.display='block';
+      input.style.borderColor='#B91C1C';
+      input.value='';
+      input.focus();
+      if(typeof gtag!=='undefined'){
+        gtag('event','code_device_conflict',{'event_category':'Безпека','event_label':c});
+      }
+      return;
+    }
+
+    // Прив'язуємо код до цього пристрою
+    const deviceId=getDeviceId();
+    saveCodeBinding(c,deviceId);
+
+    const u=getUsage();
+    u.unlocked=true;
+    u.clientName=clientName||'Адмін';
+    u.code=c;
+    u.deviceId=deviceId;
+    saveUsage(u);
+    hidePaywall();
+    updateCounter();
+    if(typeof gtag!=='undefined'){
+      gtag('event','subscription_activated',{
+        'event_category':'Монетизація',
+        'event_label': isMaster?'admin':clientName
+      });
+    }
+    showToast(isMaster?'✓ Адмін доступ активовано':'✓ Доступ активовано! Дякуємо, '+clientName+'!');
+  } else {
+    err.textContent='Невірний код. Зверніться: +38 097 921 3772';
+    err.style.display='block';
+    input.style.borderColor='#B91C1C';
+    input.value='';
+    input.focus();
+  }
+}
+
+// Check on load
+window.addEventListener('load',()=>{
+  updateCounter();
+  if(!isUnlocked()&&getUsage().count>=FREE_LIMIT){
+    setTimeout(showPaywall,500);
+  }
+
+  // Кнопки дій — прив'язуємо тут щоб уникнути блокування браузером
+  document.getElementById('btn-pdf').addEventListener('click',savePDF);
+  document.getElementById('btn-share').addEventListener('click',shareResult);
+  document.getElementById('btn-image').addEventListener('click',generateImage);
+
+  // Кнопка оновлення додатку
+  document.getElementById('update-btn').addEventListener('click',checkForUpdate);
+
+  // Завантаження курсу НБУ
+  loadNBURates();
+
+  // Благодійний банер — налаштування
+  initCharityBanner();
+
+  // Інтерактивні валютні селектори в кожному полі суми
+  initCurrencyInputs();
+});
+
+// БЛАГОДІЙНИЙ БАНЕР — ти оновлюєш ці значення вручну
+const CHARITY_CONFIG = {
+  // Посилання на банку
+  bankUrl: 'https://send.monobank.ua/jar/9KnaSnmkdK',
+  // Сума зібраних коштів (оновлюй вручну в коді)
+  collected: 0,
+  // Кількість клієнтів які підтримали (оновлюй вручну)
+  supporters: 0,
+  // Активний період акції (формат YYYY-MM-DD)
+  endDate: '2026-07-30'
+};
+
+function initCharityBanner(){
+  // Перевіряємо чи акція ще активна
+  const now=new Date();
+  const end=new Date(CHARITY_CONFIG.endDate);
+  if(now > end){
+    // Акція завершена — приховуємо банер
+    const banner=document.getElementById('charity-banner');
+    if(banner) banner.style.display='none';
+    return;
+  }
+  // Встановлюємо посилання на банку
+  document.getElementById('charity-btn').href=CHARITY_CONFIG.bankUrl;
+  // Показуємо лічильники
+  document.getElementById('charity-amount').textContent=CHARITY_CONFIG.collected.toLocaleString('uk-UA')+' ₴';
+  document.getElementById('charity-count').textContent=CHARITY_CONFIG.supporters;
+  // Трекаємо клік
+  document.getElementById('charity-btn').addEventListener('click',()=>{
+    if(typeof gtag!=='undefined'){
+      gtag('event','charity_click',{'event_category':'Благодійність'});
+    }
+  });
+}
+
+function loadNBURates(){
+  const today=new Date();
+  const dateStr=today.getFullYear()+
+    String(today.getMonth()+1).padStart(2,'0')+
+    String(today.getDate()).padStart(2,'0');
+  
+  // Спочатку перевіряємо кеш
+  try{
+    const cached=JSON.parse(localStorage.getItem('ed_nbu_rates')||'null');
+    if(cached && cached.date===dateStr){
+      displayRates(cached.usd, cached.eur, cached.dateStr);
+      return;
+    }
+  }catch(e){}
+
+  // Запит до API НБУ
+  fetch(`https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?date=${dateStr}&json`)
+    .then(r=>r.json())
+    .then(data=>{
+      const usd=data.find(c=>c.cc==='USD');
+      const eur=data.find(c=>c.cc==='EUR');
+      if(!usd||!eur) throw new Error('No rates');
+      const usdRate=usd.rate.toFixed(2);
+      const eurRate=eur.rate.toFixed(2);
+      const dateFormatted=usd.exchangedate;
+      
+      // Кешуємо на день
+      try{
+        localStorage.setItem('ed_nbu_rates',JSON.stringify({
+          date:dateStr, usd:usdRate, eur:eurRate, dateStr:dateFormatted
+        }));
+      }catch(e){}
+      
+      displayRates(usdRate, eurRate, dateFormatted);
+    })
+    .catch(()=>{
+      // Якщо не вдалось — показуємо кешовані (навіть якщо старі)
+      try{
+        const cached=JSON.parse(localStorage.getItem('ed_nbu_rates')||'null');
+        if(cached){
+          displayRates(cached.usd, cached.eur, cached.dateStr+' (кеш)');
+          return;
+        }
+      }catch(e){}
+      document.getElementById('rate-usd').textContent='—';
+      document.getElementById('rate-eur').textContent='—';
+      document.getElementById('rate-date').textContent='немає звязку';
+    });
+}
+
+function displayRates(usd, eur, date){
+  document.getElementById('rate-usd').textContent=usd+' ₴';
+  document.getElementById('rate-eur').textContent=eur+' ₴';
+  document.getElementById('rate-date').textContent='станом на '+date;
+  // Зберігаємо для конвертації
+  window._currentRates={usd:parseFloat(usd), eur:parseFloat(eur)};
+  // Оновлюємо еквіваленти в усіх полях де вже є значення
+  ['price','eval_val','house-price','house-eval','land-price','land-eval','osg-price','osg-eval','zabud-price','zabud-eval','sp-price','sp-eval'].forEach(id=>{
+    if(document.getElementById(id)) updateEquivalent(id);
+  });
+}
+
+// ВАЛЮТА ВВЕДЕННЯ — індивідуально для кожного поля
+// Структура: { 'price': 'UAH', 'house-price': 'USD', ... }
+let fieldCurrencies = {};
+
+function getFieldCurrency(fieldId){
+  return fieldCurrencies[fieldId] || 'UAH';
+}
+
+function setFieldCurrency(fieldId, cur){
+  fieldCurrencies[fieldId] = cur;
+  // Оновлюємо UI селектора
+  const wrap = document.getElementById(fieldId).closest('.cur-input-wrap');
+  if(wrap){
+    wrap.querySelectorAll('.cur-pill').forEach(p=>{
+      p.classList.toggle('active', p.dataset.cur===cur);
+    });
+  }
+  // Якщо є парне поле eval — синхронізуємо валюту
+  const pairs = {'price':'eval_val','eval_val':'price',
+                 'house-price':'house-eval','house-eval':'house-price',
+                 'land-price':'land-eval','land-eval':'land-price',
+                 'osg-price':'osg-eval','osg-eval':'osg-price',
+                 'zabud-price':'zabud-eval','zabud-eval':'zabud-price',
+                 'sp-price':'sp-eval','sp-eval':'sp-price'};
+  const pair = pairs[fieldId];
+  if(pair){
+    fieldCurrencies[pair] = cur;
+    const pairWrap = document.getElementById(pair)?.closest('.cur-input-wrap');
+    if(pairWrap){
+      pairWrap.querySelectorAll('.cur-pill').forEach(p=>{
+        p.classList.toggle('active', p.dataset.cur===cur);
+      });
+    }
+    updateEquivalent(pair);
+  }
+  updateEquivalent(fieldId);
+  calc();
+}
+
+function updateEquivalent(fieldId){
+  const input = document.getElementById(fieldId);
+  if(!input) return;
+  const wrap = input.closest('.cur-input-wrap');
+  if(!wrap) return;
+  const equiv = wrap.parentElement.querySelector('.cur-equiv');
+  if(!equiv) return;
+
+  const val = parseFloat(input.value) || 0;
+  const cur = getFieldCurrency(fieldId);
+  if(!val){
+    equiv.innerHTML = '';
+    return;
+  }
+  if(!window._currentRates){
+    equiv.innerHTML = '<span class="eq-rate">курс завантажується...</span>';
+    return;
+  }
+
+  let html = '';
+  const rates = window._currentRates;
+  if(cur === 'UAH'){
+    const usd = val / rates.usd;
+    const eur = val / rates.eur;
+    html = `≈ <span class="eq-val">$${fmt(usd)}</span> або <span class="eq-val">€${fmt(eur)}</span>`;
+  } else if(cur === 'USD'){
+    const uah = val * rates.usd;
+    html = `≈ <span class="eq-val">${fmt(uah)} ₴</span> <span class="eq-rate">(курс ${rates.usd.toFixed(2)} ₴)</span>`;
+  } else if(cur === 'EUR'){
+    const uah = val * rates.eur;
+    html = `≈ <span class="eq-val">${fmt(uah)} ₴</span> <span class="eq-rate">(курс ${rates.eur.toFixed(2)} ₴)</span>`;
+  }
+  equiv.innerHTML = html;
+}
+
+// Обгортаємо всі поля для введення суми в селектор валют
+function initCurrencyInputs(){
+  const moneyFieldIds = ['price','eval_val','house-price','house-eval','land-price','land-eval','osg-price','osg-eval','zabud-price','zabud-eval','sp-price','sp-eval'];
+  moneyFieldIds.forEach(id=>{
+    const input = document.getElementById(id);
+    if(!input) return;
+    if(input.closest('.cur-input-wrap')) return; // вже обгорнутий
+
+    const fieldDiv = input.closest('.field');
+    if(!fieldDiv) return;
+
+    // Створюємо обгортку
+    const wrap = document.createElement('div');
+    wrap.className = 'cur-input-wrap';
+    input.parentNode.insertBefore(wrap, input);
+    wrap.appendChild(input);
+
+    // Селектор валюти
+    const selector = document.createElement('div');
+    selector.className = 'cur-input-selector';
+    selector.innerHTML = `
+      <span class="cur-pill active" data-cur="UAH">₴</span>
+      <span class="cur-pill" data-cur="USD">$</span>
+      <span class="cur-pill" data-cur="EUR">€</span>
+    `;
+    selector.querySelectorAll('.cur-pill').forEach(p=>{
+      p.addEventListener('click', (e)=>{
+        e.preventDefault();
+        e.stopPropagation();
+        setFieldCurrency(id, p.dataset.cur);
+      });
+    });
+    wrap.appendChild(selector);
+
+    // Рядок еквіваленту
+    const equiv = document.createElement('div');
+    equiv.className = 'cur-equiv';
+    fieldDiv.appendChild(equiv);
+
+    // Оновлюємо еквівалент при введенні
+    input.addEventListener('input', ()=>updateEquivalent(id));
+  });
+}
+
+// Стара функція для сумісності
+let inputCurrency='UAH';
+function setInputCurrency(cur){
+  inputCurrency=cur;
+}
+
+function convertToUAH(amount, fieldId){
+  // Якщо передано fieldId — беремо валюту того поля
+  // Інакше використовуємо глобальну
+  let cur = fieldId ? getFieldCurrency(fieldId) : inputCurrency;
+  if(cur === 'UAH') return amount;
+  if(!window._currentRates) return amount;
+  const rate = cur === 'USD' ? window._currentRates.usd : window._currentRates.eur;
+  return amount * rate;
+}
+
+// Конвертує значення з конкретного поля з його валюти в грн
+function fieldToUAH(fieldId){
+  const input = document.getElementById(fieldId);
+  if(!input) return 0;
+  const val = parseFloat(input.value) || 0;
+  return convertToUAH(val, fieldId);
+}
+
+function convertFromUAH(uahAmount, targetCur){
+  if(!targetCur || targetCur==='UAH') return uahAmount;
+  if(!window._currentRates) return uahAmount;
+  const rate=targetCur==='USD'?window._currentRates.usd:window._currentRates.eur;
+  return uahAmount / rate;
+}
+
+function checkForUpdate(){
+  const btn=document.getElementById('update-btn');
+  btn.textContent='⏳ Оновлення...';
+  btn.disabled=true;
+
+  // Очищуємо весь кеш і перезавантажуємо
+  if('caches' in window){
+    caches.keys().then(keys=>{
+      return Promise.all(keys.map(k=>caches.delete(k)));
+    }).then(()=>{
+      // Знімаємо реєстрацію service worker для повного оновлення
+      if('serviceWorker' in navigator){
+        return navigator.serviceWorker.getRegistrations().then(regs=>{
+          return Promise.all(regs.map(r=>r.unregister()));
+        });
+      }
+    }).then(()=>{
+      showToast('✓ Завантажуємо свіжу версію...');
+      setTimeout(()=>{
+        // Перезавантаження з обходом кешу
+        window.location.reload(true);
+      },800);
+    }).catch(()=>{
+      window.location.reload(true);
+    });
+  } else {
+    window.location.reload(true);
+  }
+}
+
+
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('install-banner').style.display='flex'});
+window.addEventListener('appinstalled',()=>{document.getElementById('install-banner').style.display='none'});
+function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null})}}
+
+let propType='zhytlova', years='more', saleNum=1;
+let houseYears='more', housePriorSales=0;
+let evalManuallyEdited=false, houseEvalManual=false, landEvalManual=false;
+
+function setType(t){
+  propType=t;
+  ['zhytlova','budynok','osg','komertsiina','spadkuv'].forEach(v=>document.getElementById('t-'+v).className='tog'+(v===t?' on':''));
+  document.getElementById('standard-inputs').style.display   = (t!=='budynok'&&t!=='spadkuv')?'':'none';
+  document.getElementById('house-inputs').style.display      = t==='budynok'?'':'none';
+  document.getElementById('spadkuv-inputs').style.display    = t==='spadkuv'?'':'none';
+  document.getElementById('residential-opts').style.display  = (t==='zhytlova'||t==='osg')?'':'none';
+  document.getElementById('house-opts').style.display        = t==='budynok'?'':'none';
+  document.getElementById('comm-note').style.display         = t==='komertsiina'?'block':'none';
+  document.getElementById('osg-note').style.display          = t==='osg'?'block':'none';
+  document.getElementById('scenarios-card').style.display    = t!=='budynok'?'':'none';
+  calc();
+}
+function setYears(y){years=y;['more','less','inherited'].forEach(v=>document.getElementById('y-'+v).className='tog'+(v===y?' on':''));calc()}
+function setSale(n){saleNum=n;[1,2,3].forEach(v=>document.getElementById('s-'+v).className='tog'+(v===n?' on':''));calc()}
+function setHouseYears(y){houseYears=y;['more','less','inherited'].forEach(v=>document.getElementById('hy-'+v).className='tog'+(v===y?' on':''));calc()}
+function setHousePriorSales(n){housePriorSales=n;[0,1,2].forEach(v=>document.getElementById('hs-'+v).className='tog'+(v===n?' on':''));calc()}
+
+let osgEnabled=false;
+let osgEvalManual=false;
+let osgPrivatized=true;
+let zabudEnabled=false;
+let zabudEvalManual=false;
+
+function toggleZabud(){
+  zabudEnabled=!zabudEnabled;
+  document.getElementById('zabud-inputs').style.display=zabudEnabled?'':'none';
+  document.getElementById('zabud-toggle-btn').className='tog'+(zabudEnabled?' on':'');
+  calc();
+}
+function mirrorZabud(){
+  const p=document.getElementById('zabud-price'),e=document.getElementById('zabud-eval');
+  if(!zabudEvalManual)e.value=p.value;
+}
+document.getElementById('zabud-eval').addEventListener('input',function(){zabudEvalManual=this.value!==document.getElementById('zabud-price').value});
+document.getElementById('zabud-price').addEventListener('input',function(){if(!this.value)zabudEvalManual=false});
+
+function setOSGPrivatized(val){
+  osgPrivatized=val;
+  document.getElementById('osg-priv-yes').className='tog'+(val?' on':'');
+  document.getElementById('osg-priv-no').className='tog'+(!val?' on':'');
+  document.getElementById('osg-exempt-note').style.display=val?'block':'none';
+  document.getElementById('osg-taxed-note').style.display=val?'none':'block';
+  calc();
+}
+function toggleOSG(){
+  osgEnabled=!osgEnabled;
+  document.getElementById('osg-inputs').style.display=osgEnabled?'':'none';
+  document.getElementById('osg-toggle-btn').className='tog'+(osgEnabled?' on':'');
+  calc();
+}
+function mirrorOSG(){const p=document.getElementById('osg-price'),e=document.getElementById('osg-eval');if(!osgEvalManual)e.value=p.value}
+document.getElementById('osg-eval').addEventListener('input',function(){osgEvalManual=this.value!==document.getElementById('osg-price').value});
+document.getElementById('osg-price').addEventListener('input',function(){if(!this.value)osgEvalManual=false});
+function mirrorHouse(){const p=document.getElementById('house-price'),e=document.getElementById('house-eval');if(!houseEvalManual)e.value=p.value}
+function mirrorLand(){const p=document.getElementById('land-price'),e=document.getElementById('land-eval');if(!landEvalManual)e.value=p.value}
+function mirrorPrice(){const p=document.getElementById('price'),e=document.getElementById('eval_val');if(!evalManuallyEdited)e.value=p.value}
+document.getElementById('eval_val').addEventListener('input',function(){evalManuallyEdited=this.value!==document.getElementById('price').value});
+document.getElementById('price').addEventListener('input',function(){if(!this.value)evalManuallyEdited=false});
+document.getElementById('house-eval').addEventListener('input',function(){houseEvalManual=this.value!==document.getElementById('house-price').value});
+document.getElementById('house-price').addEventListener('input',function(){if(!this.value)houseEvalManual=false});
+document.getElementById('land-eval').addEventListener('input',function(){landEvalManual=this.value!==document.getElementById('land-price').value});
+document.getElementById('land-price').addEventListener('input',function(){if(!this.value)landEvalManual=false});
+
+function fmt(n){return Math.round(n).toLocaleString('uk-UA')}
+
+// Визначає активну валюту "виводу" — беремо валюту першого ненульового поля
+function getDisplayCurrency(){
+  const candidates=['price','house-price','land-price','osg-price','zabud-price','sp-price'];
+  for(const id of candidates){
+    const el=document.getElementById(id);
+    if(el && el.value && parseFloat(el.value)>0){
+      const cur=getFieldCurrency(id);
+      if(cur!=='UAH') return cur;
+    }
+  }
+  return 'UAH';
+}
+
+// Формат з дублюванням у валюту вводу
+function fmtDual(uahAmount, inline=false){
+  const uahStr=fmt(uahAmount)+' грн';
+  const cur=(typeof getDisplayCurrency==='function')?getDisplayCurrency():inputCurrency;
+  if(cur==='UAH'||!window._currentRates) return uahStr;
+  const symbol=cur==='USD'?'$':'€';
+  const converted=convertFromUAH(uahAmount, cur);
+  const curStr=symbol+fmt(converted);
+  if(inline){
+    return `${uahStr} <span style="color:#94A3B8;font-size:11px;font-weight:400">(${curStr})</span>`;
+  }
+  return `${uahStr}<div style="font-size:11px;color:#94A3B8;font-weight:400;margin-top:2px">≈ ${curStr}</div>`;
+}
+function getRatesFor(y,sale){
+  if(y==='inherited'&&sale===1)return{pdfo:0,vz:0};
+  if(sale>=3)return{pdfo:18,vz:5};
+  if(sale===2)return{pdfo:5,vz:5};
+  if(y==='more')return{pdfo:0,vz:0};
+  return{pdfo:5,vz:5};
+}
+function getRates(){
+  if(propType==='komertsiina')return{pdfo:5,vz:5};
+  return getRatesFor(years,saleNum);
+}
+function getBase(){
+  return Math.max(fieldToUAH('price'), fieldToUAH('eval_val'));
+}
+
+function calc(){
+  if(propType==='budynok'){calcHouse();return}
+  const base=getBase();
+  const{pdfo,vz}=getRates();
+  const pdfoAmt=base*pdfo/100, vzAmt=base*vz/100, total=pdfoAmt+vzAmt;
+  const rb=document.getElementById('result-block');
+  if(pdfo===0&&vz===0){
+    rb.innerHTML=`<div class="zero-box">Пільга — 0% ПДФО та 0% військового збору</div>
+      <div class="result-grid">
+        <div class="rcard"><div class="rl">База оподаткування</div><div class="rv">${fmtDual(base)}</div></div>
+        <div class="rcard"><div class="rl">Податки разом</div><div class="rv" style="color:#16A34A">0 грн</div></div>
+      </div>
+      <div class="extra-box">
+        <div class="extra-title">Додаткові витрати (не податки)</div>
+        <div class="extra-grid">
+          <div class="extra-item"><span class="extra-lbl">📋 Плата за нотаріальне оформлення</span><span class="extra-val" style="color:#64748B;font-weight:400;font-size:11px">уточнюйте при оформленні</span></div>
+          <div class="extra-item"><span class="extra-lbl">📋 Внесок до Пенсійного фонду (покупець)</span><span class="extra-val" style="color:#64748B;font-weight:400;font-size:11px">уточнюйте при оформленні</span></div>
+          
+        </div>
+      </div>`;
+  } else {
+    rb.innerHTML=`<div class="section-label">Результат розрахунку</div>
+      <div class="result-grid">
+        <div class="rcard"><div class="rl">База оподаткування</div><div class="rv">${fmtDual(base)}</div></div>
+        <div class="rcard"><div class="rl">ПДФО ${pdfo}%</div><div class="rv">${fmt(pdfoAmt)} грн</div></div>
+        <div class="rcard"><div class="rl">Військ. збір ${vz}%</div><div class="rv">${fmt(vzAmt)} грн</div></div>
+      </div>
+      <div class="total-box">
+        <div><div class="tl">Податки разом</div><div class="tc">${pdfo+vz}% від бази</div></div>
+        <div class="tv">${fmtDual(total, true)}</div>
+      </div>
+      <div class="extra-box">
+        <div class="extra-title">Додаткові витрати (не податки)</div>
+        <div class="extra-grid">
+          <div class="extra-item"><span class="extra-lbl">📋 Плата за нотаріальне оформлення</span><span class="extra-val" style="color:#64748B;font-weight:400;font-size:11px">уточнюйте при оформленні</span></div>
+          <div class="extra-item"><span class="extra-lbl">📋 Внесок до Пенсійного фонду (покупець)</span><span class="extra-val" style="color:#64748B;font-weight:400;font-size:11px">уточнюйте при оформленні</span></div>
+          
+        </div>
+      </div>`;
+  }
+  const scenarios=[
+    {name:'1-й продаж, > 3 роки',pdfo:0,vz:0},
+    {name:'1-й продаж, < 3 роки / спадщина',pdfo:5,vz:5},
+    {name:'2-й продаж за рік',pdfo:5,vz:5},
+    {name:'3-й і більше за рік',pdfo:18,vz:5},
+    {name:'Комерційна нерухомість',pdfo:5,vz:5},
+  ];
+  document.getElementById('all-scenarios').innerHTML=scenarios.map(sc=>{
+    const amt=base*(sc.pdfo+sc.vz)/100, pct=sc.pdfo+sc.vz;
+    const isActive=sc.pdfo===pdfo&&sc.vz===vz;
+    return`<div class="sc-row${isActive?' active':''}">
+      <span class="sn">${isActive?'▸ ':''}${sc.name}</span>
+      <span class="sv">${amt===0?'0 грн':fmt(amt)+' грн'}</span>
+      <span class="sp">${pct}%</span></div>`;
+  }).join('');
+  if(window._recalcRates)window._recalcRates();
+  incrementCalc();
+}
+
+let spStep=1;
+let spEvalManual=false;
+
+const SP_HINTS={
+  1:'Діти (у т.ч. усиновлені), чоловік/дружина, батьки спадкодавця',
+  2:'Рідні брати/сестри, дід/баба, онуки спадкодавця',
+  3:'Всі інші родичі та особи: дядько/тітка, племінники, двоюрідні тощо',
+  4:'Спадкоємець або спадкодавець — нерезидент України (незалежно від споріднення)',
+  5:'Особи з інвалідністю І гр., діти-сироти, діти позбавлені батьківського піклування, діти з інвалідністю'
+};
+const SP_RATES={
+  1:{pdfo:0,vz:0},
+  2:{pdfo:0,vz:0},
+  3:{pdfo:5,vz:5},
+  4:{pdfo:18,vz:5},
+  5:{pdfo:0,vz:0}
+};
+
+function setSpStep(n){
+  spStep=n;
+  [1,2,3,4,5].forEach(v=>{
+    const idMap={1:'sp-1',2:'sp-2',3:'sp-other',4:'sp-nonres',5:'sp-льгота'};
+    document.getElementById(idMap[v]).className='tog'+(v===n?' on':'');
+  });
+  document.getElementById('sp-hint').innerHTML=SP_HINTS[n];
+  calcSpadkuv();
+}
+
+function mirrorSp(){
+  const p=document.getElementById('sp-price'),e=document.getElementById('sp-eval');
+  if(!spEvalManual)e.value=p.value;
+}
+document.getElementById('sp-eval').addEventListener('input',function(){spEvalManual=this.value!==document.getElementById('sp-price').value});
+document.getElementById('sp-price').addEventListener('input',function(){if(!this.value)spEvalManual=false});
+
+function calcSpadkuv(){
+  const base=Math.max(parseFloat(document.getElementById('sp-price').value)||0,parseFloat(document.getElementById('sp-eval').value)||0);
+  const rb=document.getElementById('result-block');
+  const {pdfo,vz}=SP_RATES[spStep];
+  if(!base){
+    rb.innerHTML='<div class="hint" style="text-align:center;padding:1rem;color:#94A3B8">Введіть вартість майна</div>';
+    return;
+  }
+  const pdfoAmt=base*pdfo/100;
+  const vzAmt=base*vz/100;
+  const total=pdfoAmt+vzAmt;
+  const isZero=total===0;
+
+  const stepLabels={1:'1-й ступінь (діти, батьки, чоловік/дружина)',2:'2-й ступінь (брати/сестри, дід/баба, онуки)',3:'Інші родичі та особи',4:'Нерезидент',5:'Пільгова категорія'};
+  const noteText={
+    1:'Спадкоємці 1-го ступеня не сплачують ПДФО та ВЗ незалежно від вартості майна (ст. 174.2.1 ПКУ). Декларацію можна не подавати, якщо це єдиний дохід за рік.',
+    2:'Спадкоємці 2-го ступеня не сплачують ПДФО та ВЗ незалежно від вартості майна (ст. 174.2.1 ПКУ). Декларацію можна не подавати, якщо це єдиний дохід за рік.',
+    3:'Інші спадкоємці-резиденти сплачують 5% ПДФО + 5% ВЗ. Необхідно подати декларацію до 1 травня та сплатити податок до 1 серпня наступного року.',
+    4:'Якщо спадкоємець або спадкодавець — нерезидент, ставка 18% ПДФО + 5% ВЗ незалежно від споріднення. Нотаріус не оформить спадщину без сплати податку.',
+    5:'Особи з інвалідністю І групи, діти-сироти та діти з інвалідністю звільнені від ПДФО та ВЗ незалежно від ступеня споріднення (ст. 174.2.1 ПКУ).'
+  };
+
+  rb.innerHTML=`
+    <div class="section-label">📜 Спадкування · ${stepLabels[spStep]}</div>
+    <div class="result-grid">
+      <div class="rcard"><div class="rl">База оподаткування</div><div class="rv">${fmtDual(base)}</div></div>
+      <div class="rcard"><div class="rl">ПДФО ${pdfo}% + ВЗ ${vz}%</div>
+        <div class="rv" style="color:${isZero?'#16A34A':'#1B2B5E'}">${isZero?'0 грн':fmt(total)+' грн'}</div></div>
+    </div>
+    ${isZero?`<div class="zero-box" style="margin-top:10px">✓ Податок на спадщину — 0 грн</div>`:`
+    <div class="result-grid" style="margin-top:8px">
+      <div class="rcard"><div class="rl">ПДФО ${pdfo}%</div><div class="rv">${fmt(pdfoAmt)} грн</div></div>
+      <div class="rcard"><div class="rl">Військ. збір ${vz}%</div><div class="rv">${fmt(vzAmt)} грн</div></div>
+    </div>
+    <div class="total-box" style="margin-top:8px">
+      <div><div class="tl">Податок разом</div><div class="tc">${pdfo+vz}% від бази</div></div>
+      <div class="tv">${fmtDual(total, true)}</div>
+    </div>`}
+    <div class="note"><strong>Важливо:</strong> ${noteText[spStep]}</div>
+    <div class="extra-box" style="margin-top:8px">
+      <div class="extra-title">Додаткові витрати (не податки)</div>
+      <div class="extra-grid">
+        <div class="extra-item"><span class="extra-lbl">📋 Плата за нотаріальне оформлення спадщини</span><span class="extra-val" style="color:var(--text-2);font-weight:400;font-size:11px">уточнюйте при оформленні</span></div>
+      </div>
+    </div>`;
+  if(window._recalcRates)window._recalcRates();
+  incrementCalc();
+}
+
+function calcHouse(){
+  // ОБ'ЄКТ 1: будинок + ділянка під ним = один об'єкт
+  const hBase=Math.max(fieldToUAH('house-price'), fieldToUAH('house-eval'));
+  const lBase=Math.max(fieldToUAH('land-price'), fieldToUAH('land-eval'));
+  const obj1Base=hBase+lBase; // сума = база 1-го об'єкта
+  // ОБ'ЄКТ 2: ОСГ (якщо є)
+  const oBase=osgEnabled?Math.max(fieldToUAH('osg-price'), fieldToUAH('osg-eval')):0;
+  // ОБ'ЄКТ 3: Ділянка під забудову (якщо є)
+  const zBase=zabudEnabled?Math.max(fieldToUAH('zabud-price'), fieldToUAH('zabud-eval')):0;
+
+  const rb=document.getElementById('result-block');
+  if(!obj1Base&&!oBase&&!zBase){rb.innerHTML='<div class="hint" style="text-align:center;padding:1rem;color:#94A3B8">Введіть вартість будинку та/або ділянок</div>';return}
+
+  // Формуємо масив об'єктів
+  let objects=[];
+  if(obj1Base) objects.push({base:obj1Base,houseBase:hBase,lbl:'🏡 Будинок + ділянка під будинком',isOSG:false,isZabud:false});
+  if(oBase)    objects.push({base:oBase,houseBase:0,lbl:'🌾 Ділянка ОСГ',isOSG:true,isZabud:false});
+  if(zBase)    objects.push({base:zBase,houseBase:0,lbl:'🏗 Ділянка під забудову',isOSG:false,isZabud:true});
+
+  // ЛОГІКА згідно ст. 172 ПКУ:
+  // - Будинок + ділянка під будинком = 1 об'єкт (об'єднані в obj1Base)
+  // - Кожна наступна ділянка (ОСГ, забудова) = окремий об'єкт
+  // - Приватизована ОСГ — звільнена від ПДФО+ВЗ (ст. 172.1), але РАХУЄТЬСЯ як об'єкт у черзі!
+  
+  // НЕ сортуємо — порядок такий як вводить користувач:
+  // ЛОГІКА згідно ст. 172 ПКУ:
+  // Будинок+ділянка та приватизована ОСГ — обидва об'єкти п.172.1
+  // Звільнення "один раз на рік" діє ТІЛЬКИ для 1-го продажу
+  // 2-й об'єкт 172.1 → 5%+5% (п.172.2), 3-й і наступні → 18%+5%
+  
+  let saleCounter=housePriorSales;
+  objects.forEach(obj=>{
+    saleCounter++;
+    obj.saleN=saleCounter;
+    if(obj.isOSG&&osgPrivatized&&saleCounter===1){
+      // Приватизована ОСГ як 1-й (єдиний) продаж — звільнена ст.172.1
+      obj.r={pdfo:0,vz:0};obj.tax=0;obj.exempted=true;
+    } else {
+      // Всі інші випадки — за чергою продажу
+      obj.r=getRatesFor(houseYears,saleCounter);
+      obj.tax=obj.base*(obj.r.pdfo+obj.r.vz)/100;
+      obj.exempted=(obj.r.pdfo===0&&obj.r.vz===0);
+    }
+  });
+  
+  const taxableObjs = objects.filter(o=>!o.exempted);
+
+  const totalTax=objects.reduce((sum,obj)=>sum+obj.tax,0);
+  // ПФ тільки з вартості будинку (не землі)
+  const pfBase=hBase;
+  const notarBase=objects.reduce((s,o)=>s+o.base,0);
+
+  function objBlock(obj){
+    const isZero=obj.r.pdfo===0&&obj.r.vz===0;
+    const isOSGexempt=obj.isOSG&&osgPrivatized&&obj.saleN===1;
+    const saleLabel=`${obj.saleN}-й продаж цього року`;
+    const saleStyle=isZero?'background:#DCFCE7;color:#15803D':'';
+    const baseDetail=obj.houseBase>0&&lBase>0
+      ?`<div style="font-size:11px;color:#64748B;margin-top:3px">Будинок: ${fmt(obj.houseBase)} + Ділянка: ${fmt(lBase)} грн</div>`:'';
+    let bottomNote='';
+    if(isOSGexempt){
+      bottomNote='<div style="font-size:11px;color:#16A34A;font-weight:600;margin-top:4px">✓ Приватизована ОСГ як перший продаж — звільнена (ст. 172.1 ПКУ)</div>';
+    } else if(isZero){
+      bottomNote='<div style="font-size:11px;color:#16A34A;font-weight:600;margin-top:4px">✓ Перший продаж, у власності понад 3 роки — 0%</div>';
+    }
+    return`<div class="obj-block">
+      <div class="obj-title">${obj.lbl} <span class="sale-badge" style="${saleStyle}">${saleLabel}</span></div>
+      <div class="result-grid">
+        <div class="rcard"><div class="rl">База оподаткування</div><div class="rv">${fmtDual(obj.base)}</div>${baseDetail}</div>
+        <div class="rcard"><div class="rl">ПДФО ${obj.r.pdfo}% + ВЗ ${obj.r.vz}%</div>
+          <div class="rv" style="color:${isZero?'#16A34A':'#1B2B5E'}">${isZero?'0 грн':fmt(obj.tax)+' грн'}</div></div>
+      </div>
+      ${bottomNote}
+    </div>`;
+  }
+
+  const ruleBanner=`<div style="background:#EBF4FF;border-left:3px solid #378ADD;border-radius:0 8px 8px 0;padding:8px 12px;font-size:12px;color:#185FA5;font-weight:500;margin-bottom:10px">
+    📜 Згідно ст. 172 ПКУ: будинок + ділянка під ним = 1 об'єкт. Кожна додаткова ділянка — окремий продаж.
+  </div>`;
+  rb.innerHTML=`
+    ${ruleBanner}
+    <div class="section-label">${objects.length} об'єкт(и) оподаткування</div>
+    ${objects.map(o=>objBlock(o)).join('')}
+    <div class="total-box" style="margin-top:10px">
+      <div><div class="tl">Податки разом (всі об'єкти)</div></div>
+      <div class="tv">${fmtDual(totalTax, true)}</div>
+    </div>
+    <div class="extra-box">
+      <div class="extra-title">Додаткові витрати (не податки)</div>
+      <div class="extra-grid">
+        <div class="extra-item"><span class="extra-lbl">📋 Плата за нотаріальне оформлення (по кожному договору)</span><span class="extra-val" style="color:var(--text-2);font-weight:400;font-size:11px">уточнюйте при оформленні</span></div>
+        <div class="extra-item"><span class="extra-lbl">📋 Внесок до ПФ — тільки з будинку (покупець)</span><span class="extra-val" style="color:var(--text-2);font-weight:400;font-size:11px">уточнюйте при оформленні</span></div>
+      </div>
+    </div>`;
+  if(window._recalcRates)window._recalcRates();
+  incrementCalc();
+}
+
+const RATES_DATA=[
+  {sit:'1-й продаж, > 3 роки у власності',pdfo:0,vz:0,bgClass:'bg-green',tc:'c-green'},
+  {sit:'1-й продаж, < 3 роки у власності',pdfo:5,vz:5,bgClass:'bg-amber',tc:'c-amber'},
+  {sit:'2-й продаж за рік',pdfo:5,vz:5,bgClass:'bg-amber',tc:'c-amber'},
+  {sit:'3-й і більше продажів за рік',pdfo:18,vz:5,bgClass:'bg-red',tc:'c-red'},
+  {sit:'Нерезидент',pdfo:18,vz:5,bgClass:'bg-red',tc:'c-red'},
+  {sit:'Комерційна нерухомість',pdfo:5,vz:5,bgClass:'bg-blue',tc:'c-blue'},
+];
+function buildRatesTable(){
+  const{pdfo,vz}=getRates();
+  document.getElementById('rates-tbody').innerHTML=RATES_DATA.map(r=>{
+    const isActive=r.pdfo===pdfo&&r.vz===vz;
+    return`<tr class="${isActive?'active-row':''}"><td>${r.sit}</td>
+      <td><span class="${r.bgClass} ${r.tc}" style="display:inline-block;padding:2px 7px;border-radius:4px;font-size:12px">${r.pdfo}%</span></td>
+      <td><span class="${r.bgClass} ${r.tc}" style="display:inline-block;padding:2px 7px;border-radius:4px;font-size:12px">${r.vz}%</span></td>
+      <td><span class="${r.bgClass} ${r.tc}" style="display:inline-block;padding:2px 7px;border-radius:4px;font-size:12px;font-weight:700">${r.pdfo+r.vz}%</span></td></tr>`;
+  }).join('');
+}
+function toggleRates(){
+  const btn=document.getElementById('rates-toggle'),body=document.getElementById('rates-body');
+  const isOpen=body.classList.toggle('open');
+  btn.classList.toggle('open',isOpen);
+  if(isOpen)buildRatesTable();
+}
+function generateImage(){
+  const base=getCurrentBase();
+  if(!base){showToast('Спочатку введіть суму угоди');return}
+
+  // Будуємо красивий блок для знімку
+  const date=new Date().toLocaleDateString('uk-UA');
+  const rb=document.getElementById('result-block');
+  const resultHTML=rb.innerHTML;
+
+  const wrapper=document.createElement('div');
+  wrapper.style.cssText='position:fixed;left:-9999px;top:0;width:380px;background:#fff;padding:0;font-family:Arial,sans-serif;z-index:-1';
+
+  wrapper.innerHTML=`<div style="background:#1B2B5E;padding:16px 20px">
+      <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:.12em">ЕКСПЕРТНА ДУМКА</div>
+      <div style="font-size:10px;color:#A0B4E8;margin-top:2px">Оцінка нерухомості · Житомир</div>
+    </div>
+    <div style="padding:14px 16px;background:#F4F6FB;border-bottom:1px solid #E2E8F0">
+      <div style="font-size:13px;font-weight:700;color:#1B2B5E">Розрахунок податків при продажу нерухомості</div>
+      <div style="font-size:11px;color:#94A3B8;margin-top:2px">${date}</div>
+    </div>
+    <div style="padding:14px 16px">${resultHTML}</div>
+    <div style="background:#1B2B5E;padding:10px 16px;display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:10px;color:#A0B4E8">📞 +38 097 921 3772</div>
+      <div style="font-size:9px;color:#64748B">⚠️ Орієнтовний розрахунок</div>
+    </div>`;
+
+  document.body.appendChild(wrapper);
+
+  // Тимчасово застосуємо стилі калькулятора до wrapper
+  const styleLink=document.createElement('style');
+  styleLink.textContent=`
+    .obj-block{background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:10px;margin-bottom:8px}
+    .obj-title{font-size:12px;font-weight:700;color:#1B2B5E;margin-bottom:6px}
+    .sale-badge{font-size:10px;background:#EBF4FF;color:#185FA5;padding:2px 6px;border-radius:3px;margin-left:4px}
+    .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+    .rcard{background:#fff;border:1px solid #E2E8F0;border-radius:6px;padding:8px}
+    .rl{font-size:10px;color:#94A3B8;margin-bottom:2px}
+    .rv{font-size:13px;font-weight:700;color:#1B2B5E}
+    .total-box{background:#1B2B5E;border-radius:8px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+    .tl{font-size:11px;font-weight:600;color:#A0B4E8}
+    .tc{font-size:10px;color:#A0B4E8}
+    .tv{font-size:18px;font-weight:700;color:#F0C040}
+    .extra-box{background:#FFF8E7;border:1px solid #FDE68A;border-radius:8px;padding:10px;margin-top:8px}
+    .extra-title{font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;margin-bottom:6px}
+    .extra-item{display:flex;justify-content:space-between;font-size:11px;padding:3px 0;border-bottom:1px solid #FDE68A}
+    .extra-lbl{color:#64748B}
+    .extra-val{font-weight:700;color:#1B2B5E}
+    .extra-total{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:#1B2B5E;padding-top:6px;margin-top:2px}
+    .zero-box{background:#DCFCE7;border-radius:8px;padding:12px;text-align:center;font-size:14px;font-weight:700;color:#15803D}
+    .note{background:#FEF3C7;border-left:3px solid #F59E0B;padding:8px 10px;font-size:11px;color:#92400E;font-weight:500;margin-top:8px;border-radius:0 6px 6px 0}
+    .section-label{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#94A3B8;margin-bottom:8px}
+  `;
+  wrapper.appendChild(styleLink);
+
+  showToast('⏳ Створюємо зображення...');
+
+  html2canvas(wrapper,{
+    scale:2,
+    backgroundColor:'#ffffff',
+    logging:false,
+    useCORS:true,
+    allowTaint:true
+  }).then(canvas=>{
+    document.body.removeChild(wrapper);
+    canvas.toBlob(blob=>{
+      if(!blob){showToast('Помилка створення зображення');return}
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.href=url;
+      a.download='rozrakhunok_podatkiv.png';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(()=>URL.revokeObjectURL(url),1000);
+      showToast('✓ Зображення збережено! Відправ через Viber');
+    },'image/png');
+  }).catch(()=>{
+    document.body.removeChild(wrapper);
+    showToast('Помилка. Спробуй зробити скріншот екрану');
+  });
+}
+
+window._recalcRates=function(){if(document.getElementById('rates-body').classList.contains('open'))buildRatesTable()};
+
+calc();
+
+function savePDF(){
+  const base=getCurrentBase();
+  if(!base){showToast('Спочатку введіть суму угоди');return}
+  const date=new Date().toLocaleDateString('uk-UA');
+  const rb=document.getElementById('result-block');
+
+  // Збираємо структуровані блоки
+  const objBlocks=rb.querySelectorAll('.obj-block');
+  const totalBox=rb.querySelector('.total-box');
+  const extraBox=rb.querySelector('.extra-box');
+  const zeroBox=rb.querySelector('.zero-box');
+  const rcards=rb.querySelectorAll('.rcard');
+
+  let objectsHTML='';
+  let chartItems=[];
+
+  if(objBlocks.length>0){
+    objBlocks.forEach(block=>{
+      const titleEl=block.querySelector('.obj-title');
+      const badge=block.querySelector('.sale-badge');
+      const cards=block.querySelectorAll('.rcard');
+      const noteEl=block.querySelector('div[style*="color:#16A34A"]');
+      const titleText=titleEl?(titleEl.innerText.replace(badge?badge.innerText:'','').trim()):'';
+      const badgeText=badge?badge.innerText:'';
+      let baseVal='',taxVal='',taxNum=0;
+      cards.forEach((c,i)=>{
+        const v=c.querySelector('.rv');
+        if(i===0&&v) baseVal=v.innerText;
+        if(i===1&&v){taxVal=v.innerText;taxNum=parseFloat(taxVal.replace(/[^0-9]/g,''))||0;}
+      });
+      if(taxNum>0) chartItems.push({label:titleText.substring(0,18),val:taxNum});
+      objectsHTML+=`<div class="obj-card">
+        <div class="obj-hdr"><div class="obj-name">${titleText}</div><div class="obj-badge">${badgeText}</div></div>
+        <div class="obj-grid">
+          <div class="obj-field"><div class="fl">База оподаткування</div><div class="fv">${baseVal}</div></div>
+          <div class="obj-field"><div class="fl">Податок (ПДФО + ВЗ)</div><div class="fv tax">${taxVal}</div></div>
+        </div>
+        ${noteEl?`<div class="obj-note">${noteEl.innerText}</div>`:''}
+      </div>`;
+    });
+  } else if(zeroBox){
+    objectsHTML=`<div class="zero-card">${zeroBox.innerText}</div>`;
+  } else if(rcards.length>0){
+    let rows='';
+    rcards.forEach(c=>{
+      const l=c.querySelector('.rl'),v=c.querySelector('.rv');
+      if(l&&v){
+        const taxNum=parseFloat(v.innerText.replace(/[^0-9]/g,''))||0;
+        if(l.innerText.includes('ПДФО')&&taxNum>0) chartItems.push({label:'Податок',val:taxNum});
+        rows+=`<div class="obj-field"><div class="fl">${l.innerText}</div><div class="fv">${v.innerText}</div></div>`;
+      }
+    });
+    objectsHTML=`<div class="obj-card"><div class="obj-grid">${rows}</div></div>`;
+  }
+
+  // Підсумок
+  let totalHTML='',extraHTML='';
+  if(totalBox){
+    const tl=totalBox.querySelector('.tl'),tv=totalBox.querySelector('.tv'),tc=totalBox.querySelector('.tc');
+    const totNum=parseFloat(tv?tv.innerText.replace(/[^0-9]/g,''):'0')||0;
+    if(totNum>0&&chartItems.length===0) chartItems=[{label:'Податок',val:totNum}];
+    totalHTML=`<div class="total-card">
+      <div><div class="tl2">${tl?tl.innerText:'Податки разом'}</div>${tc?`<div class="tc2">${tc.innerText}</div>`:''}</div>
+      <div class="tv2">${tv?tv.innerText:''}</div>
+    </div>`;
+  }
+  if(extraBox){
+    const rows=extraBox.querySelectorAll('.extra-item'),tot=extraBox.querySelector('.extra-total');
+    let rHTML='';
+    rows.forEach(r=>{
+      const l=r.querySelector('.extra-lbl'),v=r.querySelector('.extra-val');
+      if(l&&v) rHTML+=`<div class="er"><span>${l.innerText}</span><span class="ev">${v.innerText}</span></div>`;
+    });
+    if(tot) rHTML+=`<div class="er etot"><span>${tot.children[0]?tot.children[0].innerText:''}</span><span class="ev">${tot.children[1]?tot.children[1].innerText:''}</span></div>`;
+    extraHTML=`<div class="extra-card"><div class="sec">Додаткові витрати (не податки)</div>${rHTML}</div>`;
+  }
+
+  // SVG діаграма (горизонтальні бари)
+  let chartHTML='';
+  if(chartItems.length>0){
+    const maxV=Math.max(...chartItems.map(x=>x.val));
+    const rowH=44, w=420, padL=20, barMaxW=260;
+    const svgH=chartItems.length*rowH+20;
+    let bars='';
+    chartItems.forEach((item,i)=>{
+      const y=i*rowH+10;
+      const bw=Math.round((item.val/maxV)*barMaxW);
+      const colors=['#1B2B5E','#D4A017','#0F6E56','#A32D2D'];
+      const col=colors[i%colors.length];
+      const fmt=(item.val/1000).toFixed(0)+' тис. грн';
+      bars+=`<text x="${padL}" y="${y+16}" font-size="11" fill="#64748B" font-family="Arial">${item.label}</text>
+        <rect x="${padL}" y="${y+20}" width="${bw}" height="16" fill="${col}" rx="3"/>
+        <text x="${padL+bw+6}" y="${y+32}" font-size="11" fill="${col}" font-weight="700" font-family="Arial">${fmt}</text>`;
+    });
+    chartHTML=`<div class="chart-card"><div class="sec">Структура податків</div>
+      <svg viewBox="0 0 ${w} ${svgH}" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block">${bars}</svg>
+    </div>`;
+  }
+
+  const printHTML=`<!DOCTYPE html><html lang="uk"><head><meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Розрахунок податків ${date}</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Arial,Helvetica,sans-serif;padding:22px;max-width:600px;margin:0 auto;color:#1E293B;font-size:13px}
+    .print-btn{display:block;width:100%;padding:13px;background:#1B2B5E;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:18px;letter-spacing:.03em}
+    .hdr{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #1B2B5E;padding-bottom:12px;margin-bottom:16px}
+    .cn{font-size:16px;font-weight:700;color:#1B2B5E;letter-spacing:.1em;margin-bottom:3px}
+    .cs{font-size:11px;color:#64748B}
+    .hr{text-align:right;font-size:11px;color:#94A3B8;line-height:1.7}
+    .sec{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#94A3B8;margin-bottom:8px}
+    .obj-card{background:#F8FAFC;border-radius:8px;border:1px solid #E2E8F0;padding:12px;margin-bottom:10px}
+    .obj-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:4px}
+    .obj-name{font-size:14px;font-weight:700;color:#1B2B5E}
+    .obj-badge{font-size:10px;background:#EBF4FF;color:#185FA5;padding:3px 8px;border-radius:4px;font-weight:600}
+    .obj-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .obj-field{background:#fff;border-radius:6px;padding:8px 10px;border:1px solid #E2E8F0}
+    .fl{font-size:10px;color:#94A3B8;margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em}
+    .fv{font-size:15px;font-weight:700;color:#1B2B5E}
+    .fv.tax{color:#A32D2D}
+    .obj-note{font-size:11px;color:#16A34A;font-weight:600;margin-top:8px;padding-top:8px;border-top:1px solid #E2E8F0}
+    .zero-card{background:#DCFCE7;border-radius:8px;padding:14px;text-align:center;font-size:15px;font-weight:700;color:#15803D;margin-bottom:10px}
+    .total-card{background:#1B2B5E;border-radius:10px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+    .tl2{font-size:12px;font-weight:600;color:#A0B4E8}
+    .tc2{font-size:10px;color:#A0B4E8;margin-top:2px}
+    .tv2{font-size:22px;font-weight:700;color:#F0C040}
+    .chart-card{background:#F8FAFC;border-radius:8px;padding:12px;margin-bottom:10px;border:1px solid #E2E8F0}
+    .extra-card{background:#FFF8E7;border-radius:8px;padding:12px;margin-bottom:10px;border:1px solid #FDE68A}
+    .er{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #FDE68A;font-size:12px;color:#64748B;gap:8px}
+    .er:last-child{border:none}
+    .ev{font-weight:700;color:#1B2B5E;white-space:nowrap}
+    .etot{font-weight:700;color:#1B2B5E;padding-top:8px}
+    .etot .ev{color:#D4A017;font-size:14px}
+    .note{font-size:10px;color:#94A3B8;border-top:1px solid #E2E8F0;padding-top:10px;margin-top:4px;line-height:1.7}
+    .print-btn{position:fixed;bottom:20px;right:20px;background:#16A34A;color:#fff;border:none;border-radius:50px;padding:14px 22px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2);z-index:1000;font-family:inherit;touch-action:manipulation}
+    .back-btn{position:fixed;top:20px;left:20px;background:#1B2B5E;color:#fff;border:none;border-radius:50px;padding:12px 20px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2);z-index:1000;font-family:inherit;touch-action:manipulation;text-decoration:none;display:inline-block}
+    .back-btn:active{transform:scale(.95)}
+    @media print{.print-btn,.back-btn{display:none}}
+  </style></head><body>
+  <a href="https://ztexpert-hash.github.io/kalkulator-podatkiv" class="back-btn">← Назад до калькулятора</a>
+  <button class="print-btn" onclick="window.print()">🖨️ Роздрукувати / Зберегти як PDF</button>
+  <div class="hdr">
+    <div><div class="cn">ТОВ «ЕКСПЕРТНА ДУМКА»</div><div class="cs">Оцінка нерухомості · Житомир</div></div>
+    <div class="hr">Розрахунок податків<br>при продажу нерухомості<br><strong style="color:#1B2B5E">${date}</strong></div>
+  </div>
+  <div class="sec" style="margin-bottom:10px">Об'єкти оподаткування</div>
+  ${objectsHTML}
+  ${totalHTML}
+  ${chartHTML}
+  ${extraHTML}
+  <div class="note">⚠️ Орієнтовний розрахунок відповідно до ПКУ України · 2026 р.<br>
+  Проконсультуйтесь з нотаріусом перед укладанням угоди.<br>
+  📞 +38 097 921 3772 · zt.expert@gmail.com</div>
+  </body></html>`;
+
+  try{
+    // iOS Safari не підтримує Blob download — використовуємо print
+    const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
+    if(isIOS){
+      // На iOS — відкриваємо для друку через нове вікно
+      const w=window.open('','_blank');
+      if(w){
+        w.document.write(printHTML);
+        w.document.close();
+        w.focus();
+        showToast('✓ Натисни "Поділитись" → "Друк" → Зберегти PDF');
+      } else {
+        // Якщо popup заблоковано — копіюємо текст
+        const text=buildShareText();
+        copyToClipboard(text);
+        showToast('✓ Результат скопійовано — вставте в будь-який документ');
+      }
+    } else {
+      // Android/Desktop — завантажуємо файл
+      const blob=new Blob([printHTML],{type:'text/html;charset=utf-8'});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.href=url;
+      a.target='_blank';
+      a.download='Rozrakhunok_podatkiv.html';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(()=>{URL.revokeObjectURL(url);document.body.removeChild(a);},1000);
+      showToast('✓ Файл збережено — відкрий і роздрукуй як PDF');
+    }
+  }catch(e){
+    const text=buildShareText();
+    copyToClipboard(text);
+    showToast('✓ Результат скопійовано');
+  }
+}
+
+function buildShareText(){
+  const date=new Date().toLocaleDateString('uk-UA');
+  const rb=document.getElementById('result-block');
+  let lines=[];
+  lines.push('📊 РОЗРАХУНОК ПОДАТКІВ ПРИ ПРОДАЖУ НЕРУХОМОСТІ');
+  lines.push('🗓 Дата: '+date);
+  lines.push('━━━━━━━━━━━━━━━━━━━━');
+
+  // Об'єкти
+  const objBlocks=rb.querySelectorAll('.obj-block');
+  if(objBlocks.length>0){
+    objBlocks.forEach((block,i)=>{
+      const titleEl=block.querySelector('.obj-title');
+      const badge=block.querySelector('.sale-badge');
+      const cards=block.querySelectorAll('.rcard');
+      const noteEl=block.querySelector('div[style*="color:#16A34A"]');
+      const titleText=titleEl?(titleEl.innerText.replace(badge?badge.innerText:'','').trim()):'';
+      const badgeText=badge?badge.innerText:'';
+      lines.push('');
+      lines.push((i+1)+'. '+titleText);
+      lines.push('   '+badgeText);
+      cards.forEach(c=>{
+        const l=c.querySelector('.rl'),v=c.querySelector('.rv');
+        if(l&&v) lines.push('   '+l.innerText+': '+v.innerText);
+      });
+      if(noteEl) lines.push('   ✓ '+noteEl.innerText.trim());
+    });
+  } else {
+    // Квартира
+    const rcards=rb.querySelectorAll('.rcard');
+    lines.push('');
+    rcards.forEach(c=>{
+      const l=c.querySelector('.rl'),v=c.querySelector('.rv');
+      if(l&&v) lines.push('   '+l.innerText+': '+v.innerText);
+    });
+  }
+
+  // Підсумок
+  const totalBox=rb.querySelector('.total-box');
+  if(totalBox){
+    const tv=totalBox.querySelector('.tv'),tc=totalBox.querySelector('.tc');
+    lines.push('');
+    lines.push('━━━━━━━━━━━━━━━━━━━━');
+    lines.push('💰 ПОДАТКИ РАЗОМ: '+(tv?tv.innerText:''));
+    if(tc) lines.push('   '+tc.innerText);
+  }
+
+  // Додаткові витрати
+  const extraBox=rb.querySelector('.extra-box');
+  if(extraBox){
+    lines.push('');
+    lines.push('📋 ДОДАТКОВІ ВИТРАТИ:');
+    const rows=extraBox.querySelectorAll('.extra-item');
+    rows.forEach(r=>{
+      const l=r.querySelector('.extra-lbl'),v=r.querySelector('.extra-val');
+      if(l&&v) lines.push('   • '+l.innerText+': '+v.innerText);
+    });
+    const tot=extraBox.querySelector('.extra-total');
+    if(tot) lines.push('   Разом: '+(tot.children[1]?tot.children[1].innerText:''));
+  }
+
+  lines.push('');
+  lines.push('━━━━━━━━━━━━━━━━━━━━');
+  lines.push('🏢 ТОВ «Експертна Думка» · Житомир');
+  lines.push('📞 +38 097 921 3772');
+  lines.push('✉️ zt.expert@gmail.com');
+  lines.push('⚠️ Орієнтовний розрахунок. Консультуйтесь з нотаріусом.');
+  return lines.join('\n');
+}
+
+function shareResult(){
+  const base=getCurrentBase();
+  if(!base){showToast('Спочатку введіть суму угоди');return}
+  const text=buildShareText();
+  if(navigator.share){
+    navigator.share({title:'Розрахунок податків — Експертна Думка',text})
+    .then(()=>showToast('✓ Надіслано!'))
+    .catch(()=>copyToClipboard(text));
+  } else {
+    copyToClipboard(text);
+  }
+}
+
+function copyToClipboard(text){
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(()=>{
+      showToast('✓ Скопійовано в буфер обміну');
+    }).catch(()=>showToast('Не вдалось скопіювати'));
+  } else {
+    const ta=document.createElement('textarea');
+    ta.value=text;document.body.appendChild(ta);ta.select();
+    document.execCommand('copy');document.body.removeChild(ta);
+    showToast('✓ Скопійовано в буфер обміну');
+  }
+}
+
+function showToast(msg){
+  let t=document.getElementById('toast');
+  if(!t){t=document.createElement('div');t.id='toast';t.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1B2B5E;color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:600;z-index:9999;opacity:0;transition:opacity .3s';document.body.appendChild(t)}
+  t.textContent=msg;t.style.opacity='1';
+  setTimeout(()=>{t.style.opacity='0'},2500);
+}
+
+function getCurrentBase(){
+  if(propType==='budynok'){
+    return Math.max(fieldToUAH('house-price'), fieldToUAH('house-eval'));
+  } else if(propType==='spadkuv'){
+    return Math.max(fieldToUAH('sp-price'), fieldToUAH('sp-eval'));
+  } else {
+    return Math.max(fieldToUAH('price'), fieldToUAH('eval_val'));
+  }
+}
+
+function saveScreenshot(){
+  showToast('📸 Android: Живлення+Гучність↓ · iPhone: Бічна+Гучність↑');
+}
+
+</script>
+</body>
+</html>
