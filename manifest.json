@@ -1,0 +1,25 @@
+{
+  "name": "Довідник зареєстрованих оцінок ФДМУ — Житомир",
+  "short_name": "ФДМУ Житомир",
+  "description": "Довідкова статистика зареєстрованих оцінок ФДМУ по місту Житомир",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#F4F1EA",
+  "theme_color": "#16302B",
+  "orientation": "portrait-primary",
+  "lang": "uk",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
