@@ -28,7 +28,7 @@
       <button class="update-btn" onclick="refreshApp()">🔄 Оновити</button>
       <button class="update-btn" onclick="openImport()">📂 Імпорт Excel ФДМУ</button>
       <input id="excelImport" type="file" accept=".xlsx,.xls" style="display:none" onchange="importExcelFile(event)">
-      <span class="version-pill" id="versionTop">v2.6</span>
+      <span class="version-pill" id="versionTop">v2.7</span>
       <button class="client-btn" onclick="generatePdfReference()">📄 PDF-довідка</button>
       <button class="client-btn" onclick="copyClientText()">📋 Текст клієнту</button>
       <button id="installBtn" class="client-btn" onclick="installApp()">📲 Встановити додаток</button><a class="client-btn call-btn" href="tel:+380979213772">📞 Замовити оцінку</a>
@@ -55,7 +55,7 @@
 </section>
 
 <section class="card"><div class="section">Параметри об’єкта</div><div class="grid"><div class="field"><label>Тип об’єкта</label><select id="objectType"><option value="apartment">Квартира</option><option value="dorm">Кімната в гуртожитку</option></select></div><div class="field"><label>Район</label><select id="district"><option value="all">Будь-який район Житомира</option><option value="Богунський">Богунський</option><option value="Корольовський">Корольовський</option><option value="Житомир (без району)">Житомир без району</option></select></div><div class="field"><label>Кімнатність</label><select id="rooms"><option value="1">1-кімнатна</option><option value="2">2-кімнатна</option><option value="3">3-кімнатна</option><option value="4">4+ кімнатна</option></select></div><div class="field"><label>Загальна площа, кв.м</label><input id="area" type="number" step="0.1"></div><div class="field"><label>Рік побудови</label><input id="year" type="number"><div class="hint">фактор схожості, а не жорсткий фільтр</div></div><div class="field"><label>Поверх</label><input id="floor" type="number"></div><div class="field"><label>Поверховість будинку</label><input id="totalFloors" type="number"><div class="hint">якщо невідомо — залиште порожнім</div></div></div><div class="notice">Без загальної площі система показує тільки загальну статистику бази. Підбір зареєстрованих оцінок запускається після введення площі; рік і поверх враховуються лише якщо вони заповнені.</div><div class="btn-row" style="margin-top:12px"><button class="btn" onclick="runAuto()">Підібрати зареєстровані оцінки</button><button class="btn secondary" onclick="selectAll(true)">Вибрати всі</button><button class="btn warn" onclick="selectAll(false)">Очистити всі</button><button class="btn gray" onclick="recalcSelected()">Перерахувати</button></div></section>
-<section class="card"><div class="section">База даних</div><div class="stats"><div class="stat"><div class="l">Версія сайту</div><div class="v" id="st-version">2.6</div></div><div class="stat"><div class="l">Записів у чистій базі</div><div class="v" id="st-count">—</div></div><div class="stat"><div class="l">Квартири</div><div class="v" id="st-apts">—</div></div><div class="stat"><div class="l">Кімнати/гуртожитки</div><div class="v" id="st-dorms">—</div></div><div class="stat"><div class="l">Показано оцінок</div><div class="v" id="st-shown">—</div></div><div class="stat"><div class="l">Вибрано</div><div class="v" id="st-selected">—</div></div><div class="stat"><div class="l">Оновлено базу</div><div class="v" id="st-updated" style="font-size:15px">—</div></div></div></section>
+<section class="card"><div class="section">База даних</div><div class="stats"><div class="stat"><div class="l">Версія сайту</div><div class="v" id="st-version">2.7</div></div><div class="stat"><div class="l">Записів у робочій базі</div><div class="v" id="st-count">—</div></div><div class="stat"><div class="l">Квартири</div><div class="v" id="st-apts">—</div></div><div class="stat"><div class="l">Кімнати/гуртожитки</div><div class="v" id="st-dorms">—</div></div><div class="stat"><div class="l">Показано оцінок</div><div class="v" id="st-shown">—</div></div><div class="stat"><div class="l">Вибрано</div><div class="v" id="st-selected">—</div></div><div class="stat"><div class="l">Оновлено базу</div><div class="v" id="st-updated" style="font-size:15px">—</div></div></div></section>
 <section class="card" id="result-card"><div class="section">Результат</div><div class="main-result"><div class="label">Орієнтовний діапазон за вибраними зареєстрованими оцінками</div><div class="big" id="total">—</div><div class="usdline" id="totalUsd">—</div><div class="range" id="range">—</div><div class="usdline" id="rangeUsd">—</div><div id="reliability" class="reliability rel-low" style="display:none">—</div></div><div class="methods"><div class="method primary"><div class="m1">Зважена</div><div class="m2" id="weighted">—</div></div><div class="method"><div class="m1">Середня</div><div class="m2" id="simple">—</div></div><div class="method"><div class="m1">Медіана</div><div class="m2" id="median">—</div></div></div><div id="details" class="notice" style="display:none"></div></section>
 <section class="card" id="sampleCard" style="display:none">
   <div class="section">Структура використаної вибірки</div>
@@ -75,7 +75,7 @@
   <div class="top-note">Таблиця показує записи з найвищим балом схожості серед вибраних зареєстрованих оцінок. ЄДРПОУ не відображається.</div>
 </section>
 <section class="card"><div class="controls"><div><div class="section" style="margin-bottom:4px">Зареєстровані оцінки</div><div class="hint">Число в кружечку — бал близькості до заданих параметрів, не номер об’єкта.</div></div><input class="search" id="search" placeholder="Пошук по адресі" oninput="renderList()"></div><div class="analog-list" id="list" style="margin-top:12px"><div class="empty">Завантаження бази...</div></div></section>
-<div class="footer">Довідкова інформація. Не є звітом про оцінку майна. Зареєстровані оцінки ФДМУ не є офіційними аналогами для звіту без окремого аналізу оцінювачем. Використовується чиста база міста Житомир: Богунський, Корольовський та записи без району; службові реквізити не відображаються.<br><b>ТОВ «ЕКСПЕРТНА ДУМКА» · Оцінка майна · 097 921 37 72</b><br>Версія сайту: 2.6</div>
+<div class="footer">Довідкова інформація. Не є звітом про оцінку майна. Зареєстровані оцінки ФДМУ не є офіційними аналогами для звіту без окремого аналізу оцінювачем. Використовується чиста база міста Житомир: Богунський, Корольовський та записи без району; службові реквізити не відображаються.<br><b>ТОВ «ЕКСПЕРТНА ДУМКА» · Оцінка майна · 097 921 37 72</b><br>Версія сайту: 2.7</div>
 </main>
 <div id="toast" class="toast"></div>
 <script>
@@ -280,7 +280,7 @@ async function importExcelFile(ev){
       'ЄДРПОУ':ex.edrpou
     });
   }
-  IMPORTED_JSON={records, count:records.length, updated:new Date().toISOString().slice(0,10), source:'ФДМУ evaluation.spfu.gov.ua', version:'2.5'};
+  IMPORTED_JSON={records, count:records.length, updated:new Date().toISOString().slice(0,10), source:'ФДМУ evaluation.spfu.gov.ua', version:'2.7'};
   const dorms=records.filter(isDormRec).length;
   document.getElementById('imp-total').textContent=records.length;
   document.getElementById('imp-apts').textContent=records.length-dorms;
@@ -298,7 +298,7 @@ function downloadImportedJson(){
   setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 
-const APP_VERSION='2.6';
+const APP_VERSION='2.7';
 const USD_RATE=41.5; // довідковий курс для відображення USD
 let DATA=[], CAND=[], SELECTED=new Set(), TARGET=null;
 const allowed = new Set(['Богунський','Корольовський','Житомир (без району)']);
@@ -388,7 +388,68 @@ function renderSampleSummary(arr){
   document.getElementById('topAnalogTable').innerHTML=`<thead><tr><th>№</th><th>Бал</th><th>Адреса</th><th>Площа</th><th>Поверх</th><th>Рік</th><th>Вартість</th><th>грн/м²</th><th>Виконавець</th></tr></thead><tbody>${rows}</tbody>`;
 }
 
-function recalcSelected(){const t=TARGET||target(); const arr=CAND.filter(r=>SELECTED.has(r._id)); renderStats(); const rel=document.getElementById('reliability'); if(!t.area){document.getElementById('total').textContent='—';document.getElementById('totalUsd').textContent='';document.getElementById('range').textContent='Введіть загальну площу об’єкта';document.getElementById('rangeUsd').textContent=''; if(rel) rel.style.display='none'; ['weighted','simple','median'].forEach(id=>document.getElementById(id).textContent='—');document.getElementById('details').style.display='none'; const sc=document.getElementById('sampleCard'); if(sc) sc.style.display='none'; return} if(!arr.length){document.getElementById('total').textContent='—';document.getElementById('totalUsd').textContent='';document.getElementById('range').textContent='Не вибрано жодного аналога';document.getElementById('rangeUsd').textContent=''; if(rel) rel.style.display='none'; ['weighted','simple','median'].forEach(id=>document.getElementById(id).textContent='—');document.getElementById('details').style.display='none'; const sc=document.getElementById('sampleCard'); if(sc) sc.style.display='none'; return} let floorAdj=1, floorNote='без коригування'; if(t.floor===1){floorAdj=.93; floorNote='1-й поверх −7%'} else if(t.totalFloors&&t.floor===t.totalFloors){floorAdj=.95; floorNote='останній поверх −5%'} const wsum=arr.reduce((s,r)=>s+r._s,0); const wppm=arr.reduce((s,r)=>s+r._s*(+r['цкв']),0)/wsum*floorAdj; const sppm=arr.reduce((s,r)=>s+(+r['цкв']),0)/arr.length*floorAdj; const mppm=median(arr.map(r=>+r['цкв']))*floorAdj; const total=wppm*t.area; document.getElementById('total').textContent=fmt(total)+' грн'; document.getElementById('totalUsd').textContent='≈ '+fmtUsd(total/USD_RATE)+' · довідково'; document.getElementById('range').textContent='Діапазон ±10%: '+fmt(total*.9)+' — '+fmt(total*1.1)+' грн'; document.getElementById('rangeUsd').textContent='≈ '+fmtUsd(total*.9/USD_RATE)+' — '+fmtUsd(total*1.1/USD_RATE); document.getElementById('weighted').textContent=fmt(total)+' грн'; document.getElementById('simple').textContent=fmt(sppm*t.area)+' грн'; document.getElementById('median').textContent=fmt(mppm*t.area)+' грн'; const avg=Math.round(arr.reduce((s,r)=>s+r._s,0)/arr.length); const rr=reliabilityText(arr.length); if(rel){rel.style.display='inline-flex'; rel.className='reliability '+rr[1]; rel.textContent=rr[0]+' · '+arr.length+' записів'} const d=document.getElementById('details'); d.style.display='block'; const execCount=new Set(arr.map(r=>getExecutor(r)).filter(x=>x&&x!=='не вказано в поточній базі')).size; d.textContent=`Використано ${arr.length} зареєстрованих оцінок. Знайдено у пулі: ${CAND.length}. Виконавців у вибірці: ${execCount||'—'}. Період оцінок: ${selectedPeriod(arr)}. Середній бал схожості: ${avg}/100. Коригування: ${floorNote}.`; renderSampleSummary(arr)}
+function trimByPpm(arr){
+  const sorted=[...arr].sort((a,b)=>(+a['цкв']||0)-(+b['цкв']||0));
+  if(sorted.length<10) return {used:sorted, low:0, high:0};
+  const cut=Math.floor(sorted.length*0.10);
+  return {used:sorted.slice(cut, sorted.length-cut), low:cut, high:cut};
+}
+function avgPpm(arr){const p=arr.map(r=>+r['цкв']||0).filter(Boolean); return p.length?p.reduce((a,b)=>a+b,0)/p.length:0;}
+
+function recalcSelected(){
+  const t=TARGET||target();
+  const rawArr=CAND.filter(r=>SELECTED.has(r._id));
+  renderStats();
+  const rel=document.getElementById('reliability');
+  if(!t.area){
+    document.getElementById('total').textContent='—';
+    document.getElementById('totalUsd').textContent='';
+    document.getElementById('range').textContent='Введіть загальну площу об’єкта';
+    document.getElementById('rangeUsd').textContent='';
+    if(rel) rel.style.display='none';
+    ['weighted','simple','median'].forEach(id=>document.getElementById(id).textContent='—');
+    document.getElementById('details').style.display='none';
+    const sc=document.getElementById('sampleCard'); if(sc) sc.style.display='none';
+    return;
+  }
+  if(!rawArr.length){
+    document.getElementById('total').textContent='—';
+    document.getElementById('totalUsd').textContent='';
+    document.getElementById('range').textContent='Не вибрано жодного аналога';
+    document.getElementById('rangeUsd').textContent='';
+    if(rel) rel.style.display='none';
+    ['weighted','simple','median'].forEach(id=>document.getElementById(id).textContent='—');
+    document.getElementById('details').style.display='none';
+    const sc=document.getElementById('sampleCard'); if(sc) sc.style.display='none';
+    return;
+  }
+  const trimmed=trimByPpm(rawArr);
+  const arr=trimmed.used;
+  let floorAdj=1, floorNote='без коригування';
+  if(t.floor===1){floorAdj=.93; floorNote='1-й поверх −7%'}
+  else if(t.totalFloors&&t.floor===t.totalFloors){floorAdj=.95; floorNote='останній поверх −5%'}
+  const wsum=arr.reduce((s,r)=>s+(+r._s||1),0);
+  const wppm=arr.reduce((s,r)=>s+(+r._s||1)*(+r['цкв']||0),0)/wsum*floorAdj;
+  const sppm=avgPpm(arr)*floorAdj;
+  const mppm=median(arr.map(r=>+r['цкв']||0))*floorAdj;
+  const total=wppm*t.area;
+  document.getElementById('total').textContent=fmt(total)+' грн';
+  document.getElementById('totalUsd').textContent='≈ '+fmtUsd(total/USD_RATE)+' · довідково';
+  document.getElementById('range').textContent='Діапазон ±10%: '+fmt(total*.9)+' — '+fmt(total*1.1)+' грн';
+  document.getElementById('rangeUsd').textContent='≈ '+fmtUsd(total*.9/USD_RATE)+' — '+fmtUsd(total*1.1/USD_RATE);
+  document.getElementById('weighted').textContent=fmt(total)+' грн';
+  document.getElementById('simple').textContent=fmt(sppm*t.area)+' грн';
+  document.getElementById('median').textContent=fmt(mppm*t.area)+' грн';
+  const avg=Math.round(arr.reduce((s,r)=>s+(+r._s||0),0)/arr.length);
+  const rr=reliabilityText(arr.length);
+  if(rel){rel.style.display='inline-flex'; rel.className='reliability '+rr[1]; rel.textContent=rr[0]+' · '+arr.length+' використано'}
+  const d=document.getElementById('details');
+  d.style.display='block';
+  const execCount=new Set(arr.map(r=>getExecutor(r)).filter(x=>x&&x!=='не вказано в поточній базі')).size;
+  const trimText=trimmed.low||trimmed.high ? ` Під час розрахунку відсічено крайні значення грн/м²: нижні ${trimmed.low} і верхні ${trimmed.high}.` : ' Крайні значення не відсікались: вибірка менша 10 записів.';
+  d.textContent=`Знайдено у пулі: ${CAND.length}. Вибрано: ${rawArr.length}. Використано після очищення: ${arr.length}. Виконавців у вибірці: ${execCount||'—'}. Період оцінок: ${selectedPeriod(arr)}. Середній бал схожості: ${avg}/100. Коригування: ${floorNote}.${trimText}`;
+  renderSampleSummary(arr);
+}
 ['objectType','district','rooms','area','year','floor','totalFloors'].forEach(id=>document.addEventListener('input',e=>{if(e.target.id===id)runAuto()}));
 loadData();
 </script>
