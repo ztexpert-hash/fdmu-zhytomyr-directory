@@ -1,5 +1,22 @@
-const CACHE = 'fdmu-zhytomyr-v2_7-1';
-const FILES = ['./index.html', './manifest.json', './calc_data.json', './logo.jpg', './icon-192.png', './icon-512.png'];
-self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES))); self.skipWaiting(); });
-self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))); self.clients.claim(); });
-self.addEventListener('fetch', e => { e.respondWith(fetch(e.request).then(r => { if(r && r.status === 200){ const clone=r.clone(); caches.open(CACHE).then(c=>c.put(e.request,clone)); } return r; }).catch(()=>caches.match(e.request))); });
+const CACHE = 'fdmu-zhytomyr-v2_8-cache';
+const STATIC_FILES = ['./manifest.json','./logo.jpg','./icon-192.png','./icon-512.png'];
+self.addEventListener('install', event => {
+  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(STATIC_FILES)));
+  self.skipWaiting();
+});
+self.addEventListener('activate', event => {
+  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))));
+  self.clients.claim();
+});
+self.addEventListener('fetch', event => {
+  const url = new URL(event.request.url);
+  const isData = url.pathname.endsWith('/calc_data.json') || url.pathname.endsWith('/index.html') || url.pathname.endsWith('/README.txt') || url.pathname.endsWith('/sw.js') || url.pathname.endsWith('/');
+  if (isData) {
+    event.respondWith(fetch(event.request, {cache:'reload'}).catch(() => caches.match(event.request)));
+    return;
+  }
+  event.respondWith(caches.match(event.request).then(cached => cached || fetch(event.request).then(resp => {
+    if(resp && resp.status === 200) { const clone = resp.clone(); caches.open(CACHE).then(cache => cache.put(event.request, clone)); }
+    return resp;
+  })));
+});
