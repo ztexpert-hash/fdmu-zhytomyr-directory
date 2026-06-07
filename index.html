@@ -72,7 +72,7 @@ body:not(.locked) #authScreen{display:none!important}
       <button class="update-btn" onclick="refreshApp()">🔄 Оновити</button>
       <button class="update-btn admin-only" onclick="openImport()">📂 Імпорт Excel ФДМУ</button>
       <input id="excelImport" type="file" accept=".xlsx,.xls" style="display:none" onchange="importExcelFile(event)">
-      <span class="version-pill" id="versionTop">v8.0-beta</span><span class="user-pill" id="authUserPill">—</span><button class="client-btn" onclick="authLogout()">Вийти</button>
+      <span class="version-pill" id="versionTop">v8.1-beta</span><span class="user-pill" id="authUserPill">—</span><button class="client-btn" onclick="authLogout()">Вийти</button>
       <button class="client-btn" onclick="generatePdfReference()">📄 PDF-довідка</button>
       <button class="client-btn" onclick="copyClientText()">📋 Текст клієнту</button>
       <button id="installBtn" class="client-btn" onclick="installApp()">📲 Встановити додаток</button><a class="client-btn call-btn" href="tel:+380979213772">📞 Замовити оцінку</a>
@@ -152,7 +152,7 @@ body:not(.locked) #authScreen{display:none!important}
   <div class="analytics-note">Аналітика виконавців побудована на архівній базі з 01.01.2022, а калькулятор працює по робочій базі за останні 12 місяців. Показники є довідковими: медіана грн/м², кількість зареєстрованих оцінок і період реєстрації.</div>
 </section>
 <section class="card collapsed-section" id="recordsCard"><div class="controls"><div><div class="section" style="margin-bottom:4px">Зареєстровані оцінки</div><div class="hint">Число в кружечку — бал близькості до заданих параметрів, не номер об’єкта.</div></div><input class="search" id="search" placeholder="Пошук по адресі" oninput="renderList()"></div><div class="analog-list" id="list" style="margin-top:12px"><div class="empty">Завантаження бази...</div></div></section>
-<div class="footer">Довідкова інформація. Не є звітом про оцінку майна. Зареєстровані оцінки ФДМУ не є офіційними аналогами для звіту без окремого аналізу оцінювачем. Використовується чиста база міста Житомир: Богунський, Корольовський та записи без району; службові реквізити не відображаються.<br><b>ТОВ «ЕКСПЕРТНА ДУМКА» · Оцінка майна · 097 921 37 72</b><br>Версія сайту: 8.0-beta · довіра A/B/C · IQR · Оліївка 2018+</div>
+<div class="footer">Довідкова інформація. Не є звітом про оцінку майна. Зареєстровані оцінки ФДМУ мають довідковий характер і не є автоматично придатним джерелом для звіту без окремого аналізу оцінювачем. Використовується база: Житомир + Оліївка новобудови 2018+; службові реквізити не відображаються.<br><b>ТОВ «ЕКСПЕРТНА ДУМКА» · Оцінка майна · 097 921 37 72</b><br>Версія сайту: 8.1-beta · довіра A/B/C · IQR · Оліївка 2018+</div>
 </main>
 <div id="toast" class="toast"></div>
 <script>
@@ -340,11 +340,11 @@ body:not(.locked) #authScreen{display:none!important}
 <div class="page"><div class="actions"><button class="printbtn" onclick="window.print()">Зберегти / друк PDF</button></div>
   <div class="head"><img class="logoimg" src="logo.jpg"><div class="brand"><h1>ТОВ «ЕКСПЕРТНА ДУМКА»</h1><div class="sub">Оцінка майна · Житомир · тел. 097 921 37 72</div><div class="company">Довідник зареєстрованих оцінок ФДМУ — Житомир</div></div></div>
   <div class="title">Довідка про орієнтовний рівень зареєстрованих вартостей</div>
-  <div class="note">Ця довідка сформована для попереднього інформування клієнта на підставі вже зареєстрованих оцінок у базі ФДМУ. Документ не є звітом про оцінку майна та не є джерелом автоматично придатними джерелами для звіту без окремого аналізу оцінювачем.</div>
+  <div class="note">Ця довідка сформована для попереднього інформування клієнта на підставі вже зареєстрованих оцінок у базі ФДМУ. Документ не є звітом про оцінку майна та не є автоматично придатним джерелом для звіту без окремого аналізу оцінювачем.</div>
   <div class="grid"><div class="card"><div class="label">Тип об’єкта</div><div class="value">${obj.type}</div></div><div class="card"><div class="label">Район</div><div class="value">${obj.district}</div></div><div class="card"><div class="label">Кімнатність / площа</div><div class="value">${obj.rooms} · ${obj.area}</div></div><div class="card"><div class="label">Рік / поверх</div><div class="value">${obj.year} · пов. ${obj.floor}</div></div></div>
   <div class="bigbox"><div class="label">Орієнтовний результат за вибіркою</div><div class="main">${total}</div><div class="range">≈ ${fmtUsd(numFromText(total)/USD_RATE)} · довідково</div><div class="range">${range}</div></div>
   <div class="stats"><div class="stat"><div class="l">Використано оцінок</div><div class="v">${selected.length}</div></div><div class="stat"><div class="l">Середня грн/м²</div><div class="v">${fmt(avgPpm)}</div></div><div class="stat"><div class="l">Медіана грн/м²</div><div class="v">${fmt(medPpm)}</div></div><div class="stat"><div class="l">Діапазон грн/м²</div><div class="v">${fmt(minPpm)}–${fmt(maxPpm)}</div></div></div>
-  <div class="note"><b>База:</b> ФДМУ, місто Житомир. У таблиці наведена дата реєстрації оцінки. Оновлення бази: ${updated}. Дата формування довідки: ${today}. Версія сайту: ${APP_VERSION}.</div>
+  <div class="note"><b>База:</b> ФДМУ, Житомир + Оліївка новобудови 2018+. У таблиці наведена дата реєстрації оцінки. Оновлення бази: ${updated}. Дата формування довідки: ${today}. Версія сайту: ${APP_VERSION}.</div>
   <h3>Фрагмент використаної вибірки</h3><table><thead><tr><th style="width:4%">№</th><th style="width:16%">Адреса</th><th style="width:7%">Площа</th><th style="width:7%">Поверх</th><th style="width:7%">Рік</th><th style="width:10%">Дата реєстрації оцінки</th><th style="width:9%">грн/м²</th><th style="width:11%">Вартість об’єкта</th><th style="width:5%">Бал</th><th style="width:24%">Виконавець оцінки</th></tr></thead><tbody>${rows||'<tr><td colspan="10">Вибірка не сформована</td></tr>'}</tbody></table>${execBlock}
   <div class="foot">Інформація має довідковий характер. Зареєстровані оцінки ФДМУ використовуються лише для загального розуміння рівня вартостей, які вже реєструвалися у Єдиній базі. Остаточний результат визначається лише після проведення повної оцінки майна сертифікованим оцінювачем.</div>
   <div class="sign">ТОВ «ЕКСПЕРТНА ДУМКА»<br>Оцінка майна<br>тел. 097 921 37 72</div>
@@ -433,7 +433,8 @@ async function importExcelFile(ev){
   for(const row of rows){
     if(colStatus && String(row[colStatus]).trim() && String(row[colStatus]).toUpperCase()!=='ЗАРЕЄСТРОВАНО') continue;
     const yearVal=parseFloor(row[colYear]);
-    const district=normDistrictByTown(row[colTown], yearVal, addr);
+    const streetForDistrict=(normalizeText(row[colStreetType])+' '+normalizeText(row[colStreet])).trim();
+    const district=normDistrictByTown(row[colTown], yearVal, streetForDistrict);
     if(!district) continue;
     const street=(normalizeText(row[colStreetType])+' '+normalizeText(row[colStreet])).trim() || normalizeText(row[colStreet]);
     const address=street.replace(/\s+/g,' ').trim();
@@ -529,14 +530,14 @@ async function authLogin(){
   sessionStorage.setItem('fdmu_auth_user',JSON.stringify({name:u.name,login:u.login,role:u.role,expires:u.expires}));
   if(err) err.style.display='none';
   authApply();
-  if(!DATA || !DATA.length) if(authApply()) loadData();
+  if((typeof DATA==='undefined') || !DATA || !DATA.length) if(authApply()) loadData();
 }
 function authLogout(){
   sessionStorage.removeItem('fdmu_auth_user');
   location.reload();
 }
 
-const APP_VERSION='8.0-beta';
+const APP_VERSION='8.1-beta';
 const USD_RATE=41.5; // довідковий курс для відображення USD
 let DATA=[], CAND=[], SELECTED=new Set(), TARGET=null, ARCHIVE_ANALYTICS=null;
 const allowed = new Set(['Богунський','Корольовський','Житомир (без району)','Оліївка новобудови']);
@@ -546,7 +547,7 @@ function fmtUsd(n){return '$'+Math.round(n).toLocaleString('uk-UA').replace(/\u0
 function numFromText(t){return +String(t||'').replace(/[^0-9]/g,'')||0}
 function reliabilityText(n){if(n>=20)return ['Висока надійність вибірки', 'rel-high']; if(n>=8)return ['Середня надійність вибірки', 'rel-mid']; return ['Низька надійність вибірки', 'rel-low'];}
 function err(t){const e=document.getElementById('err'); e.style.display=t?'block':'none'; e.textContent=t||''}
-async function loadData(){try{const r=await fetch('calc_data.json?v='+APP_VERSION+'&t='+Date.now(),{cache:'reload'}); if(!r.ok) throw new Error('HTTP '+r.status); const d=await r.json(); DATA=(d.records||[]).filter(validCity); ARCHIVE_ANALYTICS=d.archive_analytics||null; if(d.version && d.version!==APP_VERSION){console.warn('Версія бази не збігається', d.version, APP_VERSION);} const dorms=DATA.filter(isDormRec).length; document.getElementById('st-version').textContent=APP_VERSION; document.getElementById('versionTop').textContent='v'+APP_VERSION; document.getElementById('st-count').textContent=DATA.length; document.getElementById('st-apts').textContent=DATA.length-dorms; document.getElementById('st-dorms').textContent=dorms; document.getElementById('st-updated').textContent=d.updated||'—'; if(document.getElementById('st-raw-city')) document.getElementById('st-raw-city').textContent=fmt(DATA_OBJ.count || ((DATA_OBJ.stats?.apartments||0)+(DATA_OBJ.stats?.dorms||0))); if(document.getElementById('st-before-dup')) document.getElementById('st-before-dup').textContent=d.eligible_city_count_before_duplicates||'—'; if(document.getElementById('st-excluded')) document.getElementById('st-excluded').textContent=(d.raw_city_count&&d.eligible_city_count_before_duplicates)?(d.raw_city_count-d.eligible_city_count_before_duplicates):'—'; if(document.getElementById('st-noncity-removed')) document.getElementById('st-noncity-removed').textContent=d.non_city_address_removed??'—'; if(document.getElementById('st-dup')) document.getElementById('st-dup').textContent=d.duplicates_removed??'—'; if(document.getElementById('st-exec')) document.getElementById('st-exec').textContent=(d.stats&&d.stats.executors)||'—'; if(document.getElementById('st-medppm')) document.getElementById('st-medppm').textContent=d.stats&&d.stats.median_ppm?fmt(d.stats.median_ppm):'—'; renderAnalytics(); ensureExecutorSearchBlock(); renderExecutorProfile(false); runAuto();}catch(ex){err('Не вдалося завантажити calc_data.json: '+ex.message+'. Запустіть через локальний сервер або GitHub Pages.')}}
+async function loadData(){try{const r=await fetch('calc_data.json?v='+APP_VERSION+'&t='+Date.now(),{cache:'reload'}); if(!r.ok) throw new Error('HTTP '+r.status); const d=await r.json(); DATA=(d.records||[]).filter(validCity); ARCHIVE_ANALYTICS=d.archive_analytics||null; if(d.version && d.version!==APP_VERSION){console.warn('Версія бази не збігається', d.version, APP_VERSION);} const dorms=DATA.filter(isDormRec).length; document.getElementById('st-version').textContent=APP_VERSION; document.getElementById('versionTop').textContent='v'+APP_VERSION; document.getElementById('st-count').textContent=DATA.length; document.getElementById('st-apts').textContent=DATA.length-dorms; document.getElementById('st-dorms').textContent=dorms; document.getElementById('st-updated').textContent=d.updated||'—'; if(document.getElementById('st-raw-city')) document.getElementById('st-raw-city').textContent=fmt(d.count || DATA.length); if(document.getElementById('st-before-dup')) document.getElementById('st-before-dup').textContent=d.eligible_city_count_before_duplicates||'—'; if(document.getElementById('st-excluded')) document.getElementById('st-excluded').textContent=(d.raw_city_count&&d.eligible_city_count_before_duplicates)?(d.raw_city_count-d.eligible_city_count_before_duplicates):'—'; if(document.getElementById('st-noncity-removed')) document.getElementById('st-noncity-removed').textContent=d.non_city_address_removed??'—'; if(document.getElementById('st-dup')) document.getElementById('st-dup').textContent=d.duplicates_removed??'—'; if(document.getElementById('st-exec')) document.getElementById('st-exec').textContent=(d.stats&&d.stats.executors)||'—'; if(document.getElementById('st-medppm')) document.getElementById('st-medppm').textContent=d.stats&&d.stats.median_ppm?fmt(d.stats.median_ppm):'—'; if(document.getElementById('st-oliivka')) document.getElementById('st-oliivka').textContent=d.stats&&d.stats.districts?((d.stats.districts['Оліївка новобудови'])||0):'—'; renderAnalytics(); ensureExecutorSearchBlock(); renderExecutorProfile(false); runAuto();}catch(ex){err('Не вдалося завантажити calc_data.json: '+ex.message+'. Запустіть через локальний сервер або GitHub Pages.')}}
 function normalizeAddressForCompare(v){
   let s=String(v||'').toUpperCase();
   // Нормалізація без \b, бо межі слова нестабільно працюють з кирилицею в різних браузерах.
