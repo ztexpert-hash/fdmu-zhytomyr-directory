@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-ФДМУ Житомир — Auto Update v7.8-beta
+ФДМУ Житомир — Auto Update v8.0-beta
 Архів з 01.01.2022 + робоча база останні 12 місяців + аналітика виконавців.
 """
 from __future__ import annotations
@@ -17,7 +17,7 @@ except Exception:
     print('ПОМИЛКА: потрібен pandas. Встановіть: pip install pandas openpyxl')
     raise
 
-APP_VERSION = '7.8-beta'
+APP_VERSION = '8.0-beta'
 START_DATE = date(2022, 1, 1)
 WORKING_DAYS = 365
 SPFU_PAGE = 'https://www.spfu.gov.ua/ua/content/spf-estimate-basereport-dani-z-edinoi-bazi.html'
@@ -53,7 +53,7 @@ def write_json(path, obj):
 
 
 def fetch_text(url):
-    req = Request(url, headers={'User-Agent': 'Mozilla/5.0 FDMU-Zhytomyr-Updater/7.8-beta'})
+    req = Request(url, headers={'User-Agent': 'Mozilla/5.0 FDMU-Zhytomyr-Updater/8.0-beta'})
     with urlopen(req, timeout=90) as r:
         raw = r.read()
     for enc in ('utf-8', 'windows-1251', 'cp1251'):
@@ -106,7 +106,7 @@ def link_is_from_2022_or_newer(url):
 def download_file(url, dst):
     dst = Path(dst)
     dst.parent.mkdir(parents=True, exist_ok=True)
-    req = Request(url, headers={'User-Agent': 'Mozilla/5.0 FDMU-Zhytomyr-Updater/7.8-beta'})
+    req = Request(url, headers={'User-Agent': 'Mozilla/5.0 FDMU-Zhytomyr-Updater/8.0-beta'})
     with urlopen(req, timeout=240) as r, open(dst, 'wb') as f:
         shutil.copyfileobj(r, f)
     return dst
@@ -160,17 +160,37 @@ def norm_status(v):
     return re.sub(r'\s+', ' ', str(v or '').strip().upper())
 
 
-def is_oliivka_town(town):
-    t = re.sub(r'\s+', ' ', str(town or '').strip().upper())
-    return any(x in t for x in ['ОЛІЇВК', 'ОЛИЕВК', 'ОЛІЕВК'])
 
-def norm_district(town, year=None):
-    t = re.sub(r'\s+', ' ', str(town or '').strip().upper())
+def join_row_text(row, columns=None):
+    """Об'єднує текстові поля рядка ФДМУ для пошуку Оліївки у різних колонках."""
+    try:
+        if columns:
+            vals = [row.get(c, '') for c in columns if c in row.index]
+        else:
+            vals = list(row.values)
+        return ' '.join(str(v) for v in vals if str(v).strip())
+    except Exception:
+        return ''
+
+def contains_oliivka_text(text):
+    t = re.sub(r'\s+', ' ', str(text or '').strip().upper())
+    return any(x in t for x in [
+        'ОЛІЇВК', 'ОЛИЕВК', 'ОЛІЕВК',
+        'ОЛIЇВК', 'ОЛIЕВК',
+        'OLIIV', 'OLIYIV'
+    ])
+
+def is_oliivka_town(town):
+    return contains_oliivka_text(town)
+
+def norm_district(town, year=None, row_text=''):
+    combined = (str(town or '') + ' ' + str(row_text or ''))
+    t = re.sub(r'\s+', ' ', combined.strip().upper())
     if 'БОГУНСЬК' in t:
         return 'Богунський'
     if 'КОРОЛЬОВСЬК' in t or 'КОРОЛЕВ' in t:
         return 'Корольовський'
-    if is_oliivka_town(town):
+    if contains_oliivka_text(t):
         return 'Оліївка новобудови' if year and int(year) >= OLIIVKA_MIN_YEAR else None
     if 'ЖИТОМИРСЬК' in t and 'РАЙОН' in t:
         return None
@@ -306,7 +326,8 @@ def extract_records(df):
             continue
         region_count += 1
         year = parse_int(row.get(col_year, '')) if col_year else None
-        district = norm_district(row.get(col_town, ''), year)
+        row_text = join_row_text(row)
+        district = norm_district(row.get(col_town, ''), year, row_text)
         if not district:
             continue
         raw_city_count += 1
@@ -366,6 +387,19 @@ def detect_new_fields(cols):
     return {'new_columns': new_cols, 'priority_columns': priority, 'previous_count': len(old_cols), 'current_count': len(cols)}
 
 
+def percentile_sorted(vals, p):
+    vals = sorted([float(v) for v in vals if v is not None])
+    if not vals:
+        return 0
+    if len(vals) == 1:
+        return round(vals[0])
+    idx = (len(vals) - 1) * p
+    lo = int(idx)
+    hi = min(lo + 1, len(vals) - 1)
+    if lo == hi:
+        return round(vals[lo])
+    return round(vals[lo] + (vals[hi] - vals[lo]) * (idx - lo))
+
 def median(vals):
     vals = sorted([float(v) for v in vals if v is not None])
     if not vals:
@@ -395,6 +429,11 @@ def compute_stats(records):
         'executors': len(ex),
         'avg_ppm': round(sum(ppms) / len(ppms)) if ppms else 0,
         'median_ppm': median(ppms),
+        'q1_ppm': percentile_sorted(ppms, 0.25),
+        'q3_ppm': percentile_sorted(ppms, 0.75),
+        'iqr_ppm': [percentile_sorted(ppms, 0.25), percentile_sorted(ppms, 0.75)],
+        'city_total': len(records),
+        'oliivka_count': districts.get('Оліївка новобудови', 0),
         'unique_normalized_addresses': len(set(r.get('ад_норм', '') for r in records)),
         'date_period': (min(dates).strftime('%d.%m.%Y') + ' – ' + max(dates).strftime('%d.%m.%Y')) if dates else '—',
         'min_date': min(dates).isoformat() if dates else '',
@@ -465,6 +504,11 @@ def build_executors_analytics(records):
             'years': e['years'],
             'months': e['months'],
             'median_ppm': median(ppms),
+        'q1_ppm': percentile_sorted(ppms, 0.25),
+        'q3_ppm': percentile_sorted(ppms, 0.75),
+        'iqr_ppm': [percentile_sorted(ppms, 0.25), percentile_sorted(ppms, 0.75)],
+        'city_total': len(records),
+        'oliivka_count': districts.get('Оліївка новобудови', 0),
             'avg_ppm': round(sum(ppms) / len(ppms)) if ppms else 0,
         })
     performers.sort(key=lambda x: (-x['count'], x['name']))
@@ -641,11 +685,11 @@ def update_site_files(archive, calc):
         html = re.sub(r"const APP_VERSION='[^']+'", f"const APP_VERSION='{APP_VERSION}'", html)
         html = re.sub(r'id="versionTop">v[^<]+<', f'id="versionTop">v{APP_VERSION}<', html)
         html = re.sub(r'id="st-version">[^<]+<', f'id="st-version">{APP_VERSION}<', html)
-        html = re.sub(r'Версія сайту: [0-9.]+[^<]*', 'Версія сайту: 7.8-beta · Оліївка 2018+ · тестовий іменний доступ', html)
+        html = re.sub(r'Версія сайту: [0-9.]+[^<]*', 'Версія сайту: 8.0-beta · довіра A/B/C · IQR · Оліївка 2018+', html)
         INDEX.write_text(html, encoding='utf-8')
     if SW.exists():
         sw = SW.read_text(encoding='utf-8')
-        sw = re.sub(r"fdmu-zhytomyr-v[0-9_]+-cache", 'fdmu-zhytomyr-v7_8_beta-cache', sw)
+        sw = re.sub(r"fdmu-zhytomyr-v[0-9_]+-cache", 'fdmu-zhytomyr-v8_0_beta-cache', sw)
         SW.write_text(sw, encoding='utf-8')
 
 
