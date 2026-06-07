@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-ФДМУ Житомир — Auto Update v7.7-beta
+ФДМУ Житомир — Auto Update v7.8-beta
 Архів з 01.01.2022 + робоча база останні 12 місяців + аналітика виконавців.
 """
 from __future__ import annotations
@@ -17,13 +17,14 @@ except Exception:
     print('ПОМИЛКА: потрібен pandas. Встановіть: pip install pandas openpyxl')
     raise
 
-APP_VERSION = '7.7-beta'
+APP_VERSION = '7.8-beta'
 START_DATE = date(2022, 1, 1)
 WORKING_DAYS = 365
 SPFU_PAGE = 'https://www.spfu.gov.ua/ua/content/spf-estimate-basereport-dani-z-edinoi-bazi.html'
 TARGET_PREFIX = 'Obekty_Zhytlovoi_neruxomosti'
 ACCEPTED_STATUSES = {'ЗАРЕЄСТРОВАНО', 'ПЕРЕВІРЕНО'}
-CITY_DISTRICTS = {'Богунський', 'Корольовський', 'Житомир (без району)'}
+CITY_DISTRICTS = {'Богунський', 'Корольовський', 'Житомир (без району)', 'Оліївка новобудови'}
+OLIIVKA_MIN_YEAR = 2018
 BAD_ADDRESS_TOKENS = ['БЕРДИЧ','НОВОГРАД','ЗВЯГ','КОРОСТ','МАЛИН','ОВРУЧ','ЧУДНІВ','АНДРУШ','РАДОМИШЛ']
 PRIORITY_FIELD_PATTERNS = ['матеріал','стін','стіни','тип буд','клас','стан','ремонт','ліфт','балкон','лодж','опал','перекрит','паркінг','гараж','поверховість','серія','новобуд','комунікац','санвуз','газ','вода']
 
@@ -52,7 +53,7 @@ def write_json(path, obj):
 
 
 def fetch_text(url):
-    req = Request(url, headers={'User-Agent': 'Mozilla/5.0 FDMU-Zhytomyr-Updater/7.7-beta'})
+    req = Request(url, headers={'User-Agent': 'Mozilla/5.0 FDMU-Zhytomyr-Updater/7.8-beta'})
     with urlopen(req, timeout=90) as r:
         raw = r.read()
     for enc in ('utf-8', 'windows-1251', 'cp1251'):
@@ -105,7 +106,7 @@ def link_is_from_2022_or_newer(url):
 def download_file(url, dst):
     dst = Path(dst)
     dst.parent.mkdir(parents=True, exist_ok=True)
-    req = Request(url, headers={'User-Agent': 'Mozilla/5.0 FDMU-Zhytomyr-Updater/7.7-beta'})
+    req = Request(url, headers={'User-Agent': 'Mozilla/5.0 FDMU-Zhytomyr-Updater/7.8-beta'})
     with urlopen(req, timeout=240) as r, open(dst, 'wb') as f:
         shutil.copyfileobj(r, f)
     return dst
@@ -159,12 +160,18 @@ def norm_status(v):
     return re.sub(r'\s+', ' ', str(v or '').strip().upper())
 
 
-def norm_district(town):
+def is_oliivka_town(town):
+    t = re.sub(r'\s+', ' ', str(town or '').strip().upper())
+    return any(x in t for x in ['ОЛІЇВК', 'ОЛИЕВК', 'ОЛІЕВК'])
+
+def norm_district(town, year=None):
     t = re.sub(r'\s+', ' ', str(town or '').strip().upper())
     if 'БОГУНСЬК' in t:
         return 'Богунський'
     if 'КОРОЛЬОВСЬК' in t or 'КОРОЛЕВ' in t:
         return 'Корольовський'
+    if is_oliivka_town(town):
+        return 'Оліївка новобудови' if year and int(year) >= OLIIVKA_MIN_YEAR else None
     if 'ЖИТОМИРСЬК' in t and 'РАЙОН' in t:
         return None
     if re.search(r'(^|\b)(М\.?\s*)?ЖИТОМИР(\b|$)', t):
@@ -298,7 +305,8 @@ def extract_records(df):
         if 'ЖИТОМИР' not in str(row.get(col_region, '')).upper():
             continue
         region_count += 1
-        district = norm_district(row.get(col_town, ''))
+        year = parse_int(row.get(col_year, '')) if col_year else None
+        district = norm_district(row.get(col_town, ''), year)
         if not district:
             continue
         raw_city_count += 1
@@ -327,7 +335,7 @@ def extract_records(df):
             'пл': round(float(area), 1),
             'пов': parse_int(row.get(col_floor, '')) if col_floor else None,
             'пх': None,
-            'рік': parse_int(row.get(col_year, '')) if col_year else None,
+            'рік': year,
             'цкв': round(float(ppm)),
             'в': round(float(value)),
             'ад': address[:90],
@@ -501,6 +509,9 @@ def clean_and_deduplicate(records):
         if r.get('р') not in CITY_DISTRICTS:
             noncity += 1
             continue
+        if r.get('р') == 'Оліївка новобудови' and (not r.get('рік') or int(r.get('рік')) < OLIIVKA_MIN_YEAR):
+            noncity += 1
+            continue
         if not valid_city_address(r.get('ад', '')):
             noncity += 1
             continue
@@ -554,7 +565,7 @@ def build_calc_from_archive(archive):
         'source_page': SPFU_PAGE,
         'target_file_prefix': TARGET_PREFIX,
         'accepted_statuses': ['Зареєстровано', 'Перевірено'],
-        'city_rule': 'Житомир + Богунський + Корольовський',
+        'city_rule': 'Житомир + Богунський + Корольовський + Оліївка новобудови 2018+',
         'archive_from': START_DATE.isoformat(),
         'working_base': 'останні 12 місяців від найновішої дати в архіві',
         'last_run': datetime.now().isoformat(timespec='seconds'),
@@ -573,8 +584,9 @@ def build_readme(archive, calc):
 Джерело: ФДМУ evaluation.spfu.gov.ua, файл {TARGET_PREFIX}
 
 Правило міста Житомир:
-Місто Житомир = Житомир + Богунський район + Корольовський район.
-Житомирський район не включається.
+Житомир = Житомир + Богунський район + Корольовський район.
+Оліївка включається тільки для квартир у багатоквартирних новобудовах 2018+.
+Житомирський район загалом не включається.
 
 Статуси, які включаються в базу:
 - Зареєстровано
@@ -629,11 +641,11 @@ def update_site_files(archive, calc):
         html = re.sub(r"const APP_VERSION='[^']+'", f"const APP_VERSION='{APP_VERSION}'", html)
         html = re.sub(r'id="versionTop">v[^<]+<', f'id="versionTop">v{APP_VERSION}<', html)
         html = re.sub(r'id="st-version">[^<]+<', f'id="st-version">{APP_VERSION}<', html)
-        html = re.sub(r'Версія сайту: [0-9.]+[^<]*', 'Версія сайту: 7.7-beta · тестовий іменний доступ · згорнуті службові модулі', html)
+        html = re.sub(r'Версія сайту: [0-9.]+[^<]*', 'Версія сайту: 7.8-beta · Оліївка 2018+ · тестовий іменний доступ', html)
         INDEX.write_text(html, encoding='utf-8')
     if SW.exists():
         sw = SW.read_text(encoding='utf-8')
-        sw = re.sub(r"fdmu-zhytomyr-v[0-9_]+-cache", 'fdmu-zhytomyr-v7_7_beta-cache', sw)
+        sw = re.sub(r"fdmu-zhytomyr-v[0-9_]+-cache", 'fdmu-zhytomyr-v7_8_beta-cache', sw)
         SW.write_text(sw, encoding='utf-8')
 
 

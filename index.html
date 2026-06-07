@@ -61,16 +61,16 @@ body:not(.locked) #authScreen{display:none!important}
       <button class="update-btn" onclick="refreshApp()">🔄 Оновити</button>
       <button class="update-btn admin-only" onclick="openImport()">📂 Імпорт Excel ФДМУ</button>
       <input id="excelImport" type="file" accept=".xlsx,.xls" style="display:none" onchange="importExcelFile(event)">
-      <span class="version-pill" id="versionTop">v7.7-beta</span><span class="user-pill" id="authUserPill">—</span><button class="client-btn" onclick="authLogout()">Вийти</button>
+      <span class="version-pill" id="versionTop">v7.8-beta</span><span class="user-pill" id="authUserPill">—</span><button class="client-btn" onclick="authLogout()">Вийти</button>
       <button class="client-btn" onclick="generatePdfReference()">📄 PDF-довідка</button>
       <button class="client-btn" onclick="copyClientText()">📋 Текст клієнту</button>
       <button id="installBtn" class="client-btn" onclick="installApp()">📲 Встановити додаток</button><a class="client-btn call-btn" href="tel:+380979213772">📞 Замовити оцінку</a>
     </div>
   </div>
-  <div class="chips" style="margin-top:12px"><span class="chip">тільки місто Житомир</span><span class="chip">ФДМУ</span><span class="chip">ручне коригування вибірки</span></div>
+  <div class="chips" style="margin-top:12px"><span class="chip">Житомир + Оліївка 2018+</span><span class="chip">ФДМУ</span><span class="chip">ручне коригування вибірки</span></div>
 </header>
 <main class="wrap">
-<section class="card"><div class="section">Призначення</div><div class="notice">Інструмент показує, які вартості вже реєструвалися у ФДМУ по квартирах у місті Житомирі. Це довідник для попереднього інформування клієнта, а не автоматична оцінка і не джерело автоматично придатними джерелами для звіту без окремого аналізу оцінювачем.</div></section>
+<section class="card"><div class="section">Призначення</div><div class="notice">Інструмент показує, які вартості вже реєструвалися у ФДМУ по квартирах у Житомирі та новобудовах Оліївки 2018+. Це довідник для попереднього інформування клієнта, а не автоматична оцінка і не є автоматично придатним джерелом для звіту без окремого аналізу оцінювачем.</div></section>
 <div id="err" class="error"></div>
 
 <section class="card">
@@ -86,7 +86,7 @@ body:not(.locked) #authScreen{display:none!important}
 
 <section class="card admin-only" id="importCard" style="display:none">
   <div class="section">Імпорт Excel ФДМУ</div>
-  <div class="notice">Виберіть Excel-файл ФДМУ. Сайт сформує новий <b>calc_data.json</b> тільки по місту Житомир: Богунський, Корольовський та записи без району. Після завантаження JSON потрібно замінити файл у GitHub і натиснути Commit changes.</div>
+  <div class="notice">Виберіть Excel-файл ФДМУ. Сайт сформує новий <b>calc_data.json</b> по Житомиру та Оліївці 2018+: Богунський, Корольовський, записи без району та Оліївка новобудови. Після завантаження JSON потрібно замінити файл у GitHub і натиснути Commit changes.</div>
   <div class="stats" style="margin-top:10px">
     <div class="stat"><div class="l">Імпортовано</div><div class="v" id="imp-total">—</div></div>
     <div class="stat"><div class="l">Квартири</div><div class="v" id="imp-apts">—</div></div>
@@ -99,8 +99,8 @@ body:not(.locked) #authScreen{display:none!important}
   </div>
 </section>
 
-<section class="card"><div class="section">Параметри об’єкта</div><div class="grid"><div class="field"><label>Тип об’єкта</label><select id="objectType"><option value="apartment">Квартира</option><option value="dorm">Кімната в гуртожитку</option></select></div><div class="field"><label>Район</label><select id="district"><option value="all">Будь-який район Житомира</option><option value="Богунський">Богунський</option><option value="Корольовський">Корольовський</option><option value="Житомир (без району)">Житомир без району</option></select></div><div class="field"><label>Період реєстрації оцінок</label><select id="datePeriod"><option value="all">Уся база</option><option value="12">Останні 12 місяців</option><option value="6">Останні 6 місяців</option><option value="3">Останні 3 місяці</option></select><div class="hint">фільтр за датою реєстрації оцінки ФДМУ</div></div><div class="field"><label>Кімнатність</label><select id="rooms"><option value="1">1-кімнатна</option><option value="2">2-кімнатна</option><option value="3">3-кімнатна</option><option value="4">4+ кімнатна</option></select></div><div class="field"><label>Загальна площа, кв.м</label><input id="area" type="number" step="0.1"></div><div class="field"><label>Рік побудови</label><input id="year" type="number"><div class="hint">фактор схожості, а не жорсткий фільтр</div></div><div class="field"><label>Поверх</label><input id="floor" type="number"></div><div class="field"><label>Поверховість будинку</label><input id="totalFloors" type="number"><div class="hint">якщо невідомо — залиште порожнім</div></div></div><div class="notice">Без загальної площі система показує тільки загальну статистику бази. Вибірка зареєстрованих оцінок формується після введення площі; рік і поверх враховуються лише якщо вони заповнені.</div><div class="btn-row" style="margin-top:12px"><button class="btn" onclick="runAuto()">Сформувати вибірку ФДМУ</button><button class="btn secondary" onclick="selectAll(true)">Вибрати всі</button><button class="btn warn" onclick="selectAll(false)">Очистити всі</button><button class="btn gray" onclick="recalcSelected()">Перерахувати</button></div></section>
-<section class="card collapsed-section" id="dbCard"><div class="section">Інформація про базу</div><div class="stats"><div class="stat"><div class="l">Версія сайту</div><div class="v" id="st-version">7.7-beta</div></div><div class="stat"><div class="l">Записів у робочій базі</div><div class="v" id="st-count">—</div></div><div class="stat"><div class="l">Квартири</div><div class="v" id="st-apts">—</div></div><div class="stat"><div class="l">Кімнати/гуртожитки</div><div class="v" id="st-dorms">—</div></div><div class="stat"><div class="l">Показано оцінок</div><div class="v" id="st-shown">—</div></div><div class="stat"><div class="l">Вибрано</div><div class="v" id="st-selected">—</div></div><div class="stat"><div class="l">Оновлено базу</div><div class="v" id="st-updated" style="font-size:15px">—</div></div><div class="stat"><div class="l">Всього місто Житомир</div><div class="v" id="st-raw-city">—</div></div><div class="stat"><div class="l">Придатні до дедублікації</div><div class="v" id="st-before-dup">—</div></div><div class="stat"><div class="l">Не входять у калькулятор</div><div class="v" id="st-excluded">—</div></div><div class="stat"><div class="l">Вилучено не місто за адресою</div><div class="v" id="st-noncity-removed">—</div></div><div class="stat"><div class="l">Прибрано дублікатів</div><div class="v" id="st-dup">—</div></div><div class="stat"><div class="l">Виконавців</div><div class="v" id="st-exec">—</div></div><div class="stat"><div class="l">Медіана грн/м²</div><div class="v" id="st-medppm">—</div></div></div></section>
+<section class="card"><div class="section">Параметри об’єкта</div><div class="grid"><div class="field"><label>Тип об’єкта</label><select id="objectType"><option value="apartment">Квартира</option><option value="dorm">Кімната в гуртожитку</option></select></div><div class="field"><label>Район</label><select id="district"><option value="all">Будь-який район Житомира</option><option value="Богунський">Богунський</option><option value="Корольовський">Корольовський</option><option value="Житомир (без району)">Житомир без району</option><option value="Оліївка новобудови">Оліївка новобудови 2018+</option></select></div><div class="field"><label>Період реєстрації оцінок</label><select id="datePeriod"><option value="all">Уся база</option><option value="12">Останні 12 місяців</option><option value="6">Останні 6 місяців</option><option value="3">Останні 3 місяці</option></select><div class="hint">фільтр за датою реєстрації оцінки ФДМУ</div></div><div class="field"><label>Кімнатність</label><select id="rooms"><option value="1">1-кімнатна</option><option value="2">2-кімнатна</option><option value="3">3-кімнатна</option><option value="4">4+ кімнатна</option></select></div><div class="field"><label>Загальна площа, кв.м</label><input id="area" type="number" step="0.1"></div><div class="field"><label>Рік побудови</label><input id="year" type="number"><div class="hint">фактор схожості, а не жорсткий фільтр</div></div><div class="field"><label>Поверх</label><input id="floor" type="number"></div><div class="field"><label>Поверховість будинку</label><input id="totalFloors" type="number"><div class="hint">якщо невідомо — залиште порожнім</div></div></div><div class="notice">Без загальної площі система показує тільки загальну статистику бази. Вибірка зареєстрованих оцінок формується після введення площі; рік і поверх враховуються лише якщо вони заповнені.</div><div class="btn-row" style="margin-top:12px"><button class="btn" onclick="runAuto()">Сформувати вибірку ФДМУ</button><button class="btn secondary" onclick="selectAll(true)">Вибрати всі</button><button class="btn warn" onclick="selectAll(false)">Очистити всі</button><button class="btn gray" onclick="recalcSelected()">Перерахувати</button></div></section>
+<section class="card collapsed-section" id="dbCard"><div class="section">Інформація про базу</div><div class="stats"><div class="stat"><div class="l">Версія сайту</div><div class="v" id="st-version">7.8-beta</div></div><div class="stat"><div class="l">Записів у робочій базі</div><div class="v" id="st-count">—</div></div><div class="stat"><div class="l">Квартири</div><div class="v" id="st-apts">—</div></div><div class="stat"><div class="l">Кімнати/гуртожитки</div><div class="v" id="st-dorms">—</div></div><div class="stat"><div class="l">Показано оцінок</div><div class="v" id="st-shown">—</div></div><div class="stat"><div class="l">Вибрано</div><div class="v" id="st-selected">—</div></div><div class="stat"><div class="l">Оновлено базу</div><div class="v" id="st-updated" style="font-size:15px">—</div></div><div class="stat"><div class="l">Всього місто Житомир</div><div class="v" id="st-raw-city">—</div></div><div class="stat"><div class="l">Придатні до дедублікації</div><div class="v" id="st-before-dup">—</div></div><div class="stat"><div class="l">Не входять у калькулятор</div><div class="v" id="st-excluded">—</div></div><div class="stat"><div class="l">Вилучено не місто за адресою</div><div class="v" id="st-noncity-removed">—</div></div><div class="stat"><div class="l">Прибрано дублікатів</div><div class="v" id="st-dup">—</div></div><div class="stat"><div class="l">Виконавців</div><div class="v" id="st-exec">—</div></div><div class="stat"><div class="l">Медіана грн/м²</div><div class="v" id="st-medppm">—</div></div></div></section>
 <section class="card" id="result-card"><div class="section">Результат</div><div class="main-result"><div class="label">Орієнтовний діапазон за вибраними зареєстрованими оцінками</div><div class="big" id="total">—</div><div class="usdline" id="totalUsd">—</div><div class="range" id="range">—</div><div class="usdline" id="rangeUsd">—</div><div id="reliability" class="reliability rel-low" style="display:none">—</div></div><div class="methods"><div class="method primary"><div class="m1">Зважена</div><div class="m2" id="weighted">—</div></div><div class="method"><div class="m1">Середня</div><div class="m2" id="simple">—</div></div><div class="method"><div class="m1">Медіана</div><div class="m2" id="median">—</div></div></div><div id="details" class="notice" style="display:none"></div></section>
 <section class="card collapsed-section" id="sampleCard">
   <div class="section">Структура використаної вибірки</div>
@@ -113,7 +113,7 @@ body:not(.locked) #authScreen{display:none!important}
     <div class="mini-stat"><div class="l">Медіана грн/м²</div><div class="v" id="sum-medppm">—</div></div>
     <div class="mini-stat"><div class="l">Богунський</div><div class="v" id="sum-bohun">—</div></div>
     <div class="mini-stat"><div class="l">Корольовський</div><div class="v" id="sum-korol">—</div></div>
-    <div class="mini-stat"><div class="l">Без району</div><div class="v" id="sum-none">—</div></div>
+    <div class="mini-stat"><div class="l">Без району</div><div class="v" id="sum-none">—</div></div><div class="mini-stat"><div class="l">Оліївка 2018+</div><div class="v" id="sum-oliivka">—</div></div>
   </div>
   <div class="section" style="margin-top:12px">ТОП-10 зареєстрованих оцінок у вибірці</div>
   <div class="top-table-wrap"><table class="top-table" id="topAnalogTable"><tbody><tr><td>Вибірка ще не сформована</td></tr></tbody></table></div>
@@ -136,7 +136,7 @@ body:not(.locked) #authScreen{display:none!important}
   <div class="analytics-note">Аналітика виконавців побудована на архівній базі з 01.01.2022, а калькулятор працює по робочій базі за останні 12 місяців. Показники є довідковими: медіана грн/м², кількість зареєстрованих оцінок і період реєстрації.</div>
 </section>
 <section class="card collapsed-section" id="recordsCard"><div class="controls"><div><div class="section" style="margin-bottom:4px">Зареєстровані оцінки</div><div class="hint">Число в кружечку — бал близькості до заданих параметрів, не номер об’єкта.</div></div><input class="search" id="search" placeholder="Пошук по адресі" oninput="renderList()"></div><div class="analog-list" id="list" style="margin-top:12px"><div class="empty">Завантаження бази...</div></div></section>
-<div class="footer">Довідкова інформація. Не є звітом про оцінку майна. Зареєстровані оцінки ФДМУ не є офіційними аналогами для звіту без окремого аналізу оцінювачем. Використовується чиста база міста Житомир: Богунський, Корольовський та записи без району; службові реквізити не відображаються.<br><b>ТОВ «ЕКСПЕРТНА ДУМКА» · Оцінка майна · 097 921 37 72</b><br>Версія сайту: 7.7-beta · тестовий іменний доступ · згорнуті службові модулі</div>
+<div class="footer">Довідкова інформація. Не є звітом про оцінку майна. Зареєстровані оцінки ФДМУ не є офіційними аналогами для звіту без окремого аналізу оцінювачем. Використовується чиста база міста Житомир: Богунський, Корольовський та записи без району; службові реквізити не відображаються.<br><b>ТОВ «ЕКСПЕРТНА ДУМКА» · Оцінка майна · 097 921 37 72</b><br>Версія сайту: 7.8-beta · Оліївка 2018+ · тестовий іменний доступ</div>
 </main>
 <div id="toast" class="toast"></div>
 <script>
@@ -296,10 +296,12 @@ function findCol(headers, patterns){
   }
   return null;
 }
-function normDistrictByTown(town){
+function normDistrictByTown(town, year){
   const t=String(town||'').toUpperCase();
+  const y=parseInt(String(year||'').match(/\d{4}/)?.[0]||'0',10);
   if(t.includes('БОГУНСЬК')) return 'Богунський';
   if(t.includes('КОРОЛЬОВСЬК')) return 'Корольовський';
+  if(t.includes('ОЛІЇВК') || t.includes('ОЛИЕВК') || t.includes('ОЛІЕВК')) return y>=2018 ? 'Оліївка новобудови' : '';
   if(t.includes('ЖИТОМИР') && !t.includes('РАЙОН')) return 'Житомир (без району)';
   return '';
 }
@@ -355,7 +357,8 @@ async function importExcelFile(ev){
   const execs=new Set();
   for(const row of rows){
     if(colStatus && String(row[colStatus]).trim() && String(row[colStatus]).toUpperCase()!=='ЗАРЕЄСТРОВАНО') continue;
-    const district=normDistrictByTown(row[colTown]);
+    const yearVal=parseFloor(row[colYear]);
+    const district=normDistrictByTown(row[colTown], yearVal);
     if(!district) continue;
     const street=(normalizeText(row[colStreetType])+' '+normalizeText(row[colStreet])).trim() || normalizeText(row[colStreet]);
     const address=street.replace(/\s+/g,' ').trim();
@@ -375,7 +378,7 @@ async function importExcelFile(ev){
       'пл':Math.round(area*10)/10,
       'пов':parseFloor(row[colFloor]),
       'пх':null,
-      'рік':parseFloor(row[colYear]),
+      'рік':yearVal,
       'цкв':Math.round(ppm),
       'в':Math.round(value),
       'ад':address.slice(0,90),
@@ -458,10 +461,10 @@ function authLogout(){
   location.reload();
 }
 
-const APP_VERSION='7.7-beta';
+const APP_VERSION='7.8-beta';
 const USD_RATE=41.5; // довідковий курс для відображення USD
 let DATA=[], CAND=[], SELECTED=new Set(), TARGET=null, ARCHIVE_ANALYTICS=null;
-const allowed = new Set(['Богунський','Корольовський','Житомир (без району)']);
+const allowed = new Set(['Богунський','Корольовський','Житомир (без району)','Оліївка новобудови']);
 const blacklist = ['БЕРДИЧ','НОВОГРАД','ЗВЯГ','КОРОСТ','МАЛИН','РАЙОН','АНДРУШ','ЧУДНІВ','ОВРУЧ'];
 function fmt(n){return Math.round(n).toLocaleString('uk-UA').replace(/\u00A0/g,' ')}
 function fmtUsd(n){return '$'+Math.round(n).toLocaleString('uk-UA').replace(/\u00A0/g,' ')}
@@ -579,6 +582,7 @@ function renderSampleSummary(arr){
   document.getElementById('sum-bohun').textContent=counts['Богунський']||0;
   document.getElementById('sum-korol').textContent=counts['Корольовський']||0;
   document.getElementById('sum-none').textContent=counts['Житомир (без району)']||0;
+  const so=document.getElementById('sum-oliivka'); if(so) so.textContent=counts['Оліївка новобудови']||0;
   const top=[...arr].sort((a,b)=>(b._s||0)-(a._s||0)).slice(0,10);
   const rows=top.map((r,i)=>`<tr><td class="center">${i+1}</td><td class="center"><span class="score ${r._s>=75?'good':r._s>=55?'mid':''}">${r._s||'—'}</span></td><td>${safe(r['ад']||'—')}</td><td class="center">${r['пл']||'—'}</td><td class="center">${r['пов']||'—'}${r['пх']?'/'+r['пх']:''}</td><td class="center">${r['рік']||'—'}</td><td class="center">${safe(recordDate(r))}</td><td class="num">${fmt(r['в']||((+r['цкв']||0)*(+r['пл']||0)))}</td><td class="num">${fmt(r['цкв']||0)}</td><td class="executor">${safe(getExecutor(r))}</td></tr>`).join('');
   document.getElementById('topAnalogTable').innerHTML=`<thead><tr><th>№</th><th>Бал</th><th>Адреса</th><th>Площа</th><th>Поверх</th><th>Рік</th><th>Дата реєстрації</th><th>Вартість</th><th>грн/м²</th><th>Виконавець</th></tr></thead><tbody>${rows}</tbody>`;
