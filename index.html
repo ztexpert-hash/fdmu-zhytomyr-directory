@@ -72,7 +72,7 @@ body:not(.locked) #authScreen{display:none!important}
       <button class="update-btn" onclick="refreshApp()">🔄 Оновити</button>
       <button class="update-btn admin-only" onclick="openImport()">📂 Імпорт Excel ФДМУ</button>
       <input id="excelImport" type="file" accept=".xlsx,.xls" style="display:none" onchange="importExcelFile(event)">
-      <span class="version-pill" id="versionTop">v8.4-beta</span><span class="user-pill" id="authUserPill">—</span><button class="client-btn" onclick="authLogout()">Вийти</button>
+      <span class="version-pill" id="versionTop">v8.5-beta</span><span class="user-pill" id="authUserPill">—</span><button class="client-btn" onclick="authLogout()">Вийти</button>
       <button class="client-btn" onclick="generatePdfReference()">📄 PDF-довідка</button>
       <button class="client-btn" onclick="copyClientText()">📋 Текст клієнту</button>
       <button id="installBtn" class="client-btn" onclick="installApp()">📲 Встановити додаток</button><a class="client-btn call-btn" href="tel:+380979213772">📞 Замовити оцінку</a>
@@ -110,8 +110,8 @@ body:not(.locked) #authScreen{display:none!important}
   </div>
 </section>
 
-<section class="card"><div class="section">Параметри об’єкта</div><div class="grid"><div class="field"><label>Тип об’єкта</label><select id="objectType"><option value="apartment">Квартира</option><option value="dorm">Кімната в гуртожитку</option></select></div><div class="field"><label>Район</label><select id="district"><option value="all">Будь-який район Житомира</option><option value="Богунський">Богунський</option><option value="Корольовський">Корольовський</option><option value="Житомир (без району)">Житомир без району</option><option value="Оліївка новобудови">Оліївка новобудови 2018+</option></select></div><div class="field"><label>Період реєстрації оцінок</label><select id="datePeriod"><option value="all">Уся база</option><option value="12">Останні 12 місяців</option><option value="6">Останні 6 місяців</option><option value="3">Останні 3 місяці</option></select><div class="hint">фільтр за датою реєстрації оцінки ФДМУ</div></div><div class="field"><label>Кімнатність</label><select id="rooms"><option value="1">1-кімнатна</option><option value="2">2-кімнатна</option><option value="3">3-кімнатна</option><option value="4">4+ кімнатна</option></select></div><div class="field"><label>Загальна площа, кв.м</label><input id="area" type="number" step="0.1"></div><div class="field"><label>Рік побудови</label><input id="year" type="number"><div class="hint">фактор схожості, а не жорсткий фільтр</div></div><div class="field"><label>Поверх</label><input id="floor" type="number"></div><div class="field"><label>Поверховість будинку</label><input id="totalFloors" type="number"><div class="hint">якщо невідомо — залиште порожнім</div></div></div><div class="notice">Без загальної площі система показує тільки загальну статистику бази. Вибірка зареєстрованих оцінок формується після введення площі; рік і поверх враховуються лише якщо вони заповнені.</div><div class="btn-row" style="margin-top:12px"><button class="btn" onclick="runAuto()">Сформувати вибірку ФДМУ</button><button class="btn secondary" onclick="selectAll(true)">Вибрати всі</button><button class="btn warn" onclick="selectAll(false)">Очистити всі</button><button class="btn gray" onclick="recalcSelected()">Перерахувати</button></div></section>
-<section class="card collapsed-section" id="dbCard"><div class="section">Інформація про базу</div><div class="stats"><div class="stat"><div class="l">Версія сайту</div><div class="v" id="st-version">8.4-beta</div></div><div class="stat"><div class="l">Записів у робочій базі</div><div class="v" id="st-count">—</div></div><div class="stat"><div class="l">Квартири</div><div class="v" id="st-apts">—</div></div><div class="stat"><div class="l">Кімнати/гуртожитки</div><div class="v" id="st-dorms">—</div></div><div class="stat"><div class="l">Показано оцінок</div><div class="v" id="st-shown">—</div></div><div class="stat"><div class="l">Вибрано</div><div class="v" id="st-selected">—</div></div><div class="stat"><div class="l">Оновлено базу</div><div class="v" id="st-updated" style="font-size:15px">—</div></div><div class="stat"><div class="l">Всього Житомир + Оліївка 2018+</div><div class="v" id="st-raw-city">—</div></div><div class="stat"><div class="l">Придатні до дедублікації</div><div class="v" id="st-before-dup">—</div></div><div class="stat"><div class="l">Не входять у довідник</div><div class="v" id="st-excluded">—</div></div><div class="stat"><div class="l">Вилучено не місто за адресою</div><div class="v" id="st-noncity-removed">—</div></div><div class="stat"><div class="l">Прибрано дублікатів</div><div class="v" id="st-dup">—</div></div><div class="stat"><div class="l">Виконавців</div><div class="v" id="st-exec">—</div></div><div class="stat"><div class="l">Медіана грн/м²</div><div class="v" id="st-medppm">—</div></div><div class="stat"><div class="l">Оліївка 2018+</div><div class="v" id="st-oliivka">—</div></div></div></section>
+<section class="card"><div class="section">Параметри об’єкта</div><div class="grid"><div class="field"><label>Тип об’єкта</label><select id="objectType"><option value="apartment">Квартира</option><option value="dorm">Кімната в гуртожитку</option></select></div><div class="field"><label>Район</label><select id="district"><option value="all">Будь-який район Житомира</option><option value="Богунський">Богунський</option><option value="Корольовський">Корольовський</option><option value="Житомир (без району)">Житомир без району</option><option value="Оліївка новобудови">Оліївка новобудови 2018+</option></select></div><div class="field"><label>Період реєстрації оцінок</label><select id="datePeriod"><option value="all">Уся база</option><option value="12">Останні 12 місяців</option><option value="6">Останні 6 місяців</option><option value="3">Останні 3 місяці</option></select><div class="hint">фільтр за датою реєстрації оцінки ФДМУ</div></div><div class="field"><label>Джерело даних для Оліївки</label><select id="dataScope"><option value="work">Робоча база 12 місяців</option><option value="archive">Повний архів 2022+</option></select><div class="hint">для Оліївки можна вручну вибрати коротку або повну базу</div></div><div class="field"><label>Кімнатність</label><select id="rooms"><option value="1">1-кімнатна</option><option value="2">2-кімнатна</option><option value="3">3-кімнатна</option><option value="4">4+ кімнатна</option></select></div><div class="field"><label>Загальна площа, кв.м</label><input id="area" type="number" step="0.1"></div><div class="field"><label>Рік побудови</label><input id="year" type="number"><div class="hint">фактор схожості, а не жорсткий фільтр</div></div><div class="field"><label>Поверх</label><input id="floor" type="number"></div><div class="field"><label>Поверховість будинку</label><input id="totalFloors" type="number"><div class="hint">якщо невідомо — залиште порожнім</div></div></div><div class="notice">Без загальної площі система показує тільки загальну статистику бази. Вибірка зареєстрованих оцінок формується після введення площі; рік і поверх враховуються лише якщо вони заповнені.</div><div class="btn-row" style="margin-top:12px"><button class="btn" onclick="runAuto()">Сформувати вибірку ФДМУ</button><button class="btn secondary" onclick="selectAll(true)">Вибрати всі</button><button class="btn warn" onclick="selectAll(false)">Очистити всі</button><button class="btn gray" onclick="recalcSelected()">Перерахувати</button></div></section>
+<section class="card collapsed-section" id="dbCard"><div class="section">Інформація про базу</div><div class="stats"><div class="stat"><div class="l">Версія сайту</div><div class="v" id="st-version">8.0-beta</div></div><div class="stat"><div class="l">Записів у робочій базі</div><div class="v" id="st-count">—</div></div><div class="stat"><div class="l">Квартири</div><div class="v" id="st-apts">—</div></div><div class="stat"><div class="l">Кімнати/гуртожитки</div><div class="v" id="st-dorms">—</div></div><div class="stat"><div class="l">Показано оцінок</div><div class="v" id="st-shown">—</div></div><div class="stat"><div class="l">Вибрано</div><div class="v" id="st-selected">—</div></div><div class="stat"><div class="l">Оновлено базу</div><div class="v" id="st-updated" style="font-size:15px">—</div></div><div class="stat"><div class="l">Всього Житомир + Оліївка 2018+</div><div class="v" id="st-raw-city">—</div></div><div class="stat"><div class="l">Придатні до дедублікації</div><div class="v" id="st-before-dup">—</div></div><div class="stat"><div class="l">Не входять у довідник</div><div class="v" id="st-excluded">—</div></div><div class="stat"><div class="l">Вилучено не місто за адресою</div><div class="v" id="st-noncity-removed">—</div></div><div class="stat"><div class="l">Прибрано дублікатів</div><div class="v" id="st-dup">—</div></div><div class="stat"><div class="l">Виконавців</div><div class="v" id="st-exec">—</div></div><div class="stat"><div class="l">Медіана грн/м²</div><div class="v" id="st-medppm">—</div></div><div class="stat"><div class="l">Оліївка 2018+</div><div class="v" id="st-oliivka">—</div></div></div></section>
 <section class="card" id="result-card"><div class="section">Результат</div><div class="main-result"><div class="label">Орієнтовний діапазон за вибраними зареєстрованими оцінками</div><div class="big" id="total">—</div><div class="usdline" id="totalUsd">—</div><div class="range" id="range">—</div><div class="usdline" id="rangeUsd">—</div><div id="reliability" class="reliability rel-low" style="display:none">—</div></div><div class="methods"><div class="method primary"><div class="m1">Зважена</div><div class="m2" id="weighted">—</div></div><div class="method"><div class="m1">Середня</div><div class="m2" id="simple">—</div></div><div class="method"><div class="m1">Медіана</div><div class="m2" id="median">—</div></div></div><div class="quality-box">
   <div class="quality-item"><div class="q-label">Надійність прогнозу</div><div class="q-value"><span id="qualityGrade" class="grade grade-d">—</span></div></div>
   <div class="quality-item"><div class="q-label">Використано оцінок</div><div class="q-value" id="usedRecords">—</div></div>
@@ -152,7 +152,7 @@ body:not(.locked) #authScreen{display:none!important}
   <div class="analytics-note">Аналітика виконавців побудована на архівній базі з 01.01.2022, а калькулятор працює по робочій базі за останні 12 місяців. Показники є довідковими: медіана грн/м², кількість зареєстрованих оцінок і період реєстрації.</div>
 </section>
 <section class="card collapsed-section" id="recordsCard"><div class="controls"><div><div class="section" style="margin-bottom:4px">Зареєстровані оцінки</div><div class="hint">Число в кружечку — бал близькості до заданих параметрів, не номер об’єкта.</div></div><input class="search" id="search" placeholder="Пошук по адресі" oninput="renderList()"></div><div class="analog-list" id="list" style="margin-top:12px"><div class="empty">Завантаження бази...</div></div></section>
-<div class="footer">Довідкова інформація. Не є звітом про оцінку майна. Зареєстровані оцінки ФДМУ мають довідковий характер і не є автоматично придатним джерелом для звіту без окремого аналізу оцінювачем. Використовується база: Житомир + Оліївка новобудови 2018+; службові реквізити не відображаються.<br><b>ТОВ «ЕКСПЕРТНА ДУМКА» · Оцінка майна · 097 921 37 72</b><br>Версія сайту: 8.4-beta · довіра A/B/C · IQR · Оліївка 2018+</div>
+<div class="footer">Довідкова інформація. Не є звітом про оцінку майна. Зареєстровані оцінки ФДМУ мають довідковий характер і не є автоматично придатним джерелом для звіту без окремого аналізу оцінювачем. Використовується база: Житомир + Оліївка новобудови 2018+; службові реквізити не відображаються.<br><b>ТОВ «ЕКСПЕРТНА ДУМКА» · Оцінка майна · 097 921 37 72</b><br>Версія сайту: 8.1-beta · довіра A/B/C · IQR · Оліївка 2018+</div>
 </main>
 <div id="toast" class="toast"></div>
 <script>
@@ -537,9 +537,9 @@ function authLogout(){
   location.reload();
 }
 
-const APP_VERSION='8.1-beta';
+const APP_VERSION='8.5-beta';
 const USD_RATE=41.5; // довідковий курс для відображення USD
-let DATA=[], CAND=[], SELECTED=new Set(), TARGET=null, ARCHIVE_ANALYTICS=null;
+let DATA=[], WORK_DATA=[], ARCHIVE_DATA=[], CAND=[], SELECTED=new Set(), TARGET=null, ARCHIVE_ANALYTICS=null, ACTIVE_SOURCE='work';
 const allowed = new Set(['Богунський','Корольовський','Житомир (без району)','Оліївка новобудови']);
 const blacklist = ['БЕРДИЧ','НОВОГРАД','ЗВЯГ','КОРОСТ','МАЛИН','РАЙОН','АНДРУШ','ЧУДНІВ','ОВРУЧ'];
 function fmt(n){return Math.round(n).toLocaleString('uk-UA').replace(/\u00A0/g,' ')}
@@ -547,7 +547,38 @@ function fmtUsd(n){return '$'+Math.round(n).toLocaleString('uk-UA').replace(/\u0
 function numFromText(t){return +String(t||'').replace(/[^0-9]/g,'')||0}
 function reliabilityText(n){if(n>=20)return ['Висока надійність вибірки', 'rel-high']; if(n>=8)return ['Середня надійність вибірки', 'rel-mid']; return ['Низька надійність вибірки', 'rel-low'];}
 function err(t){const e=document.getElementById('err'); e.style.display=t?'block':'none'; e.textContent=t||''}
-async function loadData(){try{const r=await fetch('calc_data.json?v='+APP_VERSION+'&t='+Date.now(),{cache:'reload'}); if(!r.ok) throw new Error('HTTP '+r.status); const d=await r.json(); DATA=(d.records||[]).filter(validCity); ARCHIVE_ANALYTICS=d.archive_analytics||null; if(d.version && d.version!==APP_VERSION){console.warn('Версія бази не збігається', d.version, APP_VERSION);} const dorms=DATA.filter(isDormRec).length; document.getElementById('st-version').textContent=APP_VERSION; document.getElementById('versionTop').textContent='v'+APP_VERSION; document.getElementById('st-count').textContent=DATA.length; document.getElementById('st-apts').textContent=DATA.length-dorms; document.getElementById('st-dorms').textContent=dorms; document.getElementById('st-updated').textContent=d.updated||'—'; if(document.getElementById('st-raw-city')) document.getElementById('st-raw-city').textContent=fmt(d.count || DATA.length); if(document.getElementById('st-before-dup')) document.getElementById('st-before-dup').textContent=d.eligible_city_count_before_duplicates||'—'; if(document.getElementById('st-excluded')) document.getElementById('st-excluded').textContent=(d.raw_city_count&&d.eligible_city_count_before_duplicates)?(d.raw_city_count-d.eligible_city_count_before_duplicates):'—'; if(document.getElementById('st-noncity-removed')) document.getElementById('st-noncity-removed').textContent=d.non_city_address_removed??'—'; if(document.getElementById('st-dup')) document.getElementById('st-dup').textContent=d.duplicates_removed??'—'; if(document.getElementById('st-exec')) document.getElementById('st-exec').textContent=(d.stats&&d.stats.executors)||'—'; if(document.getElementById('st-medppm')) document.getElementById('st-medppm').textContent=d.stats&&d.stats.median_ppm?fmt(d.stats.median_ppm):'—'; if(document.getElementById('st-oliivka')) document.getElementById('st-oliivka').textContent=d.stats&&d.stats.districts?((d.stats.districts['Оліївка новобудови'])||0):'—'; renderAnalytics(); ensureExecutorSearchBlock(); renderExecutorProfile(false); runAuto();}catch(ex){err('Не вдалося завантажити calc_data.json: '+ex.message+'. Запустіть через локальний сервер або GitHub Pages.')}}
+async function loadData(){try{
+  const r=await fetch('calc_data.json?v='+APP_VERSION+'&t='+Date.now(),{cache:'reload'});
+  if(!r.ok) throw new Error('HTTP '+r.status);
+  const d=await r.json();
+  WORK_DATA=(d.records||[]).filter(validCity);
+  DATA=WORK_DATA;
+  ARCHIVE_ANALYTICS=d.archive_analytics||null;
+  try{
+    const ar=await fetch('archive_calc_data.json?v='+APP_VERSION+'&t='+Date.now(),{cache:'reload'});
+    if(ar.ok){
+      const ad=await ar.json();
+      ARCHIVE_DATA=(ad.records||[]).filter(validCity);
+    }
+  }catch(_e){ARCHIVE_DATA=[];}
+  if(d.version && d.version!==APP_VERSION){console.warn('Версія бази не збігається', d.version, APP_VERSION);}
+  const dorms=WORK_DATA.filter(isDormRec).length;
+  document.getElementById('st-version').textContent=APP_VERSION;
+  document.getElementById('versionTop').textContent='v'+APP_VERSION;
+  document.getElementById('st-count').textContent=WORK_DATA.length;
+  document.getElementById('st-apts').textContent=WORK_DATA.length-dorms;
+  document.getElementById('st-dorms').textContent=dorms;
+  document.getElementById('st-updated').textContent=d.updated||'—';
+  if(document.getElementById('st-raw-city')) document.getElementById('st-raw-city').textContent=fmt(d.count || WORK_DATA.length);
+  if(document.getElementById('st-before-dup')) document.getElementById('st-before-dup').textContent=d.eligible_city_count_before_duplicates||'—';
+  if(document.getElementById('st-excluded')) document.getElementById('st-excluded').textContent=(d.raw_city_count&&d.eligible_city_count_before_duplicates)?(d.raw_city_count-d.eligible_city_count_before_duplicates):'—';
+  if(document.getElementById('st-noncity-removed')) document.getElementById('st-noncity-removed').textContent=d.non_city_address_removed??'—';
+  if(document.getElementById('st-dup')) document.getElementById('st-dup').textContent=d.duplicates_removed??'—';
+  if(document.getElementById('st-exec')) document.getElementById('st-exec').textContent=(d.stats&&d.stats.executors)||'—';
+  if(document.getElementById('st-medppm')) document.getElementById('st-medppm').textContent=d.stats&&d.stats.median_ppm?fmt(d.stats.median_ppm):'—';
+  if(document.getElementById('st-oliivka')) document.getElementById('st-oliivka').textContent=d.stats&&d.stats.districts?((d.stats.districts['Оліївка новобудови'])||0):'—';
+  renderAnalytics(); ensureExecutorSearchBlock(); renderExecutorProfile(false); runAuto();
+}catch(ex){err('Не вдалося завантажити calc_data.json: '+ex.message+'. Запустіть через локальний сервер або GitHub Pages.')}}
 function normalizeAddressForCompare(v){
   let s=String(v||'').toUpperCase();
   // Нормалізація без \b, бо межі слова нестабільно працюють з кирилицею в різних браузерах.
@@ -572,7 +603,13 @@ function normalizeAddressForCompare(v){
 }
 function showAddress(r){const raw=String(r['ад']||'—'); const n=r['ад_норм']||normalizeAddressForCompare(raw); return n&&n!==raw.toUpperCase()?raw+' · норм.: '+n:raw;}
 function validCity(r){const ad=String(r['ад']||'').toUpperCase(); return allowed.has(r['р']) && !blacklist.some(b=>ad.includes(b));}
-function target(){return {objectType:document.getElementById('objectType').value, district:document.getElementById('district').value, rooms:+document.getElementById('rooms').value, area:+document.getElementById('area').value||0, year:+document.getElementById('year').value||null, floor:+document.getElementById('floor').value||null, totalFloors:+document.getElementById('totalFloors').value||null, datePeriod:document.getElementById('datePeriod').value}}
+function target(){return {objectType:document.getElementById('objectType').value, district:document.getElementById('district').value, rooms:+document.getElementById('rooms').value, area:+document.getElementById('area').value||0, year:+document.getElementById('year').value||null, floor:+document.getElementById('floor').value||null, totalFloors:+document.getElementById('totalFloors').value||null, datePeriod:document.getElementById('datePeriod').value, dataScope:(document.getElementById('dataScope')?document.getElementById('dataScope').value:'work')}}
+function activeRecords(t){
+  const useArchive = t && t.district==='Оліївка новобудови' && t.dataScope==='archive' && ARCHIVE_DATA && ARCHIVE_DATA.length;
+  ACTIVE_SOURCE = useArchive ? 'archive' : 'work';
+  return useArchive ? ARCHIVE_DATA : WORK_DATA;
+}
+function activeSourceLabel(){return ACTIVE_SOURCE==='archive'?'Повний архів 2022+':'Робоча база 12 місяців';}
 function similarity(r,t){let s=100; const area=+r['пл']||0; if(t.area){const da=Math.abs(area-t.area)/t.area; s-=Math.min(da*115,42)} if(r['рік']&&t.year){const dy=Math.abs(+r['рік']-t.year); s-=Math.min(dy<=10?dy*.35:dy<=25?3.5+(dy-10)*1.1:20+(dy-25)*.45,30)} if(t.district!=='all' && r['р']!==t.district)s-=12; if(r['пов']&&t.floor){const tf=t.totalFloors&&t.floor===t.totalFloors; const rf=r['пх']&&r['пов']===r['пх']; if((t.floor===1)!=(r['пов']===1))s-=8; if(tf!==rf)s-=5; s-=Math.min(Math.abs((+r['пов']||0)-t.floor)*.4,6)} return Math.max(1,Math.round(s));}
 function areaOk(r,t){if(!t.area)return true; const a=+r['пл']; let pct=t.area<30?.35:t.area<=60?.28:.22; return a>=t.area*(1-pct)&&a<=t.area*(1+pct)}
 function isDormRec(r){const tp=String(r['тип']||r['вид']||r['об']||'').toUpperCase(); const ad=String(r['ад']||'').toUpperCase(); return tp.includes('ГУРТОЖ')||tp.includes('КОМУНАЛ')||tp.includes('КІМНАТ')||ad.includes('ГУРТОЖ');}
@@ -584,14 +621,14 @@ function maxRecordDate(records){
 function datePeriodOk(r,t){
   if(!t.datePeriod || t.datePeriod==='all') return true;
   const d=parseDateValue(recordDate(r));
-  const maxD=maxRecordDate(DATA);
+  const maxD=maxRecordDate(activeRecords(t));
   if(!d || !maxD) return true;
   const cutoff=new Date(maxD.getFullYear(), maxD.getMonth()-parseInt(t.datePeriod,10), maxD.getDate());
   return d>=cutoff;
 }
 function baseStatsForCurrentType(){
   const t=target();
-  const base=DATA.filter(r=>objectTypeOk(r,t));
+  const base=activeRecords(t).filter(r=>objectTypeOk(r,t));
   const ppm=base.map(r=>+r['цкв']||0).filter(Boolean);
   const med=ppm.length?Math.round(median(ppm)):0;
   const avg=ppm.length?Math.round(ppm.reduce((a,b)=>a+b,0)/ppm.length):0;
@@ -614,7 +651,7 @@ function showGeneralStatsOnly(){
   d.style.display='block';
   d.textContent='Загальна статистика бази для вибраного типу об’єкта: '+st.count+' записів; середня ціна '+(st.avg?fmt(st.avg):'—')+' грн/м²; медіана '+(st.med?fmt(st.med):'—')+' грн/м²; виконавців: '+(st.execs||'—')+'. Вибірка не формується без площі.';
 }
-function buildCandidates(t){let base=DATA.filter(r=>objectTypeOk(r,t) && datePeriodOk(r,t) && +r['к']===t.rooms); if(t.district!=='all') base=base.filter(r=>r['р']===t.district); base=base.map((r,i)=>({...r,_adNorm:r['ад_норм']||normalizeAddressForCompare(r['ад']),_id:i+'-'+(r['ад_норм']||r['ад'])+'-'+r['пл']+'-'+r['в']+'-'+recordDate(r),_s:similarity(r,t)})); base.sort((a,b)=>b._s-a._s); return base;}
+function buildCandidates(t){let source=activeRecords(t); let base=source.filter(r=>objectTypeOk(r,t) && datePeriodOk(r,t) && +r['к']===t.rooms); if(t.district!=='all') base=base.filter(r=>r['р']===t.district); base=base.map((r,i)=>({...r,_adNorm:r['ад_норм']||normalizeAddressForCompare(r['ад']),_id:i+'-'+(r['ад_норм']||r['ад'])+'-'+r['пл']+'-'+r['в']+'-'+recordDate(r),_s:similarity(r,t)})); base.sort((a,b)=>b._s-a._s); return base;}
 function runAuto(){TARGET=target(); if(!TARGET.area){showGeneralStatsOnly(); setQualityBlock([],0); return;} CAND=buildCandidates(TARGET); SELECTED.clear(); CAND.forEach(r=>SELECTED.add(r._id)); renderList(); recalcSelected();}
 function selectAll(flag){const t=TARGET||target(); if(!t.area){showToast('Спочатку вкажіть загальну площу об’єкта'); showGeneralStatsOnly(); setQualityBlock([],0); return;} if(flag){CAND.forEach(r=>SELECTED.add(r._id))}else{SELECTED.clear()} renderList(); recalcSelected();}
 function toggleOne(id,checked){checked?SELECTED.add(id):SELECTED.delete(id); recalcSelected(); renderStats();}
@@ -717,7 +754,7 @@ function recalcSelected(){
   d.style.display='block';
   const execCount=new Set(arr.map(r=>getExecutor(r)).filter(x=>x&&x!=='не вказано в поточній базі')).size;
   const trimText=' Використано всі вибрані зареєстровані оцінки без автоматичного відсікання крайніх грн/м².';
-  d.textContent=`Знайдено у пулі: ${CAND.length}. Вибрано: ${rawArr.length}. Використано в розрахунку: ${arr.length}. Виконавців у вибірці: ${execCount||'—'}. Період реєстрації оцінок: ${selectedPeriod(arr)}. Фільтр свіжості: ${(t.datePeriod&&t.datePeriod!=='all')?'останні '+t.datePeriod+' міс.':'уся база'}. Середній бал схожості: ${avg}/100. Автоматичні коригування на поверх не застосовуються.${trimText}`;
+  d.textContent=`Знайдено у пулі: ${CAND.length}. Вибрано: ${rawArr.length}. Використано в розрахунку: ${arr.length}. Виконавців у вибірці: ${execCount||'—'}. Період реєстрації оцінок: ${selectedPeriod(arr)}. Джерело даних: ${activeSourceLabel()}. Фільтр свіжості: ${(t.datePeriod&&t.datePeriod!=='all')?'останні '+t.datePeriod+' міс.':'уся база'}. Середній бал схожості: ${avg}/100. Автоматичні коригування на поверх не застосовуються.${trimText}`;
   renderSampleSummary(arr);
 }
 
