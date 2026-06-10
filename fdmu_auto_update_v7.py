@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-ФДМУ Житомир — Auto Update v8.0-beta
+ФДМУ Житомир — Auto Update v8.3-beta
 Архів з 01.01.2022 + робоча база останні 12 місяців + аналітика виконавців.
 """
 from __future__ import annotations
@@ -17,7 +17,7 @@ except Exception:
     print('ПОМИЛКА: потрібен pandas. Встановіть: pip install pandas openpyxl')
     raise
 
-APP_VERSION = '8.0-beta'
+APP_VERSION = '8.3-beta'
 START_DATE = date(2022, 1, 1)
 WORKING_DAYS = 365
 SPFU_PAGE = 'https://www.spfu.gov.ua/ua/content/spf-estimate-basereport-dani-z-edinoi-bazi.html'
@@ -53,7 +53,7 @@ def write_json(path, obj):
 
 
 def fetch_text(url):
-    req = Request(url, headers={'User-Agent': 'Mozilla/5.0 FDMU-Zhytomyr-Updater/8.0-beta'})
+    req = Request(url, headers={'User-Agent': 'Mozilla/5.0 FDMU-Zhytomyr-Updater/8.3-beta'})
     with urlopen(req, timeout=90) as r:
         raw = r.read()
     for enc in ('utf-8', 'windows-1251', 'cp1251'):
@@ -106,7 +106,7 @@ def link_is_from_2022_or_newer(url):
 def download_file(url, dst):
     dst = Path(dst)
     dst.parent.mkdir(parents=True, exist_ok=True)
-    req = Request(url, headers={'User-Agent': 'Mozilla/5.0 FDMU-Zhytomyr-Updater/8.0-beta'})
+    req = Request(url, headers={'User-Agent': 'Mozilla/5.0 FDMU-Zhytomyr-Updater/8.3-beta'})
     with urlopen(req, timeout=240) as r, open(dst, 'wb') as f:
         shutil.copyfileobj(r, f)
     return dst
@@ -191,7 +191,7 @@ def norm_district(town, year=None, row_text=''):
     if 'КОРОЛЬОВСЬК' in t or 'КОРОЛЕВ' in t:
         return 'Корольовський'
     if contains_oliivka_text(t):
-        return 'Оліївка новобудови' if year and int(year) >= OLIIVKA_MIN_YEAR else None
+        return None
     if 'ЖИТОМИРСЬК' in t and 'РАЙОН' in t:
         return None
     if re.search(r'(^|\b)(М\.?\s*)?ЖИТОМИР(\b|$)', t):
@@ -235,12 +235,18 @@ def category_name(area, obj_type):
     return {1:'1-кімнатна', 2:'2-кімнатна', 3:'3-кімнатна', 4:'4-кімнатна'}[room_cat(area)]
 
 
-def parse_executor(sod):
+def parse_executor_info(sod):
     s = re.sub(r'\s+', ' ', str(sod or '').strip())
     if not s:
-        return ''
-    m = re.match(r'^\d{6,12}\s*,\s*(.+)$', s)
-    return m.group(1).strip() if m else s
+        return '', ''
+    m = re.match(r'^(\d{6,12})\s*,\s*(.+)$', s)
+    if m:
+        return m.group(2).strip(), m.group(1).strip()
+    m2 = re.search(r'\b(\d{6,12})\b', s)
+    return s, (m2.group(1).strip() if m2 else '')
+
+def parse_executor(sod):
+    return parse_executor_info(sod)[0]
 
 
 def normalize_address(addr):
@@ -262,6 +268,62 @@ def normalize_address(addr):
         s = s.replace(k, v)
     return re.sub(r'\s+', ' ', s).strip()
 
+
+
+# ===== OLIIVKA v8.2 diagnostics and robust matching =====
+OLIIVKA_TEXT_PATTERNS = [
+    'ОЛІЇВК', 'ОЛИЕВК', 'ОЛІЕВК',
+    'ОЛIЇВК', 'ОЛIЕВК', 'ОЛIІВК',
+    'OLIIV', 'OLIYIV', 'OLIIVKA', 'OLIYIVKA'
+]
+
+def _safe_text(v):
+    return '' if v is None else str(v)
+
+def join_row_text(row, columns=None):
+    """Об'єднує всі значущі поля рядка ФДМУ для пошуку Оліївки."""
+    try:
+        if columns:
+            vals = [row.get(c, '') for c in columns if c in row.index]
+        else:
+            vals = list(row.values)
+        return ' '.join(_safe_text(v) for v in vals if _safe_text(v).strip())
+    except Exception:
+        return ''
+
+def contains_oliivka_text(text):
+    t = re.sub(r'\s+', ' ', _safe_text(text).strip().upper())
+    return any(p in t for p in OLIIVKA_TEXT_PATTERNS)
+
+def extract_year_anywhere(row, preferred_value=None):
+    """Шукає рік спочатку у стандартному полі, потім у всьому рядку."""
+    vals = []
+    if preferred_value not in (None, ''):
+        vals.append(preferred_value)
+    try:
+        vals.extend(list(row.values))
+    except Exception:
+        pass
+    text = ' '.join(_safe_text(v) for v in vals)
+    years = [int(x) for x in re.findall(r'(?:19|20)\d{2}', text)]
+    years = [y for y in years if 1900 <= y <= 2035]
+    if not years:
+        return None
+    return max(years)
+
+def oliivka_decision(row, town_value='', year_value=None):
+    """Повертає рішення щодо Оліївки і причину."""
+    row_text = join_row_text(row)
+    combined = _safe_text(town_value) + ' ' + row_text
+    found = contains_oliivka_text(combined)
+    year = extract_year_anywhere(row, year_value)
+    if not found:
+        return {'found': False, 'include': False, 'year': year, 'reason': 'oliivka_not_found'}
+    if not year:
+        return {'found': True, 'include': False, 'year': None, 'reason': 'oliivka_found_but_year_missing'}
+    if year < OLIIVKA_MIN_YEAR:
+        return {'found': True, 'include': False, 'year': year, 'reason': 'oliivka_found_but_year_before_2018'}
+    return {'found': True, 'include': True, 'year': year, 'reason': 'oliivka_2018_plus'}
 
 def valid_city_address(addr):
     ad = str(addr or '').upper()
@@ -294,6 +356,107 @@ def record_key(r):
     ])
 
 
+
+
+# ===== OLIIVKA v8.3 strict target matching =====
+# Мета: включати тільки с. Оліївка Житомирської області, новобудови / квартири у багатоповерхових будинках 2018+.
+# Не включати Худоліївку, Мозоліївку, Забілоччя та інші населені пункти з випадковим збігом.
+
+def _safe_text(v):
+    return '' if v is None else str(v)
+
+def _norm_text(v):
+    return re.sub(r'\s+', ' ', _safe_text(v).strip().upper())
+
+def join_row_text(row, columns=None):
+    try:
+        if columns:
+            vals = [row.get(c, '') for c in columns if c in row.index]
+        else:
+            vals = list(row.values)
+        return ' '.join(_safe_text(v) for v in vals if _safe_text(v).strip())
+    except Exception:
+        return ''
+
+def is_exact_oliivka_town(town_value, row_text=''):
+    """
+    Тільки с. Оліївка.
+    Дозволені варіанти:
+    - ОЛІЇВКА
+    - ОЛІЇВСЬКА/С.ОЛІЇВКА
+    - С. ОЛІЇВКА
+    - СЕЛО ОЛІЇВКА
+    Не дозволені:
+    - ХУДОЛІЇВКА
+    - МОЗОЛІЇВКА
+    - ХУДОЛІЇВСЬКА/С.ХУДОЛІЇВКА
+    """
+    town = _norm_text(town_value)
+    text = _norm_text(str(town_value) + ' ' + str(row_text))
+
+    bad = ['ХУДОЛІЇВК', 'ХУДОЛИЕВК', 'МОЗОЛІЇВК', 'МОЗОЛИЕВК', 'ЗАБІЛОЧЧЯ']
+    if any(b in text for b in bad):
+        return False
+
+    if town == 'ОЛІЇВКА':
+        return True
+    if 'ОЛІЇВСЬКА/С.ОЛІЇВКА' in town:
+        return True
+    if re.search(r'(^|[\s,;/])С\.?\s*ОЛІЇВКА($|[\s,;/])', text):
+        return True
+    if re.search(r'(^|[\s,;/])СЕЛО\s+ОЛІЇВКА($|[\s,;/])', text):
+        return True
+    if re.search(r'ЖИТОМИРСЬКА\s+ОБЛАСТЬ.*(^|[\s,;/])ОЛІЇВКА($|[\s,;/])', text):
+        return True
+    return False
+
+def is_oliivka_newbuild_apartment(row):
+    """
+    Тільки квартири / багатоповерхові житлові будівлі.
+    Відсікає житлові будинки, садибні будинки, гуртожитки, інші об'єкти.
+    """
+    text = _norm_text(join_row_text(row))
+    if 'КВАРТИРА В БАГАТОПОВЕРХОВІЙ ЖИТЛОВІЙ БУДІВЛІ' in text:
+        return True
+    # запасний варіант, якщо ФДМУ трохи змінить написання
+    if 'КВАРТИРА' in text and ('БАГАТОПОВЕРХ' in text or 'БАГАТОКВАРТИР' in text):
+        return True
+    return False
+
+def extract_year_anywhere(row, preferred_value=None):
+    vals = []
+    if preferred_value not in (None, ''):
+        vals.append(preferred_value)
+    try:
+        vals.extend(list(row.values))
+    except Exception:
+        pass
+    text = ' '.join(_safe_text(v) for v in vals)
+    years = [int(x) for x in re.findall(r'(?:19|20)\d{2}', text)]
+    years = [y for y in years if 1900 <= y <= 2035]
+    if not years:
+        return None
+    return max(years)
+
+def oliivka_decision(row, town_value='', year_value=None):
+    row_text = join_row_text(row)
+    found = is_exact_oliivka_town(town_value, row_text)
+    year = extract_year_anywhere(row, year_value)
+
+    if not found:
+        return {'found': False, 'include': False, 'year': year, 'reason': 'not_target_oliivka_village'}
+    if not year:
+        return {'found': True, 'include': False, 'year': None, 'reason': 'oliivka_year_missing'}
+    if year < OLIIVKA_MIN_YEAR:
+        return {'found': True, 'include': False, 'year': year, 'reason': 'oliivka_before_2018'}
+    if not is_oliivka_newbuild_apartment(row):
+        return {'found': True, 'include': False, 'year': year, 'reason': 'oliivka_not_multistorey_apartment'}
+    return {'found': True, 'include': True, 'year': year, 'reason': 'oliivka_newbuild_apartment_2018_plus'}
+
+def contains_oliivka_text(text):
+    # для сумісності зі старими викликами
+    return is_exact_oliivka_town(text, text)
+
 def extract_records(df):
     cols = list(df.columns)
     col_region = find_col(cols, ['Регіон'])
@@ -325,9 +488,10 @@ def extract_records(df):
         if 'ЖИТОМИР' not in str(row.get(col_region, '')).upper():
             continue
         region_count += 1
-        year = parse_int(row.get(col_year, '')) if col_year else None
+        year = extract_year_anywhere(row, row.get(col_year, '') if col_year else None)
         row_text = join_row_text(row)
-        district = norm_district(row.get(col_town, ''), year, row_text)
+        od = oliivka_decision(row, row.get(col_town, ''), year)
+        district = 'Оліївка новобудови' if od['include'] else norm_district(row.get(col_town, ''), year, row_text)
         if not district:
             continue
         raw_city_count += 1
@@ -350,6 +514,7 @@ def extract_records(df):
             continue
         type_text = str(row.get(col_type, ''))
         obj_type = 'Кімната/гуртожиток' if is_dorm(type_text, address) else 'Квартира'
+        ex_name, ex_code = parse_executor_info(row.get(col_sod, '')) if col_sod else ('', '')
         rec = {
             'р': district,
             'к': room_cat(area),
@@ -363,7 +528,8 @@ def extract_records(df):
             'тип': obj_type,
             'категорія': category_name(area, obj_type),
             'дата': dstr,
-            'вик': parse_executor(row.get(col_sod, '')) if col_sod else '',
+            'вик': ex_name,
+            'єдрпоу': ex_code,
             'файл': '',
         }
         rec['ад_норм'] = normalize_address(rec['ад'])
@@ -478,10 +644,14 @@ def build_executors_analytics(records):
     exmap = {}
     for r in records:
         ex = (r.get('вик') or '').strip() or 'не вказано'
+        code = (r.get('єдрпоу') or r.get('ЄДРПОУ') or '').strip()
         dv = parse_date_value(r.get('дата'))
         y = str(dv.year) if dv else '—'
         m = f'{dv.year}-{dv.month:02d}' if dv else '—'
-        item = exmap.setdefault(ex, {'name': ex, 'count': 0, 'years': {}, 'months': {}, 'ppms': [], 'dates': []})
+        key = code or ex
+        item = exmap.setdefault(key, {'name': ex, 'code': code, 'count': 0, 'years': {}, 'months': {}, 'ppms': [], 'dates': []})
+        if code and not item.get('code'):
+            item['code'] = code
         item['count'] += 1
         item['years'][y] = item['years'].get(y, 0) + 1
         item['months'][m] = item['months'].get(m, 0) + 1
@@ -497,6 +667,7 @@ def build_executors_analytics(records):
         ppms = e['ppms']
         performers.append({
             'name': e['name'],
+            'code': e.get('code',''),
             'count': e['count'],
             'share_pct': round(e['count'] * 100 / total, 2),
             'first_date': min(dates).isoformat() if dates else '',
@@ -682,14 +853,14 @@ def update_site_files(archive, calc):
     README.write_text(build_readme(archive, calc), encoding='utf-8')
     if INDEX.exists():
         html = INDEX.read_text(encoding='utf-8')
-        html = re.sub(r"const APP_VERSION='[^']+'", f"const APP_VERSION='{APP_VERSION}'", html)
+        html = re.sub(r"const APP_VERSION = '8.3-beta']+'", f"const APP_VERSION = '8.3-beta'", html)
         html = re.sub(r'id="versionTop">v[^<]+<', f'id="versionTop">v{APP_VERSION}<', html)
         html = re.sub(r'id="st-version">[^<]+<', f'id="st-version">{APP_VERSION}<', html)
         html = re.sub(r'Версія сайту: [0-9.]+[^<]*', 'Версія сайту: 8.0-beta · довіра A/B/C · IQR · Оліївка 2018+', html)
         INDEX.write_text(html, encoding='utf-8')
     if SW.exists():
         sw = SW.read_text(encoding='utf-8')
-        sw = re.sub(r"fdmu-zhytomyr-v[0-9_]+-cache", 'fdmu-zhytomyr-v8_0_beta-cache', sw)
+        sw = re.sub(r"fdmu-zhytomyr-v[0-9_]+-cache", 'fdmu-zhytomyr-v8_3_beta-cache', sw)
         SW.write_text(sw, encoding='utf-8')
 
 
