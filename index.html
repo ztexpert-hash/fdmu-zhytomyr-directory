@@ -69,6 +69,16 @@ body:not(.locked) #authScreen{display:none!important}
 .grade-c{background:#FEE2E2;color:#991B1B}
 .grade-d{background:#E5E7EB;color:#374151}
 
+
+/* v10.0 PDF preview + back navigation */
+.result-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+.pdf-preview-overlay{display:none;position:fixed;inset:0;z-index:9500;background:#F4F1EA;overflow:auto;padding:18px}
+.pdf-preview-toolbar{position:sticky;top:0;z-index:2;display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between;background:#fff;border:1px solid #DED7CA;border-radius:14px;padding:10px;margin:0 auto 12px;max-width:980px;box-shadow:0 2px 16px rgba(0,0,0,.08)}
+.pdf-preview-toolbar .left,.pdf-preview-toolbar .right{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.pdf-preview-title{font-size:13px;font-weight:900;color:#16302B}.pdf-preview-content{max-width:980px;margin:0 auto;background:#fff;border:1px solid #DED7CA;border-radius:16px;padding:24px;box-shadow:0 4px 24px rgba(0,0,0,.08)}
+.pdf-report{font-family:Arial,sans-serif;color:#16302B;line-height:1.45}.pdf-report .head{display:flex;align-items:center;gap:18px;border-bottom:3px solid #16302B;padding-bottom:14px;margin-bottom:18px}.pdf-report .logoimg{width:110px;height:90px;object-fit:contain}.pdf-report h1{font-size:22px;margin:0;color:#16302B}.pdf-report .sub{font-size:13px;color:#52645D;margin-top:3px}.pdf-report .title{font-size:20px;font-weight:800;margin:18px 0 10px;text-transform:uppercase;letter-spacing:.03em}.pdf-report .note{background:#FFF7E6;border-left:5px solid #C6912B;padding:12px 14px;border-radius:8px;color:#6B4A00;font-size:13px;margin:12px 0}.pdf-report .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}.pdf-report .card{border:1px solid #DED7CA;border-radius:12px;padding:12px;background:#FCFBF8;margin:0;box-shadow:none}.pdf-report .label{font-size:11px;color:#6B7A72;text-transform:uppercase;font-weight:800}.pdf-report .value{font-size:18px;font-weight:800;margin-top:4px}.pdf-report .bigbox{background:#EAF4F0;border:2px solid #1B6B5A;border-radius:14px;padding:18px;text-align:center;margin:16px 0}.pdf-report .bigbox .main{font-size:32px;font-weight:900}.pdf-report .range{font-size:15px;color:#52645D;margin-top:6px}.pdf-report .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.pdf-report .stat{border:1px solid #DED7CA;border-radius:10px;padding:10px;background:#fff}.pdf-report .stat .v{font-size:18px;font-weight:900}.pdf-report .stat .l{font-size:11px;color:#6B7A72}.pdf-report table{width:100%;border-collapse:collapse;margin-top:10px;font-size:10.5px;table-layout:fixed}.pdf-report th{background:#16302B;color:#fff;text-align:left;padding:7px 6px}.pdf-report td{border-bottom:1px solid #E7E0D5;padding:6px 6px;vertical-align:top}.pdf-report .c{text-align:center}.pdf-report .nowrap{white-space:nowrap}.pdf-report .money{white-space:nowrap;text-align:right;font-weight:700}.pdf-report .addr-col{width:18%;word-break:break-word}.pdf-report .exec-col{width:24%;font-size:9.5px;line-height:1.25;word-break:break-word;color:#243f39}.pdf-report .foot{border-top:2px solid #DED7CA;margin-top:22px;padding-top:12px;font-size:12px;color:#52645D}.pdf-report .sign{margin-top:14px;font-size:14px;font-weight:800;color:#16302B}
+@media(max-width:720px){.pdf-preview-content{padding:14px}.pdf-report .grid,.pdf-report .stats{grid-template-columns:1fr}.pdf-report .head{align-items:flex-start}.pdf-report .logoimg{width:82px;height:68px}}
+@media print{body.printing-pdf-report>*:not(#pdfPreviewOverlay){display:none!important}body.printing-pdf-report{background:#fff!important}.pdf-preview-overlay{display:block!important;position:static!important;inset:auto!important;overflow:visible!important;padding:0!important;background:#fff!important}.pdf-preview-toolbar{display:none!important}.pdf-preview-content{max-width:none!important;margin:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:12px!important}.pdf-report .note,.pdf-report .card,.pdf-report .bigbox{break-inside:avoid}.pdf-report table{page-break-inside:auto}.pdf-report tr{page-break-inside:avoid;page-break-after:auto}}
+
 </style>
 </head><body class="locked">
 <div id="authScreen" class="auth-screen">
@@ -104,7 +114,7 @@ body:not(.locked) #authScreen{display:none!important}
         <summary class="dev-summary">⚙ Розробник</summary>
         <div class="dev-panel">
           <div class="dev-line"><span>Користувач</span><b id="authUserPill">—</b></div>
-          <div class="dev-line"><span>Версія сайту</span><b id="versionTop">v9.9-beta</b></div>
+          <div class="dev-line"><span>Версія сайту</span><b id="versionTop">v10.0-beta</b></div>
           <button class="dev-action" onclick="openImport(); this.closest('details').open=false;">📂 Імпорт Excel ФДМУ</button>
           <button class="dev-action" onclick="refreshApp(); this.closest('details').open=false;">🔄 Очистити кеш / оновити</button>
         </div>
@@ -144,15 +154,15 @@ body:not(.locked) #authScreen{display:none!important}
   </div>
 </section>
 
-<section class="card"><div class="section">Параметри об’єкта</div><div class="grid"><div class="field"><label>Тип об’єкта</label><select id="objectType"><option value="apartment">Квартира</option><option value="dorm">Кімната в гуртожитку</option></select></div><div class="field"><label>Район / зона</label><select id="district"><option value="all">Житомир — вся база</option><option value="Богунський">Богунський</option><option value="Корольовський">Корольовський</option><option value="Житомир (без району)">Житомир без району</option></select></div><div class="field"><label>Період реєстрації оцінок</label><select id="dataScope"><option value="1">Останній 1 місяць (30 днів)</option><option value="2">Останні 2 місяці (60 днів)</option><option value="3">Останні 3 місяці (90 днів)</option><option value="4">Останні 4 місяці (120 днів)</option><option value="5">Останні 5 місяців (150 днів)</option><option value="6">Останні 6 місяців (180 днів)</option><option value="12" selected>Останні 12 місяців</option><option value="archive">Повний архів 2022+</option></select><div class="hint">джерело завжди ФДМУ; вибір визначає глибину періоду для розрахунку</div></div><div class="field"><label>Кімнатність</label><select id="rooms"><option value="1">1-кімнатна</option><option value="2">2-кімнатна</option><option value="3">3-кімнатна</option><option value="4">4+ кімнатна</option></select></div><div class="field"><label>Загальна площа, кв.м</label><input id="area" type="number" step="0.1"></div><div class="field"><label>Рік побудови</label><input id="year" type="number"><div class="hint">фактор схожості, а не жорсткий фільтр</div></div><div class="field"><label>Поверх</label><input id="floor" type="number"></div><div class="field"><label>Поверховість будинку</label><input id="totalFloors" type="number"><div class="hint">якщо невідомо — залиште порожнім</div></div></div><div class="notice">Оліївка включена до загальної міської бази Житомира. Режим «Житомир — вся база» охоплює Богунський, Корольовський, Житомир без району та Оліївку 2018+. Без загальної площі система показує тільки загальну статистику бази. Вибірка зареєстрованих оцінок формується після введення площі; рік і поверх враховуються лише якщо вони заповнені.</div><div class="btn-row" style="margin-top:12px"><button class="btn" onclick="runAuto()">Сформувати вибірку ФДМУ</button><button class="btn secondary" onclick="selectAll(true)">Вибрати всі</button><button class="btn warn" onclick="selectAll(false)">Очистити всі</button><button class="btn gray" onclick="recalcSelected()">Перерахувати</button></div></section>
-<section class="card collapsed-section" id="dbCard"><div class="section">Інформація про базу</div><div class="stats"><div class="stat"><div class="l">Версія сайту</div><div class="v" id="st-version">9.9-beta</div></div><div class="stat"><div class="l">Записів у робочій базі</div><div class="v" id="st-count">—</div></div><div class="stat"><div class="l">Квартири</div><div class="v" id="st-apts">—</div></div><div class="stat"><div class="l">Кімнати/гуртожитки</div><div class="v" id="st-dorms">—</div></div><div class="stat"><div class="l">Показано оцінок</div><div class="v" id="st-shown">—</div></div><div class="stat"><div class="l">Вибрано</div><div class="v" id="st-selected">—</div></div><div class="stat"><div class="l">Оновлено базу</div><div class="v" id="st-updated" style="font-size:15px">—</div></div><div class="stat"><div class="l">Всього Житомирська міська зона</div><div class="v" id="st-raw-city">—</div></div><div class="stat"><div class="l">Придатні до дедублікації</div><div class="v" id="st-before-dup">—</div></div><div class="stat"><div class="l">Не входять у довідник</div><div class="v" id="st-excluded">—</div></div><div class="stat"><div class="l">Вилучено не місто за адресою</div><div class="v" id="st-noncity-removed">—</div></div><div class="stat"><div class="l">Прибрано дублікатів</div><div class="v" id="st-dup">—</div></div><div class="stat"><div class="l">Виконавців</div><div class="v" id="st-exec">—</div></div><div class="stat"><div class="l">Медіана грн/м²</div><div class="v" id="st-medppm">—</div></div><div class="stat"><div class="l">Оліївка у складі Житомира
+<section class="card" id="params-card"><div class="section">Параметри об’єкта</div><div class="grid"><div class="field"><label>Тип об’єкта</label><select id="objectType"><option value="apartment">Квартира</option><option value="dorm">Кімната в гуртожитку</option></select></div><div class="field"><label>Район / зона</label><select id="district"><option value="all">Житомир — вся база</option><option value="Богунський">Богунський</option><option value="Корольовський">Корольовський</option><option value="Житомир (без району)">Житомир без району</option></select></div><div class="field"><label>Період реєстрації оцінок</label><select id="dataScope"><option value="1">Останній 1 місяць (30 днів)</option><option value="2">Останні 2 місяці (60 днів)</option><option value="3">Останні 3 місяці (90 днів)</option><option value="4">Останні 4 місяці (120 днів)</option><option value="5">Останні 5 місяців (150 днів)</option><option value="6">Останні 6 місяців (180 днів)</option><option value="12" selected>Останні 12 місяців</option><option value="archive">Повний архів 2022+</option></select><div class="hint">джерело завжди ФДМУ; вибір визначає глибину періоду для розрахунку</div></div><div class="field"><label>Кімнатність</label><select id="rooms"><option value="1">1-кімнатна</option><option value="2">2-кімнатна</option><option value="3">3-кімнатна</option><option value="4">4+ кімнатна</option></select></div><div class="field"><label>Загальна площа, кв.м</label><input id="area" type="number" step="0.1"></div><div class="field"><label>Рік побудови</label><input id="year" type="number"><div class="hint">фактор схожості, а не жорсткий фільтр</div></div><div class="field"><label>Поверх</label><input id="floor" type="number"></div><div class="field"><label>Поверховість будинку</label><input id="totalFloors" type="number"><div class="hint">якщо невідомо — залиште порожнім</div></div></div><div class="notice">Оліївка включена до загальної міської бази Житомира. Режим «Житомир — вся база» охоплює Богунський, Корольовський, Житомир без району та Оліївку 2018+. Без загальної площі система показує тільки загальну статистику бази. Вибірка зареєстрованих оцінок формується після введення площі; рік і поверх враховуються лише якщо вони заповнені.</div><div class="btn-row" style="margin-top:12px"><button class="btn" onclick="runAuto()">Сформувати вибірку ФДМУ</button><button class="btn secondary" onclick="selectAll(true)">Вибрати всі</button><button class="btn warn" onclick="selectAll(false)">Очистити всі</button><button class="btn gray" onclick="recalcSelected()">Перерахувати</button></div></section>
+<section class="card collapsed-section" id="dbCard"><div class="section">Інформація про базу</div><div class="stats"><div class="stat"><div class="l">Версія сайту</div><div class="v" id="st-version">10.0-beta</div></div><div class="stat"><div class="l">Записів у робочій базі</div><div class="v" id="st-count">—</div></div><div class="stat"><div class="l">Квартири</div><div class="v" id="st-apts">—</div></div><div class="stat"><div class="l">Кімнати/гуртожитки</div><div class="v" id="st-dorms">—</div></div><div class="stat"><div class="l">Показано оцінок</div><div class="v" id="st-shown">—</div></div><div class="stat"><div class="l">Вибрано</div><div class="v" id="st-selected">—</div></div><div class="stat"><div class="l">Оновлено базу</div><div class="v" id="st-updated" style="font-size:15px">—</div></div><div class="stat"><div class="l">Всього Житомирська міська зона</div><div class="v" id="st-raw-city">—</div></div><div class="stat"><div class="l">Придатні до дедублікації</div><div class="v" id="st-before-dup">—</div></div><div class="stat"><div class="l">Не входять у довідник</div><div class="v" id="st-excluded">—</div></div><div class="stat"><div class="l">Вилучено не місто за адресою</div><div class="v" id="st-noncity-removed">—</div></div><div class="stat"><div class="l">Прибрано дублікатів</div><div class="v" id="st-dup">—</div></div><div class="stat"><div class="l">Виконавців</div><div class="v" id="st-exec">—</div></div><div class="stat"><div class="l">Медіана грн/м²</div><div class="v" id="st-medppm">—</div></div><div class="stat"><div class="l">Оліївка у складі Житомира
 12 міс. / архів</div><div class="v" id="st-oliivka">—</div></div></div></section>
 <section class="card" id="result-card"><div class="section">Результат</div><div class="main-result"><div class="label">Орієнтовний діапазон за вибраними зареєстрованими оцінками</div><div class="big" id="total">—</div><div class="usdline" id="totalUsd">—</div><div class="range" id="range">—</div><div class="usdline" id="rangeUsd">—</div><div id="reliability" class="reliability rel-low" style="display:none">—</div></div><div class="methods"><div class="method primary"><div class="m1">Зважена</div><div class="m2" id="weighted">—</div></div><div class="method"><div class="m1">Середня</div><div class="m2" id="simple">—</div></div><div class="method"><div class="m1">Медіана</div><div class="m2" id="median">—</div></div></div><div class="quality-box">
   <div class="quality-item"><div class="q-label">Надійність прогнозу</div><div class="q-value"><span id="qualityGrade" class="grade grade-d">—</span></div></div>
   <div class="quality-item"><div class="q-label">Використано оцінок</div><div class="q-value" id="usedRecords">—</div></div>
   <div class="quality-item"><div class="q-label">Основний діапазон грн/м²</div><div class="q-value" id="iqrPpm">—</div></div>
   <div class="quality-item"><div class="q-label">Основний діапазон вартості</div><div class="q-value" id="iqrValue">—</div></div>
-</div><div id="details" class="notice" style="display:none"></div></section>
+</div><div class="result-actions"><button class="btn gray" onclick="scrollToParams()">← Крок назад</button><button class="btn secondary" onclick="generatePdfReference()">📄 PDF-довідка</button></div><div id="details" class="notice" style="display:none"></div></section>
 <section class="card collapsed-section" id="sampleCard">
   <div class="section">Структура використаної вибірки</div>
   <div class="sample-grid">
@@ -188,7 +198,7 @@ body:not(.locked) #authScreen{display:none!important}
   <div class="analytics-note">Аналітика виконавців згорнута в окремі блоки, щоб сторінка не розтягувалась. Аналітика побудована на архівній базі; калькулятор може працювати за 1–6, 12 місяців або по повному архіву. Показники є довідковими: медіана грн/м², кількість зареєстрованих оцінок і період реєстрації.</div>
 </section>
 <section class="card collapsed-section" id="recordsCard"><div class="controls"><div><div class="section" style="margin-bottom:4px">Зареєстровані оцінки</div><div class="hint">Число в кружечку — бал близькості до заданих параметрів, не номер об’єкта.</div></div><input class="search" id="search" placeholder="Пошук по адресі" oninput="renderList()"></div><div class="analog-list" id="list" style="margin-top:12px"><div class="empty">Завантаження бази...</div></div></section>
-<div class="footer">Довідкова інформація. Не є звітом про оцінку майна. Зареєстровані оцінки ФДМУ мають довідковий характер і не є автоматично придатним джерелом для звіту без окремого аналізу оцінювачем. Використовується база: Житомирська міська зона; службові реквізити не відображаються.<br><b>ТОВ «ЕКСПЕРТНА ДУМКА» · Оцінка майна · 097 921 37 72</b><br>Версія сайту: 9.9-beta · компактна верхня панель · довіра A/B/C · IQR · Оліївка = Житомир</div>
+<div class="footer">Довідкова інформація. Не є звітом про оцінку майна. Зареєстровані оцінки ФДМУ мають довідковий характер і не є автоматично придатним джерелом для звіту без окремого аналізу оцінювачем. Використовується база: Житомирська міська зона; службові реквізити не відображаються.<br><b>ТОВ «ЕКСПЕРТНА ДУМКА» · Оцінка майна · 097 921 37 72</b><br>Версія сайту: 10.0-beta · компактна верхня панель · довіра A/B/C · IQR · Оліївка = Житомир</div>
 </main>
 <div id="toast" class="toast"></div>
 <script>
@@ -311,92 +321,87 @@ function currentObjectDescription(){
   const floor=t.floor?`${t.floor}${t.totalFloors?'/'+t.totalFloors:''}`:'не вказано';
   return {type,district,rooms,area,year,floor};
 }
-function generatePdfReference(){
+
+function scrollToParams(){
+  const el=document.getElementById('params-card')||document.querySelector('section.card');
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function getSelectedRecordsForPdf(){
+  try{return CAND.filter(r=>SELECTED.has(r._id));}catch(e){return []}
+}
+function currentObjectDescription(){
+  const t=target();
+  const type=t.objectType==='dorm'?'кімната в гуртожитку':'квартира';
+  const district=(t.district==='all')?'Житомир — вся база':t.district;
+  const rooms=t.rooms?`${t.rooms}-кімнатна`:'';
+  const area=t.area?`${t.area} кв.м`:'не вказано';
+  const year=t.year?`${t.year} р.`:'не вказано';
+  const floor=t.floor?`${t.floor}${t.totalFloors?'/'+t.totalFloors:''}`:'не вказано';
+  return {type,district,rooms,area,year,floor};
+}
+function buildPdfReferenceHtml(){
   const total=document.getElementById('total').textContent||'—';
-  if(total==='—') {showToast('Спочатку введіть площу і сформуйте вибірку'); return;}
+  if(total==='—') {showToast('Спочатку введіть площу і сформуйте вибірку'); return null;}
   const range=document.getElementById('range').textContent||'';
   const selected=getSelectedRecordsForPdf();
+  if(!selected.length){showToast('Немає вибраних оцінок для PDF-довідки'); return null;}
   const obj=currentObjectDescription();
-  const avgPpm = selected.length ? Math.round(selected.reduce((s,r)=>s+(+r['цкв']||0),0)/selected.length) : 0;
-  const medPpm = selected.length ? median(selected.map(r=>+r['цкв']||0)) : 0;
-  const minPpm = selected.length ? Math.min(...selected.map(r=>+r['цкв']||0)) : 0;
-  const maxPpm = selected.length ? Math.max(...selected.map(r=>+r['цкв']||0)) : 0;
+  const values=selected.map(r=>+r['цкв']||0).filter(Boolean);
+  const avgPpm = values.length ? Math.round(values.reduce((s,v)=>s+v,0)/values.length) : 0;
+  const medPpm = values.length ? median(values) : 0;
+  const minPpm = values.length ? Math.min(...values) : 0;
+  const maxPpm = values.length ? Math.max(...values) : 0;
   const today=new Date().toLocaleDateString('uk-UA');
   const updated=document.getElementById('st-updated')?.textContent||'—';
+  const period=document.getElementById('sum-period')?.textContent||'—';
   const rows=selected.slice(0,12).map((r,i)=>`<tr><td class="c">${i+1}</td><td class="addr-col">${safe(showAddress(r))}</td><td class="c nowrap">${r['пл']||'—'}</td><td class="c nowrap">${r['пов']||'—'}${r['пх']?'/'+r['пх']:''}</td><td class="c nowrap">${r['рік']||'—'}</td><td class="c nowrap">${safe(recordDate(r))}</td><td class="money nowrap">${fmt(r['цкв']||0)}</td><td class="money nowrap">${fmt(r['в']||((+r['цкв']||0)*(+r['пл']||0)))}</td><td class="c nowrap">${r._s||'—'}</td><td class="exec-col">${safe(getExecutor(r))}</td></tr>`).join('');
   const execBlock=executorSummary(selected);
-  const w=window.open('', '_blank');
-  if(!w){showToast('Браузер заблокував відкриття PDF-вікна');return;}
-  w.document.open();
-  w.document.write(`<!DOCTYPE html><html lang="uk"><head><meta charset="UTF-8"><title>Довідка ФДМУ</title>
-  <style>
-    *{box-sizing:border-box} body{font-family:Arial,sans-serif;color:#16302B;margin:0;background:#fff;padding:28px;line-height:1.45} 
-    .page{max-width:820px;margin:0 auto}.head{display:flex;align-items:center;gap:18px;border-bottom:3px solid #16302B;padding-bottom:14px;margin-bottom:18px}.logoimg{width:110px;height:90px;object-fit:contain}.brand h1{font-size:22px;margin:0;color:#16302B}.brand .sub{font-size:13px;color:#52645D;margin-top:3px}.company{font-size:14px;font-weight:700;color:#16302B;margin-top:8px}.gold{color:#C6912B}.title{font-size:20px;font-weight:800;margin:18px 0 10px;text-transform:uppercase;letter-spacing:.03em}.note{background:#FFF7E6;border-left:5px solid #C6912B;padding:12px 14px;border-radius:8px;color:#6B4A00;font-size:13px;margin:12px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}.card{border:1px solid #DED7CA;border-radius:12px;padding:12px;background:#FCFBF8}.label{font-size:11px;color:#6B7A72;text-transform:uppercase;font-weight:800}.value{font-size:18px;font-weight:800;margin-top:4px}.bigbox{background:#EAF4F0;border:2px solid #1B6B5A;border-radius:14px;padding:18px;text-align:center;margin:16px 0}.bigbox .main{font-size:32px;font-weight:900}.range{font-size:15px;color:#52645D;margin-top:6px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.stat{border:1px solid #DED7CA;border-radius:10px;padding:10px}.stat .v{font-size:18px;font-weight:900}.stat .l{font-size:11px;color:#6B7A72}table{width:100%;border-collapse:collapse;margin-top:10px;font-size:10.5px;table-layout:fixed}th{background:#16302B;color:#fff;text-align:left;padding:7px 6px}td{border-bottom:1px solid #E7E0D5;padding:6px 6px;vertical-align:top}.c{text-align:center}.nowrap{white-space:nowrap}.money{white-space:nowrap;text-align:right;font-weight:700}.addr-col{width:18%;word-break:break-word}.exec-col{width:24%;font-size:9.5px;line-height:1.25;word-break:break-word;color:#243f39} .foot{border-top:2px solid #DED7CA;margin-top:22px;padding-top:12px;font-size:12px;color:#52645D}.sign{margin-top:14px;font-size:14px;font-weight:800;color:#16302B}.actions{position:sticky;top:0;background:#fff;padding:10px 0;margin-bottom:10px;border-bottom:1px solid #eee}.printbtn{background:#1B6B5A;color:#fff;border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}@media print{.actions{display:none} body{padding:18px}.page{max-width:none}.note{break-inside:avoid}.card,.bigbox{break-inside:avoid}}
-  
-.auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#16302B,#1B6B5A);padding:18px}
-.auth-card{width:100%;max-width:420px;background:#fff;border-radius:18px;padding:22px;box-shadow:0 18px 60px rgba(0,0,0,.28)}
-.auth-card h2{font-size:21px;color:#16302B;margin-bottom:6px}
-.auth-card p{font-size:13px;color:#6B7A72;margin-bottom:14px}
-.auth-card .field{margin-bottom:10px}
-.auth-error{display:none;background:#FEE2E2;color:#991B1B;border:1px solid #FCA5A5;border-radius:10px;padding:10px;margin-top:10px;font-size:13px;font-weight:800}
-.auth-note{font-size:11px;color:#6B7A72;line-height:1.45;margin-top:12px}
-body.locked .app-header,body.locked main,body.locked .mobile-actions{display:none!important}
-body:not(.locked) #authScreen{display:none!important}
-.user-pill{display:inline-flex;align-items:center;border:1px solid rgba(255,255,255,.18);color:#fff;background:rgba(255,255,255,.08);border-radius:11px;padding:9px 12px;font-weight:900;font-size:13px}
-.hidden-by-role{display:none!important}
-
-
-.collapse-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.collapse-toggle{border:1px solid #BFD4CC;background:#EEF4F1;color:#1B6B5A;border-radius:12px;padding:11px 13px;font-weight:900;cursor:pointer;transition:.15s ease}
-.collapse-toggle.admin{border-color:#E6C16B;background:#FFF2D6;color:#8A5D00}
-.collapse-toggle.is-active{background:var(--teal);border-color:var(--teal);color:#fff;box-shadow:0 0 0 3px rgba(27,107,90,.16)}
-.collapse-toggle.admin.is-active{background:#9A6500;border-color:#9A6500;color:#fff;box-shadow:0 0 0 3px rgba(154,101,0,.16)}
-.field.is-active label{color:#0B5B4D;font-weight:900}
-.field.is-active input,.field.is-active select{border-color:#0B7A63;background:#DDF4EC;box-shadow:0 0 0 3px rgba(27,107,90,.22);font-weight:800}
-.field.is-active .hint{color:#0B5B4D;font-weight:700}
-.field.is-active::before{content:'✓ активний фільтр';display:inline-block;margin-bottom:4px;font-size:10px;font-weight:900;color:#0B5B4D;background:#CFF7E4;border:1px solid #8BD8B6;border-radius:999px;padding:2px 7px}
-.btn.is-active{box-shadow:0 0 0 3px rgba(27,107,90,.16);transform:translateY(-1px)}
-.collapsed-section{display:none}
-.collapsed-section.open{display:block}
-
-
-.quality-box{margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
-.quality-item{background:#F6F4EF;border:1px solid #E8E1D6;border-radius:12px;padding:10px}
-.quality-item .q-label{font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase}
-.quality-item .q-value{font-size:18px;font-weight:900;margin-top:4px;color:var(--ink)}
-.grade{display:inline-flex;align-items:center;justify-content:center;min-width:42px;height:42px;border-radius:999px;font-size:22px;font-weight:900}
-.grade-a{background:#DCFCE7;color:#166534}
-.grade-b{background:#FEF3C7;color:#92400E}
-.grade-c{background:#FEE2E2;color:#991B1B}
-.grade-d{background:#E5E7EB;color:#374151}
-
-</style></head><body class="locked">
-<div id="authScreen" class="auth-screen">
-  <div class="auth-card">
-    <h2>Доступ до довідника ФДМУ</h2>
-    <p>Вхід за іменним логіном і паролем. Тимчасова тестова авторизація без сервера.</p>
-    <div class="field"><label>Логін</label><input id="authLogin" autocomplete="username"></div>
-    <div class="field"><label>Пароль</label><input id="authPassword" type="password" autocomplete="current-password"></div>
-    <button class="btn" style="width:100%" onclick="authLogin()">Увійти</button>
-    <div id="authError" class="auth-error">Невірний логін або пароль</div>
-    <div class="auth-note">Доступ поділений за ролями: адміністратор бачить усе; рієлтор бачить довідник без аналітики оцінювачів. Це інтерфейсне обмеження без сервера.</div>
-  </div>
-</div>
-<div class="page"><div class="actions"><button class="printbtn" onclick="window.print()">Зберегти / друк PDF</button></div>
-  <div class="head"><img class="logoimg" src="logo.jpg"><div class="brand"><h1>ТОВ «ЕКСПЕРТНА ДУМКА»</h1><div class="sub">Оцінка майна · Житомир · тел. 097 921 37 72</div><div class="company">Довідник зареєстрованих оцінок ФДМУ — Житомир</div></div></div>
-  <div class="title">Довідка про орієнтовний рівень зареєстрованих вартостей</div>
-  <div class="note">Ця довідка сформована для попереднього інформування клієнта на підставі вже зареєстрованих оцінок у базі ФДМУ. Документ не є звітом про оцінку майна та не є автоматично придатним джерелом для звіту без окремого аналізу оцінювачем.</div>
-  <div class="grid"><div class="card"><div class="label">Тип об’єкта</div><div class="value">${obj.type}</div></div><div class="card"><div class="label">Район</div><div class="value">${obj.district}</div></div><div class="card"><div class="label">Кімнатність / площа</div><div class="value">${obj.rooms} · ${obj.area}</div></div><div class="card"><div class="label">Рік / поверх</div><div class="value">${obj.year} · пов. ${obj.floor}</div></div></div>
-  <div class="bigbox"><div class="label">Орієнтовний результат за вибіркою</div><div class="main">${total}</div><div class="range">≈ ${fmtUsd(numFromText(total)/USD_RATE)} · довідково</div><div class="range">${range}</div></div>
-  <div class="stats"><div class="stat"><div class="l">Використано оцінок</div><div class="v">${selected.length}</div></div><div class="stat"><div class="l">Середня грн/м²</div><div class="v">${fmt(avgPpm)}</div></div><div class="stat"><div class="l">Медіана грн/м²</div><div class="v">${fmt(medPpm)}</div></div><div class="stat"><div class="l">Діапазон грн/м²</div><div class="v">${fmt(minPpm)}–${fmt(maxPpm)}</div></div></div>
-  <div class="note"><b>База:</b> ФДМУ, Житомирська міська зона. У таблиці наведена дата реєстрації оцінки. Оновлення бази: ${updated}. Дата формування довідки: ${today}. Версія сайту: ${APP_VERSION}.</div>
-  <h3>Фрагмент використаної вибірки</h3><table><thead><tr><th style="width:4%">№</th><th style="width:16%">Адреса</th><th style="width:7%">Площа</th><th style="width:7%">Поверх</th><th style="width:7%">Рік</th><th style="width:10%">Дата реєстрації оцінки</th><th style="width:9%">грн/м²</th><th style="width:11%">Вартість об’єкта</th><th style="width:5%">Бал</th><th style="width:24%">Виконавець оцінки</th></tr></thead><tbody>${rows||'<tr><td colspan="10">Вибірка не сформована</td></tr>'}</tbody></table>${execBlock}
-  <div class="foot">Інформація має довідковий характер. Зареєстровані оцінки ФДМУ використовуються лише для загального розуміння рівня вартостей, які вже реєструвалися у Єдиній базі. Остаточний результат визначається лише після проведення повної оцінки майна сертифікованим оцінювачем.</div>
-  <div class="sign">ТОВ «ЕКСПЕРТНА ДУМКА»<br>Оцінка майна<br>тел. 097 921 37 72</div>
-  </div></body></html>`);
-  w.document.close();
-  setTimeout(()=>{try{w.focus()}catch(e){}},300);
+  return `<div class="pdf-report">
+    <div class="head"><img class="logoimg" src="logo.jpg" alt="Експертна Думка"><div><h1>ТОВ «ЕКСПЕРТНА ДУМКА»</h1><div class="sub">Оцінка майна · Житомир · тел. 097 921 37 72</div><div class="sub"><b>Довідник зареєстрованих оцінок ФДМУ — Житомир</b></div></div></div>
+    <div class="title">Довідка про орієнтовний рівень зареєстрованих вартостей</div>
+    <div class="note">Це довідкова інформація за зареєстрованими оцінками ФДМУ. Документ не є звітом про оцінку майна і не замінює професійний висновок оцінювача.</div>
+    <div class="grid"><div class="card"><div class="label">Тип / зона</div><div class="value">${obj.type} · ${obj.district}</div></div><div class="card"><div class="label">Кімнатність / площа</div><div class="value">${obj.rooms} · ${obj.area}</div></div><div class="card"><div class="label">Рік / поверх</div><div class="value">${obj.year} · пов. ${obj.floor}</div></div><div class="card"><div class="label">Період оцінок</div><div class="value">${safe(period)}</div></div></div>
+    <div class="bigbox"><div class="label">Орієнтовний результат за вибіркою</div><div class="main">${total}</div><div class="range">≈ ${fmtUsd(numFromText(total)/USD_RATE)} · довідково</div><div class="range">${range}</div></div>
+    <div class="stats"><div class="stat"><div class="l">Використано оцінок</div><div class="v">${selected.length}</div></div><div class="stat"><div class="l">Середня грн/м²</div><div class="v">${fmt(avgPpm)}</div></div><div class="stat"><div class="l">Медіана грн/м²</div><div class="v">${fmt(medPpm)}</div></div><div class="stat"><div class="l">Діапазон грн/м²</div><div class="v">${fmt(minPpm)}–${fmt(maxPpm)}</div></div></div>
+    <div class="note"><b>База:</b> ФДМУ, Житомирська міська зона. Оновлення бази: ${safe(updated)}. Дата формування довідки: ${safe(today)}. Версія сайту: ${APP_VERSION}.</div>
+    <h3>Фрагмент використаної вибірки</h3><table><thead><tr><th style="width:4%">№</th><th style="width:16%">Адреса</th><th style="width:7%">Площа</th><th style="width:7%">Поверх</th><th style="width:7%">Рік</th><th style="width:10%">Дата реєстрації</th><th style="width:9%">грн/м²</th><th style="width:11%">Вартість</th><th style="width:5%">Бал</th><th style="width:24%">Виконавець</th></tr></thead><tbody>${rows||'<tr><td colspan="10">Вибірка не сформована</td></tr>'}</tbody></table>${execBlock}
+    <div class="foot">Інформація має довідковий характер. Зареєстровані оцінки ФДМУ використовуються лише для загального розуміння рівня вартостей, які вже реєструвалися у Єдиній базі. Остаточний результат визначається лише після проведення повної оцінки майна сертифікованим оцінювачем.</div>
+    <div class="sign">ТОВ «ЕКСПЕРТНА ДУМКА»<br>Оцінка майна<br>тел. 097 921 37 72</div>
+  </div>`;
 }
+function ensurePdfPreviewOverlay(){
+  let overlay=document.getElementById('pdfPreviewOverlay');
+  if(overlay) return overlay;
+  overlay=document.createElement('div');
+  overlay.id='pdfPreviewOverlay';
+  overlay.className='pdf-preview-overlay';
+  overlay.innerHTML=`<div class="pdf-preview-toolbar"><div class="left"><button class="btn gray" onclick="backFromPdfPreview()">← Крок назад</button><span class="pdf-preview-title">PDF-довідка перед збереженням</span></div><div class="right"><button class="btn" onclick="printPdfPreview()">Зберегти / друк PDF</button><button class="btn warn" onclick="closePdfPreview()">Закрити</button></div></div><div id="pdfPreviewContent" class="pdf-preview-content"></div>`;
+  document.body.appendChild(overlay);
+  return overlay;
+}
+function generatePdfReference(){
+  const html=buildPdfReferenceHtml();
+  if(!html) return;
+  const overlay=ensurePdfPreviewOverlay();
+  document.getElementById('pdfPreviewContent').innerHTML=html;
+  overlay.style.display='block';
+  document.body.classList.add('pdf-preview-open');
+  overlay.scrollTop=0;
+}
+function closePdfPreview(){
+  const overlay=document.getElementById('pdfPreviewOverlay');
+  if(overlay) overlay.style.display='none';
+  document.body.classList.remove('pdf-preview-open','printing-pdf-report');
+}
+function backFromPdfPreview(){
+  closePdfPreview();
+  setTimeout(scrollToParams,50);
+}
+function printPdfPreview(){
+  document.body.classList.add('printing-pdf-report');
+  setTimeout(()=>{window.print();},80);
+}
+window.addEventListener('afterprint',()=>document.body.classList.remove('printing-pdf-report'));
 
 
 function openImport(){
@@ -600,7 +605,7 @@ function authLogout(){
   location.reload();
 }
 
-const APP_VERSION='9.9-beta';
+const APP_VERSION='10.0-beta';
 const USD_RATE=41.5; // довідковий курс для відображення USD
 let DATA=[], WORK_DATA=[], ARCHIVE_DATA=[], CAND=[], SELECTED=new Set(), TARGET=null, ARCHIVE_ANALYTICS=null, ACTIVE_SOURCE='work';
 const allowed = new Set(['Богунський','Корольовський','Житомир (без району)','Оліївка новобудови']);
