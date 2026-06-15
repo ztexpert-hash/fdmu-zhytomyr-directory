@@ -15,6 +15,21 @@
 .executor-detail-tools{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.executor-detail-tools button{font-size:12px}.executor-details details{border:1px solid #E8E1D6;border-radius:12px;background:#fff;margin:8px 0;overflow:hidden}.executor-details summary{cursor:pointer;font-weight:900;color:#16302B;background:#F6F4EF;padding:10px 12px;list-style:none}.executor-details summary::-webkit-details-marker{display:none}.executor-details summary:before{content:'▶';display:inline-block;margin-right:6px;color:#1B6B5A}.executor-details details[open]>summary:before{content:'▼'}.executor-details .inner{padding:10px}.executor-works-table{width:100%;border-collapse:collapse;font-size:11px;min-width:860px}.executor-works-table th{background:#16302B;color:#fff;text-align:left;padding:7px}.executor-works-table td{border-bottom:1px solid #EEE8DD;padding:6px;vertical-align:top}.executor-works-table .num{text-align:right;font-weight:900;white-space:nowrap}.executor-works-table .center{text-align:center;white-space:nowrap}.executor-works-wrap{overflow:auto;border:1px solid #EEE8DD;border-radius:10px}.executor-code{font-size:11px;color:#6B7A72;font-weight:800;margin-top:3px}
 .collapsible-panel{border:1px solid var(--line);border-radius:12px;background:#FCFBF8;overflow:hidden}.collapsible-panel>summary{cursor:pointer;list-style:none;padding:10px 12px;background:#F6F4EF;color:var(--teal);font-weight:900;text-transform:uppercase;letter-spacing:.06em;font-size:12px;border-bottom:1px solid var(--line)}.collapsible-panel>summary::-webkit-details-marker{display:none}.collapsible-panel>summary:before{content:'▶';display:inline-block;margin-right:7px;color:#1B6B5A}.collapsible-panel[open]>summary:before{content:'▼'}.collapsible-panel .panel-body{padding:10px 12px}.scroll-limited{max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}.executor-months-wrap.scroll-limited{max-height:360px}.analytics-panel h3{margin:0}.quick-jump{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.quick-jump .btn{padding:8px 10px;font-size:12px}
 
+
+.compact-header-actions{align-items:center}
+.compact-header-actions .client-btn,.compact-header-actions .update-btn{padding:8px 10px;font-size:13px}
+.compact-header-actions .compact-icon{width:40px;min-width:40px;padding:8px 0;text-align:center}
+.logout-btn{opacity:.88}
+.dev-menu{position:relative;display:inline-block}
+.dev-summary{list-style:none;cursor:pointer;border:1px solid rgba(244,211,141,.45);background:rgba(244,211,141,.12);color:#F4D38D;border-radius:11px;padding:8px 10px;font-weight:900;font-size:13px}
+.dev-summary::-webkit-details-marker{display:none}
+.dev-menu[open] .dev-summary{background:#9A6500;color:#fff;border-color:#9A6500}
+.dev-panel{position:absolute;right:0;top:calc(100% + 8px);z-index:7000;width:270px;background:#fff;color:#16302B;border:1px solid #DED7CA;border-radius:14px;padding:10px;box-shadow:0 16px 44px rgba(0,0,0,.22)}
+.dev-line{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;font-size:12px;padding:7px 6px;border-bottom:1px solid #EEE8DD}
+.dev-line span{color:#6B7A72;font-weight:800}.dev-line b{text-align:right;word-break:break-word}
+.dev-action{width:100%;margin-top:8px;border:1px solid #BFD4CC;background:#EEF4F1;color:#1B6B5A;border-radius:10px;padding:10px 11px;font-weight:900;cursor:pointer;text-align:left}
+.dev-action:hover{background:#DDF4EC}
+@media(max-width:720px){.dev-menu{position:static}.dev-panel{left:12px;right:12px;width:auto}.compact-header-actions .client-btn,.compact-header-actions .update-btn,.dev-summary{font-size:12px;padding:8px 9px}}
 @media(max-width:720px){.app-header{padding-left:12px;padding-right:12px}.brand{align-items:flex-start}.logo{width:48px;height:48px}.brand h1{font-size:17px}.header-actions{width:100%}.header-actions .client-btn,.header-actions .update-btn,.header-actions .version-pill{font-size:12px;padding:8px 10px}.wrap{padding:10px 10px calc(var(--safe-bot) + 86px)}.card{padding:13px;border-radius:14px}.grid,.stats,.methods{grid-template-columns:1fr}.btn-row .btn{flex:1;min-width:145px}.analog-list{max-height:none;overflow:visible}.analog{grid-template-columns:28px 48px 1fr;padding:10px 8px;font-size:12px}.ppm{grid-column:3;text-align:left;font-size:13px}.big{font-size:28px}.mobile-actions{display:flex}}
 
 .auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#16302B,#1B6B5A);padding:18px}
@@ -64,7 +79,7 @@ body:not(.locked) #authScreen{display:none!important}
     <div class="field"><label>Пароль</label><input id="authPassword" type="password" autocomplete="current-password"></div>
     <button class="btn" style="width:100%" onclick="authLogin()">Увійти</button>
     <div id="authError" class="auth-error">Невірний логін або пароль</div>
-    <div class="auth-note">Доступ поділений за ролями: адміністратор бачить усе; ріелтор бачить довідник без аналітики оцінювачів. Це інтерфейсне обмеження без сервера.</div>
+    <div class="auth-note">Доступ поділений за ролями: адміністратор бачить усе; рієлтор бачить довідник без аналітики оцінювачів. Це інтерфейсне обмеження без сервера.</div>
   </div>
 </div>
 
@@ -78,14 +93,23 @@ body:not(.locked) #authScreen{display:none!important}
         <div class="company"><b>ТОВ «ЕКСПЕРТНА ДУМКА»</b><br>Оцінка майна · <a class="phone" href="tel:+380979213772">097 921 37 72</a></div>
       </div>
     </div>
-    <div class="header-actions">
+    <div class="header-actions compact-header-actions">
       <button class="update-btn" onclick="refreshApp()">🔄 Оновити</button>
-      <button class="update-btn admin-only" onclick="openImport()">📂 Імпорт Excel ФДМУ</button>
       <input id="excelImport" type="file" accept=".xlsx,.xls" style="display:none" onchange="importExcelFile(event)">
-      <span class="version-pill" id="versionTop">v9.7-beta</span><span class="user-pill" id="authUserPill">—</span><button class="client-btn" onclick="authLogout()">Вийти</button>
-      <button class="client-btn" onclick="generatePdfReference()">📄 PDF-довідка</button>
-      <button class="client-btn" onclick="copyClientText()">📋 Текст клієнту</button>
-      <button id="installBtn" class="client-btn" onclick="installApp()">📲 Встановити додаток</button><a class="client-btn call-btn" href="tel:+380979213772">📞 Замовити оцінку</a>
+      <button class="client-btn" onclick="generatePdfReference()">📄 PDF</button>
+      <button class="client-btn" onclick="copyClientText()">📋 Текст</button>
+      <a class="client-btn call-btn" href="tel:+380979213772">📞 Оцінка</a>
+      <button id="installBtn" class="client-btn compact-icon" onclick="installApp()" title="Встановити додаток">📲</button>
+      <details class="dev-menu admin-only">
+        <summary class="dev-summary">⚙ Розробник</summary>
+        <div class="dev-panel">
+          <div class="dev-line"><span>Користувач</span><b id="authUserPill">—</b></div>
+          <div class="dev-line"><span>Версія сайту</span><b id="versionTop">v9.9-beta</b></div>
+          <button class="dev-action" onclick="openImport(); this.closest('details').open=false;">📂 Імпорт Excel ФДМУ</button>
+          <button class="dev-action" onclick="refreshApp(); this.closest('details').open=false;">🔄 Очистити кеш / оновити</button>
+        </div>
+      </details>
+      <button class="client-btn logout-btn" onclick="authLogout()">Вийти</button>
     </div>
   </div>
   <div class="chips" style="margin-top:12px"><span class="chip">Житомирська міська зона</span><span class="chip">ФДМУ</span><span class="chip">спрощена міська зона</span></div>
@@ -121,7 +145,7 @@ body:not(.locked) #authScreen{display:none!important}
 </section>
 
 <section class="card"><div class="section">Параметри об’єкта</div><div class="grid"><div class="field"><label>Тип об’єкта</label><select id="objectType"><option value="apartment">Квартира</option><option value="dorm">Кімната в гуртожитку</option></select></div><div class="field"><label>Район / зона</label><select id="district"><option value="all">Житомир — вся база</option><option value="Богунський">Богунський</option><option value="Корольовський">Корольовський</option><option value="Житомир (без району)">Житомир без району</option></select></div><div class="field"><label>Період реєстрації оцінок</label><select id="dataScope"><option value="1">Останній 1 місяць (30 днів)</option><option value="2">Останні 2 місяці (60 днів)</option><option value="3">Останні 3 місяці (90 днів)</option><option value="4">Останні 4 місяці (120 днів)</option><option value="5">Останні 5 місяців (150 днів)</option><option value="6">Останні 6 місяців (180 днів)</option><option value="12" selected>Останні 12 місяців</option><option value="archive">Повний архів 2022+</option></select><div class="hint">джерело завжди ФДМУ; вибір визначає глибину періоду для розрахунку</div></div><div class="field"><label>Кімнатність</label><select id="rooms"><option value="1">1-кімнатна</option><option value="2">2-кімнатна</option><option value="3">3-кімнатна</option><option value="4">4+ кімнатна</option></select></div><div class="field"><label>Загальна площа, кв.м</label><input id="area" type="number" step="0.1"></div><div class="field"><label>Рік побудови</label><input id="year" type="number"><div class="hint">фактор схожості, а не жорсткий фільтр</div></div><div class="field"><label>Поверх</label><input id="floor" type="number"></div><div class="field"><label>Поверховість будинку</label><input id="totalFloors" type="number"><div class="hint">якщо невідомо — залиште порожнім</div></div></div><div class="notice">Оліївка включена до загальної міської бази Житомира. Режим «Житомир — вся база» охоплює Богунський, Корольовський, Житомир без району та Оліївку 2018+. Без загальної площі система показує тільки загальну статистику бази. Вибірка зареєстрованих оцінок формується після введення площі; рік і поверх враховуються лише якщо вони заповнені.</div><div class="btn-row" style="margin-top:12px"><button class="btn" onclick="runAuto()">Сформувати вибірку ФДМУ</button><button class="btn secondary" onclick="selectAll(true)">Вибрати всі</button><button class="btn warn" onclick="selectAll(false)">Очистити всі</button><button class="btn gray" onclick="recalcSelected()">Перерахувати</button></div></section>
-<section class="card collapsed-section" id="dbCard"><div class="section">Інформація про базу</div><div class="stats"><div class="stat"><div class="l">Версія сайту</div><div class="v" id="st-version">9.7-beta</div></div><div class="stat"><div class="l">Записів у робочій базі</div><div class="v" id="st-count">—</div></div><div class="stat"><div class="l">Квартири</div><div class="v" id="st-apts">—</div></div><div class="stat"><div class="l">Кімнати/гуртожитки</div><div class="v" id="st-dorms">—</div></div><div class="stat"><div class="l">Показано оцінок</div><div class="v" id="st-shown">—</div></div><div class="stat"><div class="l">Вибрано</div><div class="v" id="st-selected">—</div></div><div class="stat"><div class="l">Оновлено базу</div><div class="v" id="st-updated" style="font-size:15px">—</div></div><div class="stat"><div class="l">Всього Житомирська міська зона</div><div class="v" id="st-raw-city">—</div></div><div class="stat"><div class="l">Придатні до дедублікації</div><div class="v" id="st-before-dup">—</div></div><div class="stat"><div class="l">Не входять у довідник</div><div class="v" id="st-excluded">—</div></div><div class="stat"><div class="l">Вилучено не місто за адресою</div><div class="v" id="st-noncity-removed">—</div></div><div class="stat"><div class="l">Прибрано дублікатів</div><div class="v" id="st-dup">—</div></div><div class="stat"><div class="l">Виконавців</div><div class="v" id="st-exec">—</div></div><div class="stat"><div class="l">Медіана грн/м²</div><div class="v" id="st-medppm">—</div></div><div class="stat"><div class="l">Оліївка у складі Житомира
+<section class="card collapsed-section" id="dbCard"><div class="section">Інформація про базу</div><div class="stats"><div class="stat"><div class="l">Версія сайту</div><div class="v" id="st-version">9.9-beta</div></div><div class="stat"><div class="l">Записів у робочій базі</div><div class="v" id="st-count">—</div></div><div class="stat"><div class="l">Квартири</div><div class="v" id="st-apts">—</div></div><div class="stat"><div class="l">Кімнати/гуртожитки</div><div class="v" id="st-dorms">—</div></div><div class="stat"><div class="l">Показано оцінок</div><div class="v" id="st-shown">—</div></div><div class="stat"><div class="l">Вибрано</div><div class="v" id="st-selected">—</div></div><div class="stat"><div class="l">Оновлено базу</div><div class="v" id="st-updated" style="font-size:15px">—</div></div><div class="stat"><div class="l">Всього Житомирська міська зона</div><div class="v" id="st-raw-city">—</div></div><div class="stat"><div class="l">Придатні до дедублікації</div><div class="v" id="st-before-dup">—</div></div><div class="stat"><div class="l">Не входять у довідник</div><div class="v" id="st-excluded">—</div></div><div class="stat"><div class="l">Вилучено не місто за адресою</div><div class="v" id="st-noncity-removed">—</div></div><div class="stat"><div class="l">Прибрано дублікатів</div><div class="v" id="st-dup">—</div></div><div class="stat"><div class="l">Виконавців</div><div class="v" id="st-exec">—</div></div><div class="stat"><div class="l">Медіана грн/м²</div><div class="v" id="st-medppm">—</div></div><div class="stat"><div class="l">Оліївка у складі Житомира
 12 міс. / архів</div><div class="v" id="st-oliivka">—</div></div></div></section>
 <section class="card" id="result-card"><div class="section">Результат</div><div class="main-result"><div class="label">Орієнтовний діапазон за вибраними зареєстрованими оцінками</div><div class="big" id="total">—</div><div class="usdline" id="totalUsd">—</div><div class="range" id="range">—</div><div class="usdline" id="rangeUsd">—</div><div id="reliability" class="reliability rel-low" style="display:none">—</div></div><div class="methods"><div class="method primary"><div class="m1">Зважена</div><div class="m2" id="weighted">—</div></div><div class="method"><div class="m1">Середня</div><div class="m2" id="simple">—</div></div><div class="method"><div class="m1">Медіана</div><div class="m2" id="median">—</div></div></div><div class="quality-box">
   <div class="quality-item"><div class="q-label">Надійність прогнозу</div><div class="q-value"><span id="qualityGrade" class="grade grade-d">—</span></div></div>
@@ -164,7 +188,7 @@ body:not(.locked) #authScreen{display:none!important}
   <div class="analytics-note">Аналітика виконавців згорнута в окремі блоки, щоб сторінка не розтягувалась. Аналітика побудована на архівній базі; калькулятор може працювати за 1–6, 12 місяців або по повному архіву. Показники є довідковими: медіана грн/м², кількість зареєстрованих оцінок і період реєстрації.</div>
 </section>
 <section class="card collapsed-section" id="recordsCard"><div class="controls"><div><div class="section" style="margin-bottom:4px">Зареєстровані оцінки</div><div class="hint">Число в кружечку — бал близькості до заданих параметрів, не номер об’єкта.</div></div><input class="search" id="search" placeholder="Пошук по адресі" oninput="renderList()"></div><div class="analog-list" id="list" style="margin-top:12px"><div class="empty">Завантаження бази...</div></div></section>
-<div class="footer">Довідкова інформація. Не є звітом про оцінку майна. Зареєстровані оцінки ФДМУ мають довідковий характер і не є автоматично придатним джерелом для звіту без окремого аналізу оцінювачем. Використовується база: Житомирська міська зона; службові реквізити не відображаються.<br><b>ТОВ «ЕКСПЕРТНА ДУМКА» · Оцінка майна · 097 921 37 72</b><br>Версія сайту: 9.7-beta · довіра A/B/C · IQR · Оліївка = Житомир</div>
+<div class="footer">Довідкова інформація. Не є звітом про оцінку майна. Зареєстровані оцінки ФДМУ мають довідковий характер і не є автоматично придатним джерелом для звіту без окремого аналізу оцінювачем. Використовується база: Житомирська міська зона; службові реквізити не відображаються.<br><b>ТОВ «ЕКСПЕРТНА ДУМКА» · Оцінка майна · 097 921 37 72</b><br>Версія сайту: 9.9-beta · компактна верхня панель · довіра A/B/C · IQR · Оліївка = Житомир</div>
 </main>
 <div id="toast" class="toast"></div>
 <script>
@@ -355,7 +379,7 @@ body:not(.locked) #authScreen{display:none!important}
     <div class="field"><label>Пароль</label><input id="authPassword" type="password" autocomplete="current-password"></div>
     <button class="btn" style="width:100%" onclick="authLogin()">Увійти</button>
     <div id="authError" class="auth-error">Невірний логін або пароль</div>
-    <div class="auth-note">Доступ поділений за ролями: адміністратор бачить усе; ріелтор бачить довідник без аналітики оцінювачів. Це інтерфейсне обмеження без сервера.</div>
+    <div class="auth-note">Доступ поділений за ролями: адміністратор бачить усе; рієлтор бачить довідник без аналітики оцінювачів. Це інтерфейсне обмеження без сервера.</div>
   </div>
 </div>
 <div class="page"><div class="actions"><button class="printbtn" onclick="window.print()">Зберегти / друк PDF</button></div>
@@ -506,7 +530,7 @@ function downloadImportedJson(){
 
 const AUTH_USERS=[
   {name:'Андрій',login:'andrii',role:'admin',expires:'2027-12-31',hash:'240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9'},
-  {name:'Ріелтор',login:'test1',role:'realtor',expires:'2026-12-31',hash:'ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae'}
+  {name:'Ріелтор',login:'test1',role:'rieltor',expires:'2026-12-31',hash:'ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae'}
 ];
 
 async function sha256Text(text){
@@ -524,7 +548,7 @@ function authExpired(u){
 }
 function roleLabel(role){
   if(role==='admin') return 'адмін';
-  if(role==='realtor') return 'ріелтор';
+  if(role==='rieltor') return 'ріелтор';
   return 'користувач';
 }
 function hasRoleAccess(u, feature){
@@ -576,7 +600,7 @@ function authLogout(){
   location.reload();
 }
 
-const APP_VERSION='9.7-beta';
+const APP_VERSION='9.9-beta';
 const USD_RATE=41.5; // довідковий курс для відображення USD
 let DATA=[], WORK_DATA=[], ARCHIVE_DATA=[], CAND=[], SELECTED=new Set(), TARGET=null, ARCHIVE_ANALYTICS=null, ACTIVE_SOURCE='work';
 const allowed = new Set(['Богунський','Корольовський','Житомир (без району)','Оліївка новобудови']);
