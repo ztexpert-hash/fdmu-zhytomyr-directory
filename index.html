@@ -718,7 +718,7 @@ function activeRecords(t){
 }
 function activeSourceLabel(){const t=TARGET||target(); if(ACTIVE_SOURCE==='archive') return 'Повний архів 2022+'; const m=parseInt(t.dataScope||'12',10); return 'Останні '+m+' '+monthWord(m)+' ('+(m*30)+' днів)';}
 function monthWord(n){n=+n; if(n===1)return 'місяць'; if(n>=2&&n<=4)return 'місяці'; return 'місяців';}
-function similarity(r,t){let s=100; const area=+r['пл']||0; if(t.area){const da=Math.abs(area-t.area)/t.area; s-=Math.min(da*115,42)} if(r['рік']&&t.year){const dy=Math.abs(+r['рік']-t.year); s-=Math.min(dy<=10?dy*.35:dy<=25?3.5+(dy-10)*1.1:20+(dy-25)*.45,30)} if(t.district!=='all' && !districtMatch(r,t.district))s-=12; if(r['пов']&&t.floor){const tf=t.totalFloors&&t.floor===t.totalFloors; const rf=r['пх']&&r['пов']===r['пх']; if((t.floor===1)!=(r['пов']===1))s-=8; if(tf!==rf)s-=5; s-=Math.min(Math.abs((+r['пов']||0)-t.floor)*.4,6)} return Math.max(1,Math.round(s));}
+function similarity(r,t){let s=100; const area=+r['пл']||0; if(t.area){const da=Math.abs(area-t.area)/t.area; s-=Math.min(da*135,48)} if(r['рік']&&t.year){const dy=Math.abs(+r['рік']-t.year); s-=Math.min(dy<=8?dy*.4:dy<=25?3.2+(dy-8)*1.2:23.6+(dy-25)*.5,32)} if(t.district!=='all' && !districtMatch(r,t.district))s-=12; if(r['пов']&&t.floor){const tf=t.totalFloors&&t.floor===t.totalFloors; const rf=r['пх']&&r['пов']===r['пх']; if((t.floor===1)!=(r['пов']===1))s-=8; if(tf!==rf)s-=5; s-=Math.min(Math.abs((+r['пов']||0)-t.floor)*.4,6)} return Math.max(1,Math.round(s));}
 function areaOk(r,t){if(!t.area)return true; const a=+r['пл']; let pct=t.area<30?.35:t.area<=60?.28:.22; return a>=t.area*(1-pct)&&a<=t.area*(1+pct)}
 function isDormRec(r){const tp=String(r['тип']||r['вид']||r['об']||'').toUpperCase(); const ad=String(r['ад']||'').toUpperCase(); return tp.includes('ГУРТОЖ')||tp.includes('КОМУНАЛ')||tp.includes('КІМНАТ')||ad.includes('ГУРТОЖ');}
 function objectTypeOk(r,t){const isDorm=isDormRec(r); return t.objectType==='dorm' ? isDorm : !isDorm;}
@@ -853,7 +853,37 @@ function renderSampleSummary(arr){
   document.getElementById('topAnalogTable').innerHTML=`<thead><tr><th>№</th><th>Бал</th><th>Адреса</th><th>Площа</th><th>Поверх</th><th>Рік</th><th>Дата реєстрації</th><th>Вартість</th><th>грн/м²</th><th>Виконавець</th></tr></thead><tbody>${rows}</tbody>`;
 }
 
-function trimByPpm(arr){return {used:[...arr], low:0, high:0};}
+function trimByPpm(arr){
+  // Відсікання цінових викидів за методом IQR (Тьюкі, 1.5×).
+  // Захищає середньозважену вартість від поодиноких аномальних грн/м².
+  // Запобіжники: при <6 записах не відсікаємо (вибірка замала);
+  // ніколи не прибираємо більше ~25% записів, щоб не «вирізати» половину бази.
+  const src=[...arr];
+  if(src.length<6) return {used:src, low:0, high:0, lowB:null, highB:null};
+  const ppms=src.map(r=>+r['цкв']||0).filter(x=>x>0).sort((a,b)=>a-b);
+  if(ppms.length<6) return {used:src, low:0, high:0, lowB:null, highB:null};
+  const q1=percentileSorted(ppms,0.25);
+  const q3=percentileSorted(ppms,0.75);
+  const iqr=q3-q1;
+  const lowB=q1-1.5*iqr;
+  const highB=q3+1.5*iqr;
+  let kept=src.filter(r=>{const p=+r['цкв']||0; return p>=lowB && p<=highB;});
+  let low=src.length-kept.filter(r=>(+r['цкв']||0)>=lowB).length;
+  let high=src.filter(r=>(+r['цкв']||0)>highB).length;
+  // Запобіжник: не відсікати більше за чверть вибірки.
+  const maxCut=Math.floor(src.length*0.25);
+  if(src.length-kept.length>maxCut){
+    // лишаємо найближчі до медіани, прибираємо тільки найекстремальніші
+    const med=percentileSorted(ppms,0.50);
+    const ranked=[...src].sort((a,b)=>Math.abs((+a['цкв']||0)-med)-Math.abs((+b['цкв']||0)-med));
+    kept=ranked.slice(0, src.length-maxCut);
+    const cutSet=new Set(kept);
+    low=src.filter(r=>!cutSet.has(r) && (+r['цкв']||0)<med).length;
+    high=src.filter(r=>!cutSet.has(r) && (+r['цкв']||0)>=med).length;
+  }
+  if(!kept.length) return {used:src, low:0, high:0, lowB, highB};
+  return {used:kept, low, high, lowB:Math.round(lowB), highB:Math.round(highB)};
+}
 function avgPpm(arr){const p=arr.map(r=>+r['цкв']||0).filter(Boolean); return p.length?p.reduce((a,b)=>a+b,0)/p.length:0;}
 
 function recalcSelected(){
@@ -893,12 +923,19 @@ function recalcSelected(){
   const wppm=arr.reduce((s,r)=>s+(+r._s||1)*(+r['цкв']||0),0)/wsum;
   const sppm=avgPpm(arr);
   const mppm=median(arr.map(r=>+r['цкв']||0));
-  const total=wppm*t.area;
+  // Робастна основа вартості:
+  // за замовчуванням — відсічене середньозважене за схожістю (wppm).
+  // Але якщо медіана й середньозважене розходяться >8% (ознака перекосу
+  // вибірки), основою стає медіана як стійкіша до асиметрії оцінка.
+  const skew = mppm>0 ? Math.abs(wppm-mppm)/mppm : 0;
+  const usedMedian = skew>0.08;
+  const basePpm = usedMedian ? mppm : wppm;
+  const total=basePpm*t.area;
   document.getElementById('total').textContent=fmt(total)+' грн';
   document.getElementById('totalUsd').textContent='≈ '+fmtUsd(total/USD_RATE)+' · довідково';
   document.getElementById('range').textContent='Діапазон ±10%: '+fmt(total*.9)+' — '+fmt(total*1.1)+' грн';
   document.getElementById('rangeUsd').textContent='≈ '+fmtUsd(total*.9/USD_RATE)+' — '+fmtUsd(total*1.1/USD_RATE);
-  document.getElementById('weighted').textContent=fmt(total)+' грн';
+  document.getElementById('weighted').textContent=fmt(wppm*t.area)+' грн';
   document.getElementById('simple').textContent=fmt(sppm*t.area)+' грн';
   document.getElementById('median').textContent=fmt(mppm*t.area)+' грн';
   const avg=Math.round(arr.reduce((s,r)=>s+(+r._s||0),0)/arr.length);
@@ -907,8 +944,14 @@ function recalcSelected(){
   const d=document.getElementById('details');
   d.style.display='block';
   const execCount=new Set(arr.map(r=>getExecutor(r)).filter(x=>x&&x!=='не вказано в поточній базі')).size;
-  const trimText=' Автоматично використано рекомендовану групу найбільш схожих оцінок; за потреби можна вручну додати або прибрати записи.';
-  d.textContent=`Знайдено у пулі: ${CAND.length}. Вибрано: ${rawArr.length}. Використано в розрахунку: ${arr.length}. Виконавців у вибірці: ${execCount||'—'}. Період реєстрації оцінок: ${selectedPeriod(arr)}. Період даних: ${activeSourceLabel()}. Оліївка врахована у складі Житомира. Середній бал схожості: ${avg}/100. Автоматичні коригування на поверх не застосовуються.${trimText}`;
+  const cutN=(trimmed.low||0)+(trimmed.high||0);
+  const trimText = cutN>0
+    ? ` Відсічено цінових викидів: ${cutN} (за межами ${fmt(trimmed.lowB)}–${fmt(trimmed.highB)} грн/м²).`
+    : ' Цінових викидів не виявлено.';
+  const baseText = usedMedian
+    ? ` Через перекіс вибірки (${Math.round(skew*100)}%) за основу вартості взято медіану.`
+    : ' За основу вартості взято середньозважене за схожістю.';
+  d.textContent=`Знайдено у пулі: ${CAND.length}. Вибрано: ${rawArr.length}. Використано в розрахунку: ${arr.length}. Виконавців у вибірці: ${execCount||'—'}. Період реєстрації оцінок: ${selectedPeriod(arr)}. Період даних: ${activeSourceLabel()}. Оліївка врахована у складі Житомира. Середній бал схожості: ${avg}/100.${baseText}${trimText} Автоматичні коригування на поверх не застосовуються.`;
   renderSampleSummary(arr);
 }
 
