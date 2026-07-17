@@ -222,7 +222,7 @@ body:not(.locked) #authScreen{display:none!important}
   </div>
   <div class="analytics-note">Аналітика виконавців згорнута в окремі блоки, щоб сторінка не розтягувалась. Аналітика побудована на архівній базі; калькулятор може працювати за 1–6, 12 місяців або по повному архіву. Показники є довідковими: медіана грн/м², кількість зареєстрованих оцінок і період реєстрації.</div>
 </section>
-<section class="card collapsed-section" id="recordsCard"><div class="controls"><div><div class="section" style="margin-bottom:4px">Зареєстровані оцінки</div><div class="hint">Число в кружечку — бал близькості до заданих параметрів, не номер об’єкта.</div></div><input class="search" id="search" placeholder="Пошук по адресі" oninput="renderList()"></div><div class="analog-list" id="list" style="margin-top:12px"><div class="empty">Завантаження бази...</div></div></section>
+<section class="card collapsed-section" id="recordsCard"><div class="controls"><div><div class="section" style="margin-bottom:4px">Зареєстровані оцінки</div><div class="hint">Число в кружечку — бал близькості до заданих параметрів, не номер об’єкта.</div></div><input class="search" id="search" placeholder="Пошук по адресі (працює без площі)" oninput="renderList()"></div><div class="analog-list" id="list" style="margin-top:12px"><div class="empty">Завантаження бази...</div></div></section>
 <div class="footer">Довідкова інформація. Не є звітом про оцінку майна. Зареєстровані оцінки ФДМУ мають довідковий характер і не є автоматично придатним джерелом для звіту без окремого аналізу оцінювачем. Використовується база: Житомирська міська зона; службові реквізити не відображаються.<br><b>ТОВ «ЕКСПЕРТНА ДУМКА» · Оцінка майна · 097 921 37 72</b><br>Версія сайту: 10.4-beta · компактна верхня панель · довіра A/B/C · IQR · Оліївка = Житомир</div>
 </main>
 <div id="toast" class="toast"></div>
@@ -806,7 +806,33 @@ function runAuto(){
 function selectAll(flag){const t=TARGET||target(); if(!t.area){showToast('Спочатку вкажіть загальну площу об’єкта'); showGeneralStatsOnly(); setQualityBlock([],0); return;} if(flag){CAND.forEach(r=>SELECTED.add(r._id))}else{SELECTED.clear()} renderList(); recalcSelected();}
 function toggleOne(id,checked){checked?SELECTED.add(id):SELECTED.delete(id); recalcSelected(); renderStats();}
 function renderStats(){const t=TARGET||target(); if(!t.area){document.getElementById('st-shown').textContent='—'; document.getElementById('st-selected').textContent='—'; return;} document.getElementById('st-shown').textContent=CAND.length; document.getElementById('st-selected').textContent=SELECTED.size;}
-function renderList(){const t=TARGET||target(); if(!t.area){showGeneralStatsOnly(); setQualityBlock([],0); return;} const q=document.getElementById('search').value.trim().toUpperCase(); const list=document.getElementById('list'); let rows=CAND.filter(r=>!q||String(r['ад']).toUpperCase().includes(q)); if(!rows.length){list.innerHTML='<div class="empty">Зареєстровані оцінки не знайдені</div>'; renderStats(); return} list.innerHTML=rows.map(r=>`<div class="analog"><input type="checkbox" ${SELECTED.has(r._id)?'checked':''} onchange="toggleOne('${esc(r._id)}',this.checked)"><div class="score ${r._s>=75?'good':r._s>=55?'mid':''}">${r._s}</div><div><div class="addr">${safe(showAddress(r))}</div><div class="meta">${r['пл']} м² · ${r['рік']||'?'} р. · пов. ${r['пов']||'?'}${r['пх']?'/'+r['пх']:''} · дата реєстрації: ${safe(recordDate(r))} · вартість: ${fmt(r['в']||((+r['цкв']||0)*(+r['пл']||0)))} грн · виконавець: ${safe(getExecutor(r))}${executorCode(r)?' · ЄДРПОУ: '+safe(executorCode(r)):''} · ${safe(isOliivkaRecord(r)?'Оліївка у складі Житомира':r['р'])}</div></div><div class="ppm">${fmt(r['цкв'])} грн/м²</div></div>`).join(''); renderStats();}
+function renderList(){
+  const t=TARGET||target();
+  const q=document.getElementById('search').value.trim().toUpperCase();
+  const list=document.getElementById('list');
+  // РЕЖИМ ПРЯМОГО ПОШУКУ ПО АДРЕСІ: працює без площі й кімнатності
+  if(!t.area){
+    if(!q){ showGeneralStatsOnly(); setQualityBlock([],0); return; }
+    let base=activeRecords(t).filter(r=>objectTypeOk(r,t) && datePeriodOk(r,t));
+    if(t.district!=='all') base=base.filter(r=>districtMatch(r,t.district));
+    const qn=normalizeAddressForCompare(q);
+    let rows=base.filter(r=>{
+      const ad=String(r['ад']||'').toUpperCase();
+      const an=String(r['ад_норм']||'').toUpperCase();
+      return ad.includes(q) || (qn && an.includes(qn)) || an.includes(q);
+    });
+    rows=rows.map((r,i)=>({...r,_id:'addr-'+i+'-'+(r['ад_норм']||r['ад'])+'-'+r['пл']+'-'+r['в']+'-'+recordDate(r)}));
+    rows.sort((a,b)=>{const d=(parseDateValue(recordDate(b))||0)-(parseDateValue(recordDate(a))||0); return d;});
+    CAND=rows; 
+    document.getElementById('st-shown').textContent=rows.length;
+    if(!rows.length){list.innerHTML='<div class="empty">За адресою «'+safe(q)+'» оцінок не знайдено (у межах обраного типу, району та періоду).</div>'; return;}
+    list.innerHTML='<div class="hint" style="margin-bottom:8px">Прямий пошук по адресі: знайдено '+rows.length+' оцінок. Площа й кімнатність не враховуються.</div>'+
+      rows.map(r=>`<div class="analog"><input type="checkbox" ${SELECTED.has(r._id)?'checked':''} onchange="toggleOne('${esc(r._id)}',this.checked)"><div class="score">${r['к']||'·'}</div><div><div class="addr">${safe(showAddress(r))}</div><div class="meta">${r['пл']} м² · ${safe(r['тип']||'')} · ${r['рік']||'?'} р. · пов. ${r['пов']||'?'}${r['пх']?'/'+r['пх']:''} · дата реєстрації: ${safe(recordDate(r))} · вартість: ${fmt(r['в']||((+r['цкв']||0)*(+r['пл']||0)))} грн · виконавець: ${safe(getExecutor(r))}${executorCode(r)?' · ЄДРПОУ: '+safe(executorCode(r)):''} · ${safe(isOliivkaRecord(r)?'Оліївка у складі Житомира':r['р'])}</div></div><div class="ppm">${fmt(r['цкв'])} грн/м²</div></div>`).join('');
+    return;
+  }
+  let rows=CAND.filter(r=>!q||String(r['ад']).toUpperCase().includes(q)||String(r['ад_норм']||'').toUpperCase().includes(q));
+  if(!rows.length){list.innerHTML='<div class="empty">Зареєстровані оцінки не знайдені</div>'; renderStats(); return}
+  list.innerHTML=rows.map(r=>`<div class="analog"><input type="checkbox" ${SELECTED.has(r._id)?'checked':''} onchange="toggleOne('${esc(r._id)}',this.checked)"><div class="score ${r._s>=75?'good':r._s>=55?'mid':''}">${r._s}</div><div><div class="addr">${safe(showAddress(r))}</div><div class="meta">${r['пл']} м² · ${r['рік']||'?'} р. · пов. ${r['пов']||'?'}${r['пх']?'/'+r['пх']:''} · дата реєстрації: ${safe(recordDate(r))} · вартість: ${fmt(r['в']||((+r['цкв']||0)*(+r['пл']||0)))} грн · виконавець: ${safe(getExecutor(r))}${executorCode(r)?' · ЄДРПОУ: '+safe(executorCode(r)):''} · ${safe(isOliivkaRecord(r)?'Оліївка у складі Житомира':r['р'])}</div></div><div class="ppm">${fmt(r['цкв'])} грн/м²</div></div>`).join(''); renderStats();}
 function safe(s){return String(s??'').replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]))} function esc(s){return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
 function median(a){if(!a.length)return 0; a=[...a].sort((x,y)=>x-y); const m=Math.floor(a.length/2); return a.length%2?a[m]:(a[m-1]+a[m])/2}
 
