@@ -217,7 +217,7 @@ body:not(.locked) #authScreen{display:none!important}
   <div class="analytics-grid" style="margin-top:12px">
     <details class="collapsible-panel"><summary>Динаміка по місяцях</summary><div class="panel-body scroll-limited" id="analytics-months"></div></details>
     <details class="collapsible-panel"><summary>Вулиці</summary><div class="panel-body scroll-limited" id="analytics-streets"></div></details>
-    <details class="collapsible-panel"><summary>Виконавці — ТОП</summary><div class="panel-body" id="analytics-executors"></div></details>
+    <details class="collapsible-panel"><summary>Виконавці — ТОП</summary><div class="panel-body"><div class="quick-jump" style="margin:0 0 10px"><label style="font-size:12px;color:var(--muted);align-self:center">Період:</label><select id="execPeriodKind" style="max-width:120px"><option value="all">За весь час</option><option value="year">По роках</option><option value="month">По місяцях</option></select><select id="execPeriodValue" style="max-width:140px;display:none"></select></div><div id="analytics-executors"></div></div></details>
     <details class="collapsible-panel"><summary>Виконавці по роках</summary><div class="panel-body scroll-limited" id="analytics-districts"></div></details>
   </div>
   <div class="analytics-note">Аналітика виконавців згорнута в окремі блоки, щоб сторінка не розтягувалась. Аналітика побудована на архівній базі; калькулятор може працювати за 1–6, 12 місяців або по повному архіву. Показники є довідковими: медіана грн/м², кількість зареєстрованих оцінок і період реєстрації.</div>
@@ -1161,15 +1161,16 @@ function renderAnalytics(){
 
   let execRows=[];
   if(execA && execA.top_all){
-    const top=execA.top_all.slice(0,12);
-    document.getElementById('an-exec-count').textContent=execA.executors_count||top.length||'—';
-    execRows=top.map(x=>`<tr><td>${safe(x.name)}</td><td class="num">${x.count}</td><td class="num">${x.share_pct||0}%</td><td class="num">${x.last_date||'—'}</td></tr>`);
+    document.getElementById('an-exec-count').textContent=execA.executors_count||execA.top_all.length||'—';
+    window.__EXEC_A=execA;
+    renderExecTop();
+    setupExecPeriodControls();
   } else {
     const byExec=groupStats(apartments, r=>getExecutor(r)).filter(x=>x.key && x.key!=='не вказано в поточній базі').sort((a,b)=>b.count-a.count).slice(0,10);
     document.getElementById('an-exec-count').textContent=byExec.length||'—';
     execRows=byExec.map(x=>`<tr><td>${safe(x.key)}</td><td class="num">${x.count}</td><td class="num">${fmt(x.med)}</td><td class="num">${x.last?fmtDateShort(x.last):'—'}</td></tr>`);
+    document.getElementById('analytics-executors').innerHTML=tableHtml(['Виконавець','Кількість оцінок','Частка ринку','Остання дата'], execRows);
   }
-  document.getElementById('analytics-executors').innerHTML=tableHtml(['Виконавець','Кількість оцінок','Частка ринку','Остання дата'], execRows);
 
   let yearRows=[];
   if(execA && execA.top_all && execA.years){
@@ -1181,6 +1182,47 @@ function renderAnalytics(){
     const districtRows=byDistrict.map(x=>`<tr><td>${safe(x.key)}</td><td class="num">${x.count}</td><td class="num">${fmt(x.med)}</td><td class="num">${fmt(x.avg)}</td></tr>`);
     document.getElementById('analytics-districts').innerHTML=tableHtml(['Район','Кількість оцінок','Медіана грн/м²','Середня грн/м²'], districtRows);
   }
+}
+
+function renderExecTop(){
+  const execA=window.__EXEC_A; if(!execA||!execA.top_all) return;
+  const kind=(document.getElementById('execPeriodKind')||{}).value||'all';
+  const val=(document.getElementById('execPeriodValue')||{}).value||'';
+  let rows=execA.top_all.map(x=>{
+    let cnt=x.count;
+    if(kind==='year' && val) cnt=(x.years&&x.years[val])||0;
+    else if(kind==='month' && val) cnt=(x.months&&x.months[val])||0;
+    return {name:x.name, count:cnt, share:x.share_pct, last:x.last_date, med:x.median_ppm};
+  }).filter(x=>x.count>0);
+  // частка ринку в межах обраного періоду
+  const totalP=rows.reduce((s,x)=>s+x.count,0)||1;
+  rows.sort((a,b)=>b.count-a.count);
+  const top=rows.slice(0,12);
+  const headShare = kind==='all' ? 'Частка ринку' : 'Частка періоду';
+  const execRows=top.map(x=>{
+    const share = kind==='all' ? (x.share||0) : Math.round(x.count/totalP*1000)/10;
+    return `<tr><td>${safe(x.name)}</td><td class="num">${x.count}</td><td class="num">${share}%</td><td class="num">${fmt(x.med||0)}</td><td class="num">${x.last||'—'}</td></tr>`;
+  });
+  document.getElementById('analytics-executors').innerHTML=tableHtml(['Виконавець','Кількість оцінок',headShare,'Медіана грн/м²','Остання дата'], execRows);
+}
+
+function setupExecPeriodControls(){
+  const execA=window.__EXEC_A; if(!execA) return;
+  const kindSel=document.getElementById('execPeriodKind');
+  const valSel=document.getElementById('execPeriodValue');
+  if(!kindSel||!valSel||kindSel.__wired) return;
+  kindSel.__wired=true;
+  function fillValues(){
+    const kind=kindSel.value;
+    if(kind==='all'){ valSel.style.display='none'; valSel.innerHTML=''; return; }
+    valSel.style.display='';
+    const list = kind==='year' ? (execA.years||[]) : (execA.months_list||execA.months_available||[]);
+    const arr=[...list].reverse();
+    valSel.innerHTML=arr.map(v=>`<option value="${v}">${v}</option>`).join('');
+  }
+  kindSel.addEventListener('change',()=>{fillValues(); renderExecTop();});
+  valSel.addEventListener('change',renderExecTop);
+  fillValues();
 }
 
 
