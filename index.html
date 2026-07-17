@@ -693,7 +693,16 @@ function normalizeAddressForCompare(v){
   return s.replace(/\s+/g,' ').trim();
 }
 function showAddress(r){const raw=String(r['ад']||'—'); const n=r['ад_норм']||normalizeAddressForCompare(raw); return n&&n!==raw.toUpperCase()?raw+' · норм.: '+n:raw;}
-function validCity(r){const ad=String(r['ад']||'').toUpperCase(); return allowed.has(r['р']) && !blacklist.some(b=>ad.includes(b));}
+function validCity(r){
+  // Якщо район належить дозволеним — запис уже точно міський (Богунський/
+  // Корольовський/Житомир без району/Оліївка). Blacklist по тексту адреси
+  // НЕ застосовуємо, інакше відсікаються житомирські вулиці, названі на честь
+  // інших міст (вул. Велика Бердичівська, вул. Чуднівська тощо).
+  if(allowed.has(r['р'])) return true;
+  // Запасний фільтр лише для записів без валідного району:
+  const ad=String(r['ад']||'').toUpperCase();
+  return !blacklist.some(b=>ad.includes(b));
+}
 function isOliivkaRecord(r){
   if(!r) return false;
   const district=String(r['р']||'').toUpperCase();
