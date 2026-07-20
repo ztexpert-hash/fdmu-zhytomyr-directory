@@ -197,7 +197,7 @@ body:not(.locked) #authScreen{display:none!important}
 </section>
 
 <section class="card" id="params-card"><div class="section">Параметри об’єкта</div><div class="grid"><div class="field"><label>Тип об’єкта</label><select id="objectType"><option value="apartment">Квартира</option><option value="dorm">Кімната в гуртожитку</option><option value="house">Будинок</option></select></div><div class="field"><label>Район / зона</label><select id="district"><option value="all">Житомир — вся база</option><option value="Богунський">Богунський</option><option value="Корольовський">Корольовський</option><option value="Житомир (без району)">Житомир без району</option></select></div><div class="field"><label>Період реєстрації оцінок</label><select id="dataScope"><option value="1">Останній 1 місяць (30 днів)</option><option value="2">Останні 2 місяці (60 днів)</option><option value="3">Останні 3 місяці (90 днів)</option><option value="4">Останні 4 місяці (120 днів)</option><option value="5">Останні 5 місяців (150 днів)</option><option value="6">Останні 6 місяців (180 днів)</option><option value="12" selected>Останні 12 місяців</option><option value="archive">Повний архів 2019+</option></select><div class="hint">джерело завжди ФДМУ; вибір визначає глибину періоду для розрахунку</div></div><div class="field"><label>Кімнатність</label><select id="rooms"><option value="1">1-кімнатна</option><option value="2">2-кімнатна</option><option value="3">3-кімнатна</option><option value="4">4+ кімнатна</option></select></div><div class="field"><label>Загальна площа, кв.м</label><input id="area" type="number" step="0.1"></div><div class="field"><label>Рік побудови</label><input id="year" type="number"><div class="hint">фактор схожості, а не жорсткий фільтр</div></div><div class="field"><label>Поверх</label><input id="floor" type="number"></div><div class="field"><label>Поверховість будинку</label><input id="totalFloors" type="number"><div class="hint">якщо невідомо — залиште порожнім</div></div></div><div class="notice">Оліївка включена до загальної міської бази Житомира. Режим «Житомир — вся база» охоплює Богунський, Корольовський, Житомир без району та Оліївку 2018+. Без загальної площі система показує тільки загальну статистику бази. Вибірка зареєстрованих оцінок формується після введення площі; рік і поверх враховуються лише якщо вони заповнені.</div><div class="btn-row" style="margin-top:12px"><button class="btn" onclick="runAuto()">Сформувати вибірку ФДМУ</button><button class="btn secondary" onclick="selectAll(true)">Вибрати всі</button><button class="btn warn" onclick="selectAll(false)">Очистити всі</button><button class="btn gray" onclick="recalcSelected()">Перерахувати</button></div></section>
-<section class="card collapsed-section" id="dbCard"><div class="section">Інформація про базу</div><div class="stats"><div class="stat"><div class="l">Версія сайту</div><div class="v" id="st-version">11.0-beta</div></div><div class="stat"><div class="l">Записів у робочій базі</div><div class="v" id="st-count">—</div></div><div class="stat"><div class="l">Квартири</div><div class="v" id="st-apts">—</div></div><div class="stat"><div class="l">Кімнати/гуртожитки</div><div class="v" id="st-dorms">—</div></div><div class="stat"><div class="l">Показано оцінок</div><div class="v" id="st-shown">—</div></div><div class="stat"><div class="l">Вибрано</div><div class="v" id="st-selected">—</div></div><div class="stat"><div class="l">Оновлено базу</div><div class="v" id="st-updated" style="font-size:15px">—</div></div><div class="stat"><div class="l">Всього Житомирська міська зона</div><div class="v" id="st-raw-city">—</div></div><div class="stat"><div class="l">Придатні до дедублікації</div><div class="v" id="st-before-dup">—</div></div><div class="stat"><div class="l">Не входять у довідник</div><div class="v" id="st-excluded">—</div></div><div class="stat"><div class="l">Вилучено не місто за адресою</div><div class="v" id="st-noncity-removed">—</div></div><div class="stat"><div class="l">Прибрано дублікатів</div><div class="v" id="st-dup">—</div></div><div class="stat"><div class="l">Виконавців</div><div class="v" id="st-exec">—</div></div><div class="stat"><div class="l">Медіана грн/м²</div><div class="v" id="st-medppm">—</div></div><div class="stat"><div class="l">Оліївка у складі Житомира
+<section class="card collapsed-section" id="dbCard"><div class="section">Інформація про базу</div><div class="stats"><div class="stat"><div class="l">Версія сайту</div><div class="v" id="st-version">11.3-beta</div></div><div class="stat"><div class="l">Записів у робочій базі</div><div class="v" id="st-count">—</div></div><div class="stat"><div class="l">Квартири</div><div class="v" id="st-apts">—</div></div><div class="stat"><div class="l">Кімнати/гуртожитки</div><div class="v" id="st-dorms">—</div></div><div class="stat"><div class="l">Показано оцінок</div><div class="v" id="st-shown">—</div></div><div class="stat"><div class="l">Вибрано</div><div class="v" id="st-selected">—</div></div><div class="stat"><div class="l">Оновлено базу</div><div class="v" id="st-updated" style="font-size:15px">—</div></div><div class="stat"><div class="l">Всього Житомирська міська зона</div><div class="v" id="st-raw-city">—</div></div><div class="stat"><div class="l">Придатні до дедублікації</div><div class="v" id="st-before-dup">—</div></div><div class="stat"><div class="l">Не входять у довідник</div><div class="v" id="st-excluded">—</div></div><div class="stat"><div class="l">Вилучено не місто за адресою</div><div class="v" id="st-noncity-removed">—</div></div><div class="stat"><div class="l">Прибрано дублікатів</div><div class="v" id="st-dup">—</div></div><div class="stat"><div class="l">Виконавців</div><div class="v" id="st-exec">—</div></div><div class="stat"><div class="l">Медіана грн/м²</div><div class="v" id="st-medppm">—</div></div><div class="stat"><div class="l">Оліївка у складі Житомира
 12 міс. / архів</div><div class="v" id="st-oliivka">—</div></div></div></section>
 <section class="card" id="result-card"><div class="section">Результат</div><div class="main-result"><div class="label">Орієнтовний діапазон за вибраними зареєстрованими оцінками</div><div class="big" id="total">—</div><div class="usdline" id="totalUsd">—</div><div class="range" id="range">—</div><div class="usdline" id="rangeUsd">—</div><div id="reliability" class="reliability rel-low" style="display:none">—</div></div><div class="methods"><div class="method primary"><div class="m1">Зважена</div><div class="m2" id="weighted">—</div></div><div class="method"><div class="m1">Середня</div><div class="m2" id="simple">—</div></div><div class="method"><div class="m1">Медіана</div><div class="m2" id="median">—</div></div></div><div class="quality-box">
   <div class="quality-item"><div class="q-label">Надійність прогнозу</div><div class="q-value"><span id="qualityGrade" class="grade grade-d">—</span></div></div>
@@ -248,7 +248,7 @@ body:not(.locked) #authScreen{display:none!important}
     <div class="mini-stat"><div class="l">Усього оцінювачів</div><div class="v" id="an-exec-count">—</div></div>
     <div class="mini-stat"><div class="l">Частка топ-5</div><div class="v" id="an-top5">—</div></div>
   </div>
-  <div class="quick-jump"><button class="btn secondary" onclick="document.getElementById('executorSearchBlock')?.scrollIntoView({behavior:'smooth',block:'start'})">Перейти до пошуку виконавця</button><button class="btn secondary" onclick="document.getElementById('marketMonthsDetails')?.scrollIntoView({behavior:'smooth',block:'start'})">Місячна активність всієї бази</button></div>
+  <div class="quick-jump"><button class="btn secondary" onclick="jumpToExecutorSearch()">Перейти до пошуку виконавця</button><button class="btn secondary" onclick="jumpToMarketMonths()">Місячна активність всієї бази</button></div>
   <div class="analytics-grid" style="margin-top:12px">
     <details class="collapsible-panel" open><summary>Виконавці — ТОП</summary><div class="panel-body"><div class="quick-jump" style="margin:0 0 10px"><label style="font-size:12px;color:var(--muted);align-self:center">Період:</label><select id="execPeriodKind" style="max-width:120px"><option value="all">За весь час</option><option value="year">По роках</option><option value="month">По місяцях</option></select><select id="execPeriodValue" style="max-width:140px;display:none"></select></div><div id="analytics-executors"></div></div></details>
     <details class="collapsible-panel"><summary>Виконавці по роках</summary><div class="panel-body scroll-limited" id="analytics-districts"></div></details>
@@ -256,7 +256,7 @@ body:not(.locked) #authScreen{display:none!important}
   <div class="analytics-note">Аналітика оцінювачів побудована на архівній базі. Показники довідкові: кількість зареєстрованих оцінок, частка ринку, медіана грн/м² та дата останньої роботи.</div>
 </section>
 <section class="card collapsed-section" id="recordsCard"><div class="controls"><div><div class="section" style="margin-bottom:4px">Зареєстровані оцінки</div><div class="hint">Число в кружечку — бал близькості до заданих параметрів, не номер об’єкта.</div></div><input class="search" id="search" placeholder="Пошук по адресі (працює без площі)" oninput="renderList()"><span id="searchCount" class="search-count" style="display:none"></span></div><div class="analog-list" id="list" style="margin-top:12px"><div class="empty">Завантаження бази...</div></div></section>
-<div class="footer">Довідкова інформація. Не є звітом про оцінку майна. Зареєстровані оцінки ФДМУ мають довідковий характер і не є автоматично придатним джерелом для звіту без окремого аналізу оцінювачем. Використовується база: Житомирська міська зона; службові реквізити не відображаються.<br><b>ТОВ «ЕКСПЕРТНА ДУМКА» · Оцінка майна · 097 921 37 72</b><br>Версія сайту: 11.0-beta · компактна верхня панель · довіра A/B/C · IQR · Оліївка = Житомир</div>
+<div class="footer">Довідкова інформація. Не є звітом про оцінку майна. Зареєстровані оцінки ФДМУ мають довідковий характер і не є автоматично придатним джерелом для звіту без окремого аналізу оцінювачем. Використовується база: Житомирська міська зона; службові реквізити не відображаються.<br><b>ТОВ «ЕКСПЕРТНА ДУМКА» · Оцінка майна · 097 921 37 72</b><br>Версія сайту: 11.3-beta · компактна верхня панель · довіра A/B/C · IQR · Оліївка = Житомир</div>
 </main>
 <div id="toast" class="toast"></div>
 <script>
@@ -660,7 +660,7 @@ function authLogout(){
   location.reload();
 }
 
-const APP_VERSION='11.0-beta';
+const APP_VERSION='11.3-beta';
 const USD_RATE=41.5; // довідковий курс для відображення USD
 let DATA=[], WORK_DATA=[], ARCHIVE_DATA=[], CAND=[], SELECTED=new Set(), TARGET=null, ARCHIVE_ANALYTICS=null, ACTIVE_SOURCE='work';
 const allowed = new Set(['Богунський','Корольовський','Житомир (без району)','Оліївка новобудови']);
@@ -1308,10 +1308,12 @@ function allExecutorRows(){
     const key=executorGroupKey(r);
     const name=executorNameOnly(r) || getExecutor(r);
     const code=executorCode(r);
-    if(!grouped.has(key)) grouped.set(key,{key,name,code,count:0,years:{},months:{},ppms:[],dates:[],records:[]});
+    if(!grouped.has(key)) grouped.set(key,{key,name,code,count:0,years:{},months:{},ppms:[],dates:[],records:[],nameCounts:{}});
     const g=grouped.get(key);
     if(code && !g.code) g.code=code;
-    if(name && (!g.name || g.name==='—')) g.name=name;
+    // один ЄДРПОУ може бути записаний різними назвами (ФДМУ пише по-різному) —
+    // рахуємо всі й показуємо найпоширенішу
+    if(name){ g.nameCounts[name]=(g.nameCounts[name]||0)+1; }
     g.count++;
     g.records.push(r);
     const d=parseDateValue(recordDate(r));
@@ -1328,7 +1330,12 @@ function allExecutorRows(){
   const rows=[...grouped.values()].map(g=>{
     const dates=g.dates.sort((a,b)=>a-b);
     const ppms=g.ppms.filter(Boolean).sort((a,b)=>a-b);
+    // найпоширеніша назва для цього ЄДРПОУ + решта написань як аліаси
+    const nc=Object.entries(g.nameCounts||{}).sort((a,b)=>b[1]-a[1]);
+    const bestName = nc.length ? nc[0][0] : (g.name||'—');
+    const aliases  = nc.slice(1).map(x=>x[0]);
     return {...g,
+      name:bestName, aliases,
       share:Math.round(g.count/total*10000)/100,
       first:dates.length?fmtDateShort(dates[0]):'—',
       last:dates.length?fmtDateShort(dates[dates.length-1]):'—',
@@ -1340,9 +1347,27 @@ function allExecutorRows(){
   }).sort((a,b)=>b.count-a.count || executorDisplayName(a).localeCompare(executorDisplayName(b)));
   return rows;
 }
+function jumpToExecutorSearch(){
+  try{ ensureExecutorSearchBlock(); }catch(_e){}
+  const el=document.getElementById('executorSearchBlock');
+  if(!el){ alert('Блок пошуку виконавця ще не готовий — зачекайте завантаження архівної бази.'); return; }
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+  setTimeout(()=>document.getElementById('executorSearchInput')?.focus(),400);
+}
+function jumpToMarketMonths(){
+  try{ ensureExecutorSearchBlock(); }catch(_e){}
+  const el=document.getElementById('marketMonthsDetails');
+  if(!el){ alert('Блок ще не готовий — зачекайте завантаження архівної бази.'); return; }
+  el.open=true;                       // розгорнути, якщо згорнутий
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+}
 function ensureExecutorSearchBlock(){
   if(document.getElementById('executorSearchBlock'))return;
-  const host=document.querySelector('#analytics-executors')?.closest('.analytics-panel') || document.querySelector('.analytics-grid') || document.querySelector('main');
+  // блок має жити в секції аналітики ОЦІНЮВАЧІВ, після її сітки панелей
+  const host=document.querySelector('#analyticsCard .analytics-grid')
+          || document.querySelector('#analytics-executors')?.closest('.collapsible-panel')
+          || document.querySelector('#analyticsCard')
+          || document.querySelector('.analytics-grid');
   if(!host)return;
   const div=document.createElement('div');
   div.id='executorSearchBlock';
@@ -1388,7 +1413,10 @@ function findExecutorRow(q){
     if(byCode)return byCode;
   }
   if(!nq)return null;
-  return rows.find(x=>normExecName(x.name)===nq) || rows.find(x=>normExecName(x.name).includes(nq)) || rows.find(x=>nq.includes(normExecName(x.name)));
+  const alias=x=>[x.name,...(x.aliases||[])].map(normExecName);
+  return rows.find(x=>alias(x).some(n=>n===nq))
+      || rows.find(x=>alias(x).some(n=>n.includes(nq)))
+      || rows.find(x=>alias(x).some(n=>n && nq.includes(n)));
 }
 function recordValue(r){return +r['в'] || ((+r['цкв']||0)*(+r['пл']||0)) || 0;}
 function executorMonthDetails(row){
@@ -1422,7 +1450,7 @@ function renderExecutorProfile(force=true){
   const yearStats=years.map(y=>`<div class="stat"><div class="l">${safe(y)}</div><div class="v">${(row.years&&row.years[y])||0}</div></div>`).join('');
   const monthRows=(row.months||[]).slice().sort((a,b)=>String(b.name).localeCompare(String(a.name))).map(x=>`<tr><td>${safe(x.name)}</td><td class="num">${x.count||0}</td></tr>`).join('') || '<tr><td colspan="2">Немає помісячних даних</td></tr>';
   box.innerHTML=`<div class="executor-result-grid">
-      <div class="stat"><div class="l">Виконавець</div><div class="v" style="font-size:13px;line-height:1.25">${safe(row.name)}</div>${row.code?`<div class="executor-code">ЄДРПОУ: ${safe(row.code)}</div>`:''}</div>
+      <div class="stat"><div class="l">Виконавець</div><div class="v" style="font-size:13px;line-height:1.25">${safe(row.name)}</div>${row.code?`<div class="executor-code">ЄДРПОУ: ${safe(row.code)}</div>`:''}${(row.aliases&&row.aliases.length)?`<div class="executor-code" style="opacity:.75;margin-top:3px">також у базі: ${row.aliases.map(a=>safe(a)).join(' · ')}</div>`:''}</div>
       <div class="stat"><div class="l">Всього робіт</div><div class="v">${row.count||0}</div></div>
       <div class="stat"><div class="l">Частка в архіві</div><div class="v">${row.share||0}%</div></div>
       <div class="stat"><div class="l">Період</div><div class="v" style="font-size:13px">${safe(row.first||'—')} – ${safe(row.last||'—')}</div></div>
