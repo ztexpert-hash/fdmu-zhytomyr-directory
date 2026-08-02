@@ -38,6 +38,7 @@ CALC_JSON = ROOT / 'calc_data.json'
 README = ROOT / 'README.txt'
 INDEX = ROOT / 'index.html'
 SW = ROOT / 'sw.js'
+SUMMARY_JSON = ROOT / 'update_summary.json'
 
 
 def read_json(path, default):
@@ -907,6 +908,33 @@ def seed_archive_from_existing():
     return {'records': calc.get('records', []), 'source': 'seed from existing calc_data.json'}
 
 
+def write_update_summary(added_records, archive, calc):
+    """Дописує запис про поточне оновлення в update_summary.json (новий — зверху)."""
+    added_apts  = sum(1 for r in added_records if r.get('тип') != 'Кімната/гуртожиток')
+    added_dorms = sum(1 for r in added_records if r.get('тип') == 'Кімната/гуртожиток')
+
+    cst = (calc.get('stats') or {})
+    entry = {
+        'version':      APP_VERSION,
+        'date':         datetime.now().strftime('%Y-%m-%d %H:%M'),
+        'added_total':  len(added_records),
+        'added_apts':   added_apts,
+        'added_dorms':  added_dorms,
+        'archive_total':  archive.get('count', 0),
+        'working_total':  calc.get('count', 0),
+        'median_ppm':     cst.get('median_ppm', 0),
+    }
+
+    log = read_json(SUMMARY_JSON, {'updates': []})
+    if not isinstance(log, dict) or 'updates' not in log:
+        log = {'updates': []}
+    log['updates'].insert(0, entry)          # новий запис — зверху
+    log['updates'] = log['updates'][:50]     # тримаємо останні 50
+    log['last'] = entry                       # швидкий доступ до останнього
+    write_json(SUMMARY_JSON, log)
+    return entry
+
+
 def main():
     DOWNLOADS.mkdir(exist_ok=True)
     OUTPUT.mkdir(exist_ok=True)
@@ -1015,6 +1043,7 @@ def main():
             report.append('  Пріоритетні поля: ' + ', '.join(fr['priority_columns']))
 
     update_site_files(archive, calc)
+    write_update_summary(added_all, archive, calc)
     out_zip = make_site_zip()
     processed.setdefault('processed', [])
     processed['processed'].extend(processed_new)
