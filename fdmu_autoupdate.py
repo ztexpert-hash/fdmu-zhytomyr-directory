@@ -38,6 +38,7 @@ ARCHIVE = ROOT / "archive_calc_data.json"
 PROCESSED = ROOT / "processed_files.json"
 SCHEMA = ROOT / "fdmu_schema_columns.json"
 README = ROOT / "README.txt"
+MERGE = ROOT / "executor_merge.json"
 
 
 # ---------------------------------------------------------------- утиліти
@@ -290,6 +291,133 @@ def recalc(d):
                       sorted(Counter(r["дата"][6:] for r in rec).items())]
     mr["by_type"] = [{"name": x["name"], "count": x["count"], "median_ppm": x["median_ppm"]}
                      for x in grp(lambda r: r.get("тип"))]
+
+    # --- дати періоду
+    st["min_date"] = min((r["дата"] for r in rec), key=dk)
+    st["max_date"] = max((r["дата"] for r in rec), key=dk)
+    st["date_period"] = f'{st["min_date"]} — {st["max_date"]}'
+
+    # --- market_research: age / floor / area (квартири базового періоду)
+    flats = [r for r in base if r["тип"] == "Квартира"]
+
+    def age_band(y):
+        if not y:
+            return None
+        if y >= 2015:
+            return "Новобудова (2015+)"
+        if y >= 2000:
+            return "2000–2014"
+        if y >= 1991:
+            return "1991–1999"
+        if y >= 1961:
+            return "1961–1990"
+        return "до 1960"
+
+    def floor_band(f):
+        if not f:
+            return None
+        if f == 1:
+            return "1 поверх"
+        if f >= 10:
+            return "10+ поверх"
+        if f >= 5:
+            return "5–9 поверх"
+        return "2–4 поверх"
+
+    def area_band(a):
+        if not a:
+            return None
+        for hi, nm in ((35, "до 35 м²"), (45, "35–45 м²"), (55, "45–55 м²"),
+                       (70, "55–70 м²"), (90, "70–90 м²")):
+            if a < hi:
+                return nm
+        return "90+ м²"
+
+    for fld, fn in (("age", lambda r: age_band(r.get("рік"))),
+                    ("floor", lambda r: floor_band(r.get("пов"))),
+                    ("area", lambda r: area_band(r.get("пл")))):
+        mr[fld] = [{k: x[k] for k in ("name", "count", "median_ppm", "avg_ppm")}
+                   for x in grp(fn, flats)]
+
+    # --- сезонність (уся база)
+    MON = ["Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень",
+           "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"]
+    mc = Counter(r["дата"][3:5] for r in rec if len(r["дата"]) == 10)
+    tot_m = sum(mc.values())
+    avg_m = tot_m / 12 if tot_m else 0
+    mr["season"] = [{"name": MON[i], "count": mc.get(f"{i+1:02d}", 0),
+                     "dev_pct": round((mc.get(f"{i+1:02d}", 0) - avg_m) / avg_m * 100)
+                     if avg_m else 0} for i in range(12)]
+
+    # --- ВИКОНАВЦІ (archive_analytics.executors) зі збереженням аліасів
+    # --- ВИКОНАВЦІ: групування СТРОГО за кодом ЄДРПОУ.
+    # Аліаси — це лише перелік назв, під якими цей код зустрічався у ФДМУ
+    # (включно з помилками вводу). Назва НІКОЛИ не переважає код.
+    def canon(vik):
+        v = (vik or "").strip()
+        if "," in v:
+            code, nm = v.split(",", 1)
+            code, nm = code.strip(), nm.strip()
+            if code:
+                return code, nm
+            v = nm
+        return re.sub(r'[^А-ЯЇІЄҐA-Z0-9]', '', v.upper())[:20] or "—", v
+
+    # ручне об'єднання СОД за виконавцем (єдиний дозволений виняток з правила
+    # «строго за ЄДРПОУ»); порожній файл або його відсутність = без об'єднань
+    merge = {}
+    if MERGE.exists():
+        try:
+            merge = {str(k): str(v) for k, v in
+                     json.loads(MERGE.read_text(encoding="utf-8")).get("merge", {}).items()}
+        except Exception as e:
+            print(f"! executor_merge.json не прочитано: {e}")
+    for _ in range(5):                      # розгортання ланцюжків A->B->C
+        ch = {k: merge.get(v, v) for k, v in merge.items()}
+        if ch == merge:
+            break
+        merge = ch
+
+    eg = defaultdict(list)
+    for r in rec:
+        c, nm = canon(r.get("вик"))
+        eg[merge.get(c, c)].append((r, nm, c))
+    if merge:
+        print(f"Об'єднано СОД за виконавцем: {len(merge)} пар")
+
+    total = len(rec) or 1
+    top_all = []
+    for c, items in eg.items():
+        rs = [x[0] for x in items]
+        v = [x["цкв"] for x in rs if x.get("цкв")]
+        names = Counter(x[1] for x in items)
+        # назва береться з КАНОНІЧНОГО коду (орієнтир — виконавець, не поглинута фірма)
+        own = Counter(x[1] for x in items if x[2] == c)
+        main = (own or names).most_common(1)[0][0]
+        al = sorted(n for n in names if n != main)
+        yrs = Counter(x["дата"][6:] for x in rs if len(x["дата"]) == 10)
+        mos = Counter(f'{x["дата"][6:]}-{x["дата"][3:5]}' for x in rs if len(x["дата"]) == 10)
+        top_all.append({
+            "name": main, "aliases": al, "code": c,
+            "merged_codes": sorted({k for k, v in merge.items() if v == c}) or None,
+            "count": len(rs),
+            "share_pct": round(len(rs) * 100 / total, 2),
+            "median_ppm": round(statistics.median(v)) if v else 0,
+            "avg_ppm": round(sum(v) / len(v)) if v else 0,
+            "last_date": max((x["дата"] for x in rs), key=dk),
+            "years": dict(sorted(yrs.items())), "months": dict(sorted(mos.items())),
+        })
+    top_all.sort(key=lambda e: -e["count"])
+    all_years = sorted({y for e in top_all for y in e["years"]})
+    all_months = sorted({m for e in top_all for m in e["months"]})
+    d["archive_analytics"]["executors"] = {
+        "executors_count": len(top_all), "top_all": top_all,
+        "years": all_years, "months_list": all_months,
+        "years_available": all_years, "months_available": all_months,
+        "concentration_top5_pct": round(sum(e["count"] for e in top_all[:5]) * 100 / total, 1),
+    }
+    d["archive_analytics"]["market"]["streets_top"] = va["streets_top"][:15]
+    d["archive_analytics"]["market"]["districts"] = va["districts"]
 
     aa = d["archive_analytics"].setdefault("stats", {})
     aa["median_ppm"] = st["median_ppm"]
