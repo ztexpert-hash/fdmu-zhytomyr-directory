@@ -2,8 +2,9 @@ name: Оновлення бази ФДМУ
 
 on:
   schedule:
+    # щопонеділка о 06:00 UTC (09:00 за Києвом)
     - cron: '0 6 * * 1'
-  workflow_dispatch:
+  workflow_dispatch:        # ручний запуск кнопкою
 
 permissions:
   contents: write
@@ -26,7 +27,7 @@ jobs:
           git config user.name  "fdmu-bot"
           git config user.email "actions@github.com"
           if [ -n "$(git status --porcelain)" ]; then
-            git add calc_data.json archive_calc_data.json processed_files.json \
+            git add calc_data.json archive_calc_data.json processed_files.json executor_merge.json \
                     fdmu_schema_columns.json README.txt
             git commit -m "Автооновлення бази ФДМУ $(date +%d.%m.%Y)"
             git push
