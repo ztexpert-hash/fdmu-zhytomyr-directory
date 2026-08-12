@@ -1,4 +1,4 @@
-const CACHE = 'fdmu-zhytomyr-v11_7-cache';
+const CACHE = 'fdmu-zhytomyr-v11_8-cache';
 const STATIC_FILES = ['./manifest.json','./logo.jpg','./icon-192.png','./icon-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(STATIC_FILES)));
