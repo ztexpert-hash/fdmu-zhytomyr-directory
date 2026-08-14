@@ -1520,6 +1520,69 @@ function renderMarketResearch(){
   if(fk && !fk.__wired){ fk.__wired=true; fk.addEventListener('change',renderMarketResearch); }
 }
 
+/* v11.8 · клієнтський розрахунок «жовтих точок» тренду.
+   Для кожного місяця з pts перевіряємо: чи є виконавець з часткою ≥20% робіт,
+   медіана якого відхиляється від решти ринку ≥15%. Якщо так — виключаємо
+   його з розрахунку p.med, зберігаємо оригінал у p.raw, ставимо p.adj=true.
+   Пороги збігаються з описом підказки під графіком. Не змінює жодну функцію
+   аналітики окрім рендеру тренду. */
+function enrichTrendWithDominant(pts){
+  if(!pts || !pts.length) return;
+  const source=(ARCHIVE_DATA && ARCHIVE_DATA.length ? ARCHIVE_DATA : (typeof WORK_DATA!=='undefined'?WORK_DATA:DATA))||[];
+  if(!source.length) return;
+  const apartments=source.filter(r=>!isDormRec(r) && !isHouseRec(r));
+  // Групуємо по місяцях
+  const byMonth=new Map();
+  for(const r of apartments){
+    const d=parseDateValue(recordDate(r)); if(!d) continue;
+    const key=monthKeyFromDate(d);
+    if(!byMonth.has(key)) byMonth.set(key,[]);
+    byMonth.get(key).push(r);
+  }
+  const DOM_SHARE=0.20, DOM_DELTA=0.15, MIN_TOTAL=8, MIN_TOP=3, MIN_OTHERS=5;
+  for(const p of pts){
+    const arr=byMonth.get(p.name); if(!arr || arr.length<MIN_TOTAL) continue;
+    // Ключ виконавця: спершу ЄДРПОУ (стабільніший), інакше нормалізоване ПІБ
+    const groups=new Map();
+    for(const r of arr){
+      const code=executorCode(r);
+      const name=getExecutor(r);
+      if(!name || name==='не вказано в поточній базі') continue;
+      const key=code || ('_n:'+String(name).trim().toUpperCase());
+      if(!groups.has(key)) groups.set(key,{name,code,records:[]});
+      groups.get(key).records.push(r);
+    }
+    if(!groups.size) continue;
+    let top=null;
+    for(const g of groups.values()){ if(!top || g.records.length>top.records.length) top=g; }
+    if(!top || top.records.length<MIN_TOP) continue;
+    const share=top.records.length/arr.length;
+    if(share<DOM_SHARE) continue;
+    const others=arr.filter(r=>!top.records.includes(r));
+    if(others.length<MIN_OTHERS) continue;
+    const ppmsTop=top.records.map(r=>+r['цкв']||0).filter(x=>x>0);
+    const ppmsOther=others.map(r=>+r['цкв']||0).filter(x=>x>0);
+    if(ppmsTop.length<MIN_TOP || ppmsOther.length<MIN_OTHERS) continue;
+    const medTop=median(ppmsTop), medOther=median(ppmsOther);
+    if(!medOther) continue;
+    const delta=(medTop-medOther)/medOther;
+    if(Math.abs(delta)<DOM_DELTA) continue;
+    // Умови виконуються — маркуємо як «adjusted»
+    p.raw = p.med;             // зберігаємо оригінал
+    p.med = Math.round(medOther); // скоригована медіана без домінанта
+    p.kept = others.length;
+    p.adj = true;
+    p.dom = [{
+      name: top.name,
+      code: top.code || '',
+      count: top.records.length,
+      share_pct: Math.round(share*100),
+      median_ppm: Math.round(medTop),
+      delta_pct: Math.round(delta*100)
+    }];
+  }
+}
+
 function renderPriceTrend(market){
   if(market) window.__TREND_SRC=market;
   const src=window.__TREND_SRC;
@@ -1532,6 +1595,8 @@ function renderPriceTrend(market){
   let pts=src.months.map(m=>({name:m.name,count:m.count,med:m.median_ppm,avg:m.avg_ppm,
                               raw:m.raw_median_ppm,kept:m.kept_count,adj:m.adjusted,dom:m.dominant||[]}))
                     .filter(p=>p.name).sort((a,b)=>a.name.localeCompare(b.name));
+  // v11.8 · клієнтське збагачення жовтими точками (backend не заповнює adjusted/dominant)
+  if(scale==='month'){ try{ enrichTrendWithDominant(pts); }catch(e){ console.warn('trend enrich failed', e); } }
   if(scale==='year'){
     const g={};
     pts.forEach(p=>{const y=p.name.slice(0,4); (g[y]=g[y]||[]).push(p);});
@@ -1846,7 +1911,12 @@ function executorMonthDetails(row){
 }
 function renderExecutorProfile(force=true){
   const box=document.getElementById('executorProfile'); if(!box)return;
-  const q=document.getElementById('executorSearchInput')?.value||'';
+  const q=(document.getElementById('executorSearchInput')?.value||'').trim();
+  // v11.8 · пусте поле → завжди повертаємо початковий плейсхолдер (інакше стара картка «зависає»)
+  if(!q){
+    box.innerHTML='<div class="empty">Введіть ЄДРПОУ або назву виконавця і натисніть «Показати».</div>';
+    return;
+  }
   const row=findExecutorRow(q);
   if(!row){ if(force || q.length>1) box.innerHTML='<div class="empty">Виконавця не знайдено. Пошук по ЄДРПОУ працює тільки якщо код є в JSON. Спробуйте ПІБ або назву СОД.</div>'; return; }
   const years=Object.keys(row.years||{}).filter(y=>y!=='—').sort();
