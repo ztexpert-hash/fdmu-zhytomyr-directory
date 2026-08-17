@@ -10,7 +10,7 @@ self.addEventListener('activate', event => {
 });
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
-  const isData = url.pathname.endsWith('/calc_data.json') || url.pathname.endsWith('/update_summary.json') || url.pathname.endsWith('/index.html') || url.pathname.endsWith('/README.txt') || url.pathname.endsWith('/sw.js') || url.pathname.endsWith('/');
+  const isData = url.pathname.endsWith('/calc_data.json') || url.pathname.endsWith('/listings_data.json') || url.pathname.endsWith('/archive_calc_data.json') || url.pathname.endsWith('/update_summary.json') || url.pathname.endsWith('/index.html') || url.pathname.endsWith('/README.txt') || url.pathname.endsWith('/sw.js') || url.pathname.endsWith('/');
   if (isData) {
     event.respondWith(fetch(event.request, {cache:'reload'}).catch(() => caches.match(event.request)));
     return;

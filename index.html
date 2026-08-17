@@ -264,6 +264,7 @@ body:not(.locked) #authScreen{display:none!important}
     <button class="collapse-toggle" onclick="toggleSection('sampleCard', this)">Показати деталі вибірки</button>
     <button class="collapse-toggle" onclick="toggleSection('recordsCard', this)">Показати зареєстровані оцінки</button>
     <button class="collapse-toggle" onclick="toggleSection('marketCard', this)">Показати аналітику ринку</button>
+    <button class="collapse-toggle" onclick="toggleSection('lstCard', this)">Показати ринок пропозицій</button>
     <button class="collapse-toggle admin executor-analytics-only" onclick="toggleSection('analyticsCard', this)">Показати аналітику оцінювачів</button>
   </div>
   <div class="hint">Основний екран залишено чистим. Деталі, список оцінок і аналітика відкриваються тільки за потреби.</div>
@@ -327,6 +328,21 @@ body:not(.locked) #authScreen{display:none!important}
     <details class="collapsible-panel"><summary>Динаміка по місяцях — таблиця</summary><div class="panel-body scroll-limited" id="analytics-months"></div></details>
   </div>
   <div class="analytics-note">Ринкова аналітика будується на квартирах (окрім блоку «Ціна за типами»), бо змішування квартир, будинків і гуртожитків спотворює ціну за м². Медіана стійкіша за середню — вона не «пливе» від поодиноких дорогих об'єктів. Показники довідкові й не замінюють аналіз оцінювача.</div>
+</section>
+<section class="card collapsed-section" id="lstCard"><!-- lst-card-v1 -->
+  <div class="section">Ринок пропозицій — активні оголошення</div>
+  <div class="sample-grid">
+    <div class="mini-stat"><div class="l">Медіана по місту, $/м²</div><div class="v" id="lst-med-usd">—</div></div>
+    <div class="mini-stat"><div class="l">Медіана по місту, грн/м²</div><div class="v" id="lst-med-uah">—</div></div>
+    <div class="mini-stat"><div class="l">Квартир у розрахунку</div><div class="v" id="lst-used">—</div></div>
+    <div class="mini-stat"><div class="l">Дата зрізу</div><div class="v" id="lst-date" style="font-size:15px">—</div></div>
+  </div>
+  <div class="analytics-grid" style="margin-top:12px">
+    <details class="collapsible-panel panel-wide" open><summary>Кімнатність і поверховість</summary><div class="panel-body" id="lst-matrix"></div></details>
+    <details class="collapsible-panel"><summary>За кімнатністю</summary><div class="panel-body" id="lst-rooms"></div></details>
+    <details class="collapsible-panel"><summary>За поверховістю</summary><div class="panel-body" id="lst-floors"></div></details>
+  </div>
+  <div class="analytics-note">Це ціни <b>пропозиції</b> — за скільки просять у діючих оголошеннях. Зареєстровані оцінки ФДМУ в інших блоках довідника показують інше: за скільки оформили угоду. Дві величини наводяться окремо і не порівнюються між собою. Сегменти з позначкою «мало даних» (менше 30 об'єктів) не є ринковим показником.</div>
 </section>
 <section class="card executor-analytics-only collapsed-section" id="analyticsCard">
   <div class="section">Аналітика оцінювачів (СОД)</div>
@@ -845,6 +861,11 @@ async function loadData(){try{
       ARCHIVE_DATA=(ad.records||[]).filter(validCity).map(cityZoneRecord);
     }
   }catch(_e){ARCHIVE_DATA=[];}
+  try{
+    const lr=await fetch('listings_data.json?v='+APP_VERSION+'&t='+Date.now(),{cache:'reload'});
+    if(lr.ok){ window.__LST=await lr.json(); }
+  }catch(_e){ window.__LST=null; }
+  try{ renderListings(); }catch(_e){}
   if(d.version && d.version!==APP_VERSION){console.warn('Версія бази не збігається', d.version, APP_VERSION);}
   const dorms=WORK_DATA.filter(isDormRec).length;
   const houses=WORK_DATA.filter(isHouseRec).length;
@@ -865,6 +886,44 @@ async function loadData(){try{
   if(document.getElementById('st-oliivka')) document.getElementById('st-oliivka').textContent='включена в Житомир';
   populateStreetList(); renderAnalytics(); ensureExecutorSearchBlock(); renderExecutorMarketMonths(); renderExecutorProfile(false); runAuto(); loadUpdateSummary();
 }catch(ex){err('Не вдалося завантажити calc_data.json: '+ex.message+'. Запустіть через локальний сервер або GitHub Pages.')}}
+/* lst-card-v1 — блок «Ринок пропозицій». Нічого не рахує: показує готові числа з listings_data.json */
+function lstCell(x){
+  if(!x) return '<td class="num">—</td>';
+  const n='<span class="hint" style="white-space:nowrap">n='+x.n+(x.low_n?', мало даних':'')+'</span>';
+  return '<td class="num">'+fmt(x.median_usd)+' $<br>'+n+'</td>';
+}
+function renderListings(){
+  const card=document.getElementById('lstCard');
+  if(!card) return;
+  const btn=document.querySelector('button[onclick*="lstCard"]');
+  if(!window.__LST || !window.__LST.city){
+    card.classList.remove('open');
+    if(btn) btn.style.display='none';
+    return;
+  }
+  if(btn) btn.style.display='';
+  const d=window.__LST;
+  document.getElementById('lst-med-usd').textContent=fmt(d.city.median_usd)+' $';
+  document.getElementById('lst-med-uah').textContent=fmt(d.city.median_uah);
+  document.getElementById('lst-used').textContent=fmt(d.used)+' з '+fmt(d.total);
+  document.getElementById('lst-date').textContent=d.generated||d.date||'—';
+
+  const cols=d.floors_axis||[], rowsAx=d.rooms_axis||[], mx=d.matrix||[];
+  const get=(r,f)=>mx.find(x=>x.rooms===r&&x.floors===f);
+  const head='<tr><th>Кімнат</th>'+cols.map(c=>'<th class="num">'+safe(c)+' пов.</th>').join('')+'</tr>';
+  const body=rowsAx.map(r=>'<tr><td>'+safe(r)+'</td>'+cols.map(c=>lstCell(get(r,c))).join('')+'</tr>').join('');
+  const mt=document.getElementById('lst-matrix');
+  if(mt) mt.innerHTML=mx.length
+    ? '<table class="analytics-table"><thead>'+head+'</thead><tbody>'+body+'</tbody></table>'
+    : '<div class="empty">Немає даних</div>';
+
+  const axTable=(arr,label)=>tableHtml([label,'Кількість','Медіана $/м²','Медіана грн/м²'],
+    (arr||[]).map(x=>'<tr><td>'+safe(x.name)+(x.low_n?' <span class="hint">(мало даних)</span>':'')
+      +'</td><td class="num">'+fmt(x.n)+'</td><td class="num">'+fmt(x.median_usd)
+      +'</td><td class="num">'+fmt(x.median_uah)+'</td></tr>'));
+  const rr=document.getElementById('lst-rooms');   if(rr) rr.innerHTML=axTable(d.by_rooms,'Кімнат');
+  const ff=document.getElementById('lst-floors');  if(ff) ff.innerHTML=axTable(d.by_floors,'Поверховість');
+}
 function normalizeAddressForCompare(v){
   let s=String(v||'').toUpperCase();
   // Нормалізація без \b, бо межі слова нестабільно працюють з кирилицею в різних браузерах.
