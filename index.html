@@ -266,6 +266,7 @@ body:not(.locked) #authScreen{display:none!important}
     <button class="collapse-toggle" onclick="toggleSection('marketCard', this)">Показати аналітику ринку</button>
     <button class="collapse-toggle" onclick="toggleSection('lstCard', this)">Показати ринок пропозицій</button>
     <button class="collapse-toggle admin executor-analytics-only" onclick="toggleSection('analyticsCard', this)">Показати аналітику оцінювачів</button>
+    <button class="collapse-toggle" onclick="toggleAllSections(this)" id="toggleAllBtn">Активувати всі</button>
   </div>
   <div class="hint">Основний екран залишено чистим. Деталі, список оцінок і аналітика відкриваються тільки за потреби.</div>
 </section>
@@ -416,17 +417,29 @@ function setQualityBlock(selected, area){
   if(q3)q3.textContent=iqr.q3 ? fmt(iqr.q3) : '—';
 }
 
-function toggleSection(id,btn){
+function toggleSection(id,btn,opts){
   const el=document.getElementById(id);
   if(!el)return;
-  const open=el.classList.toggle('open');
+  const open=(opts&&typeof opts.force==='boolean')
+    ? (opts.force ? (el.classList.add('open'),true) : (el.classList.remove('open'),false))
+    : el.classList.toggle('open');
   if(btn){
     btn.classList.toggle('is-active', open);
     btn.setAttribute('aria-pressed', open ? 'true' : 'false');
     const txt=btn.textContent.replace(/^Показати /,'').replace(/^Сховати /,'');
     btn.textContent=(open?'Сховати ':'Показати ')+txt;
   }
-  if(open) setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),80);
+}
+
+const ALL_MODULE_IDS=['dbCard','sampleCard','recordsCard','marketCard','lstCard','analyticsCard'];
+function toggleAllSections(btn){
+  const visible=ALL_MODULE_IDS.filter(id=>{const el=document.getElementById(id); return el && !el.classList.contains('hidden-by-role');});
+  const anyClosed=visible.some(id=>!document.getElementById(id).classList.contains('open'));
+  document.querySelectorAll('.collapse-actions .collapse-toggle').forEach(b=>{
+    const m=b.getAttribute('onclick')?.match(/toggleSection\('([^']+)'/);
+    if(m) toggleSection(m[1], b, {force:anyClosed});
+  });
+  if(btn) btn.textContent = anyClosed ? 'Згорнути всі' : 'Активувати всі';
 }
 
 function showToast(t){const el=document.getElementById('toast'); el.textContent=t; el.style.display='block'; clearTimeout(window.__toastTimer); window.__toastTimer=setTimeout(()=>el.style.display='none',2600)}
