@@ -360,7 +360,7 @@ body:not(.locked) #authScreen{display:none!important}
   </div>
   <div class="analytics-note">Аналітика оцінювачів побудована на архівній базі. Показники довідкові: кількість зареєстрованих оцінок, частка ринку, медіана грн/м² та дата останньої роботи.</div>
 </section>
-<section class="card collapsed-section" id="recordsCard"><div class="controls"><div><div class="section" style="margin-bottom:4px">Зареєстровані оцінки</div><div class="hint">Число в кружечку — бал близькості до заданих параметрів, не номер об’єкта.</div></div><input class="search" id="search" placeholder="Пошук по адресі (працює без площі)" oninput="renderList()"><span id="searchCount" class="search-count" style="display:none"></span><div class="card-style-toggle" title="Стиль карток"><button type="button" id="cs-v1" onclick="setCardStyle('v1')">Компакт</button><button type="button" id="cs-v2" onclick="setCardStyle('v2')">Дашборд</button></div></div><div class="analog-list" id="list" style="margin-top:12px"><div class="empty">Завантаження бази...</div></div></section>
+<section class="card collapsed-section" id="recordsCard"><div class="controls"><div><div class="section" style="margin-bottom:4px">Зареєстровані оцінки</div><div class="hint">Число в кружечку — бал близькості до заданих параметрів, не номер об’єкта.</div></div><input class="search" id="search" placeholder="Пошук по адресі (працює без площі)" oninput="renderList()"><span id="searchCount" class="search-count" style="display:none"></span><div class="card-style-toggle" title="Стиль карток"><button type="button" id="cs-v1" onclick="setCardStyle('v1')">Компакт</button><button type="button" id="cs-v2" onclick="setCardStyle('v2')">Дашборд</button></div></div><div class="search-filters" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><select id="searchType" onchange="renderList()" style="width:auto;min-width:120px"><option value="all" selected>Всі типи</option><option value="apartment">Квартира</option><option value="dorm">Кімната в гуртожитку</option><option value="house">Будинок</option></select><select id="searchDistrict" onchange="renderList()" style="width:auto;min-width:150px"><option value="all" selected>Житомир — вся база</option><option value="Богунський">Богунський</option><option value="Корольовський">Корольовський</option><option value="Житомир (без району)">Житомир без району</option></select><select id="searchScope" onchange="renderList()" style="width:auto;min-width:170px"><option value="12" selected>Останні 12 місяців</option><option value="1">Останній 1 місяць</option><option value="3">Останні 3 місяці</option><option value="6">Останні 6 місяців</option><option value="archive">Повний архів 2019+</option></select></div><div class="hint" style="margin-top:5px">Фільтри пошуку по адресі незалежні від параметрів об'єкта вище</div><div class="analog-list" id="list" style="margin-top:12px"><div class="empty">Завантаження бази...</div></div></section>
 <div class="footer">Довідкова інформація. Не є звітом про оцінку майна. Зареєстровані оцінки ФДМУ мають довідковий характер і не є автоматично придатним джерелом для звіту без окремого аналізу оцінювачем. Використовується база: Житомирська міська зона; службові реквізити не відображаються.<br><b>ТОВ «ЕКСПЕРТНА ДУМКА» · Оцінка майна · 097 921 37 72</b><br>Версія сайту: 11.3-beta · компактна верхня панель · довіра A/B/C · IQR · Оліївка = Житомир</div>
 </main>
 <div id="toast" class="toast"></div>
@@ -1138,6 +1138,25 @@ function runAuto(){
 function selectAll(flag){const t=TARGET||target(); if(!t.area){showToast('Спочатку вкажіть загальну площу об’єкта'); showGeneralStatsOnly(); setQualityBlock([],0); return;} if(flag){CAND.forEach(r=>SELECTED.add(r._id))}else{SELECTED.clear()} renderList(); recalcSelected();}
 function toggleOne(id,checked){checked?SELECTED.add(id):SELECTED.delete(id); recalcSelected(); renderStats();}
 function renderStats(){const t=TARGET||target(); if(!t.area){document.getElementById('st-shown').textContent='—'; document.getElementById('st-selected').textContent='—'; return;} document.getElementById('st-shown').textContent=CAND.length; document.getElementById('st-selected').textContent=SELECTED.size;}
+/* ═══ Незалежні фільтри для прямого пошуку по адресі (recordsCard) ═══
+   Навмисно НЕ використовують objectTypeOk/districtMatch/activeRecords з
+   основного блоку «Параметри об'єкта», щоб зміна цих фільтрів під час
+   пошуку не залежала від стану основної форми розрахунку і не міняла
+   ACTIVE_SOURCE, який читає деталізація вибірки аналогів. */
+function searchFilterState(){
+  const byId=id=>{const el=document.getElementById(id); return el?el.value:'all'};
+  return {type:byId('searchType'), district:byId('searchDistrict'), scope:byId('searchScope')};
+}
+function searchObjectTypeOk(r,type){
+  if(type==='all') return true;
+  const isDorm=isDormRec(r), isHouse=isHouseRec(r);
+  if(type==='dorm') return isDorm;
+  if(type==='house') return isHouse;
+  return !isDorm && !isHouse;
+}
+function searchSourceRecords(scope){
+  return (scope==='archive' && ARCHIVE_DATA && ARCHIVE_DATA.length) ? ARCHIVE_DATA : WORK_DATA;
+}
 function setSearchCount(n, q){
   const el=document.getElementById('searchCount');
   if(!el) return;
@@ -1153,8 +1172,9 @@ function renderList(){
   // РЕЖИМ ПРЯМОГО ПОШУКУ ПО АДРЕСІ: працює без площі й кімнатності
   if(!t.area){
     if(!q){ showGeneralStatsOnly(); setQualityBlock([],0); setSearchCount(null); return; }
-    let base=activeRecords(t).filter(r=>objectTypeOk(r,t) && datePeriodOk(r,t));
-    if(t.district!=='all') base=base.filter(r=>districtMatch(r,t.district));
+    const sf=searchFilterState();
+    let base=searchSourceRecords(sf.scope).filter(r=>searchObjectTypeOk(r,sf.type) && datePeriodOk(r,{datePeriod:sf.scope==='archive'?'all':sf.scope}));
+    if(sf.district!=='all') base=base.filter(r=>districtMatch(r,sf.district));
     const qn=normalizeAddressForCompare(q);
     let rows=base.filter(r=>{
       const ad=String(r['ад']||'').toUpperCase();
