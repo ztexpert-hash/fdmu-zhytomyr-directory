@@ -314,21 +314,13 @@ body:not(.locked) #authScreen{display:none!important}
 </section>
 <section class="card collapsed-section" id="marketCard">
   <div class="section">Аналітика ринку житла</div>
-  <div class="sample-grid">
-    <div class="mini-stat"><div class="l">Медіана останнього місяця</div><div class="v" id="mk-last-med">—</div></div>
-    <div class="mini-stat"><div class="l">Зміна за 12 місяців</div><div class="v" id="mk-yoy">—</div></div>
-    <div class="mini-stat"><div class="l">Оцінок у базі</div><div class="v" id="mk-total">—</div></div>
-    <div class="mini-stat"><div class="l">Період спостереження</div><div class="v" id="mk-period">—</div></div>
-  </div>
   <div class="analytics-grid" style="margin-top:12px">
     <details class="collapsible-panel panel-wide" open><summary>Динаміка ціни за м² — графік</summary><div class="panel-body"><div class="quick-jump" style="margin:0 0 10px"><label style="font-size:12px;color:var(--muted);align-self:center">Розріз:</label><select id="trendScale" style="max-width:130px"><option value="month">По місяцях</option><option value="year">По роках</option></select><select id="trendRange" style="max-width:150px"><option value="all">Весь період</option><option value="36">Останні 3 роки</option><option value="24">Останні 2 роки</option><option value="12">Останні 12 міс</option></select></div><div id="priceTrend"></div></div></details>
-    <details class="collapsible-panel panel-wide" open><summary>Що впливає на ціну за м²</summary><div class="panel-body"><div class="quick-jump" style="margin:0 0 10px"><label style="font-size:12px;color:var(--muted);align-self:center">Фактор:</label><select id="factorKind" style="max-width:190px"><option value="floor">Поверх</option><option value="age">Вік будинку</option><option value="area">Площа квартири</option><option value="zone">Зона міста</option><option value="house_type">Тип будинку</option><option value="house_class">Клас житла</option><option value="walls">Матеріал стін</option></select></div><div id="factorChart"></div></div></details>
     <details class="collapsible-panel"><summary>Сезонність попиту на оцінку</summary><div class="panel-body" id="seasonChart"></div></details>
     <details class="collapsible-panel"><summary>Активність ринку по роках</summary><div class="panel-body" id="activityChart"></div></details>
-    <details class="collapsible-panel"><summary>Ціна за типами нерухомості</summary><div class="panel-body" id="byTypeTable"></div></details>
     <details class="collapsible-panel"><summary>Динаміка по місяцях — таблиця</summary><div class="panel-body scroll-limited" id="analytics-months"></div></details>
   </div>
-  <div class="analytics-note">Ринкова аналітика будується на квартирах (окрім блоку «Ціна за типами»), бо змішування квартир, будинків і гуртожитків спотворює ціну за м². Медіана стійкіша за середню — вона не «пливе» від поодиноких дорогих об'єктів. Показники довідкові й не замінюють аналіз оцінювача.</div>
+  <div class="analytics-note">Ринкова аналітика будується на квартирах, бо змішування квартир, будинків і гуртожитків спотворює ціну за м². Медіана стійкіша за середню — вона не «пливе» від поодиноких дорогих об'єктів. Показники довідкові й не замінюють аналіз оцінювача.</div>
 </section>
 <section class="card collapsed-section" id="lstCard"><!-- lst-card-v1 -->
   <div class="section">Ринок пропозицій — активні оголошення</div>
