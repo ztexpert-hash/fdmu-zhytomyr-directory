@@ -1,16 +1,16 @@
 {
- "generated": "10.09.2026 11:36",
- "date": "2026-09-10",
+ "generated": "21.09.2026 20:46",
+ "date": "2026-09-21",
  "source": "активні оголошення про продаж, м. Житомир",
- "total": 1528,
- "used": 1261,
- "excluded": 267,
- "no_floors_data": 2,
- "no_rooms_data": 58,
+ "total": 1535,
+ "used": 1334,
+ "excluded": 201,
+ "no_floors_data": 1,
+ "no_rooms_data": 49,
  "min_n": 30,
  "city": {
-  "median_usd": 1124,
-  "median_uah": 50239
+  "median_usd": 1146,
+  "median_uah": 51206
  },
  "rooms_axis": [
   "1",
@@ -27,150 +27,150 @@
   {
    "rooms": "1",
    "floors": "до 5",
-   "n": 104,
-   "median_usd": 1229,
-   "median_uah": 54931,
+   "n": 120,
+   "median_usd": 1304,
+   "median_uah": 58154,
    "low_n": false
   },
   {
    "rooms": "1",
    "floors": "6-9",
-   "n": 69,
-   "median_usd": 1203,
-   "median_uah": 53569,
+   "n": 88,
+   "median_usd": 1259,
+   "median_uah": 56016,
    "low_n": false
   },
   {
    "rooms": "1",
    "floors": "10+",
-   "n": 263,
-   "median_usd": 1173,
-   "median_uah": 52458,
+   "n": 295,
+   "median_usd": 1167,
+   "median_uah": 52237,
    "low_n": false
   },
   {
    "rooms": "2",
    "floors": "до 5",
-   "n": 179,
-   "median_usd": 1169,
-   "median_uah": 52340,
+   "n": 192,
+   "median_usd": 1193,
+   "median_uah": 53391,
    "low_n": false
   },
   {
    "rooms": "2",
    "floors": "6-9",
-   "n": 91,
-   "median_usd": 1215,
-   "median_uah": 54385,
+   "n": 84,
+   "median_usd": 1219,
+   "median_uah": 54524,
    "low_n": false
   },
   {
    "rooms": "2",
    "floors": "10+",
    "n": 224,
-   "median_usd": 1098,
-   "median_uah": 49164,
+   "median_usd": 1115,
+   "median_uah": 49871,
    "low_n": false
   },
   {
    "rooms": "3",
    "floors": "до 5",
-   "n": 59,
-   "median_usd": 1118,
-   "median_uah": 50052,
+   "n": 70,
+   "median_usd": 1094,
+   "median_uah": 48741,
    "low_n": false
   },
   {
    "rooms": "3",
    "floors": "6-9",
-   "n": 77,
-   "median_usd": 1040,
-   "median_uah": 46504,
+   "n": 78,
+   "median_usd": 1069,
+   "median_uah": 47734,
    "low_n": false
   },
   {
    "rooms": "3",
    "floors": "10+",
-   "n": 65,
-   "median_usd": 1030,
-   "median_uah": 46131,
+   "n": 66,
+   "median_usd": 990,
+   "median_uah": 44340,
    "low_n": false
   },
   {
    "rooms": "4+",
    "floors": "до 5",
-   "n": 16,
-   "median_usd": 1018,
-   "median_uah": 45558,
+   "n": 14,
+   "median_usd": 1028,
+   "median_uah": 45870,
    "low_n": true
   },
   {
    "rooms": "4+",
    "floors": "6-9",
-   "n": 33,
-   "median_usd": 878,
-   "median_uah": 39227,
+   "n": 32,
+   "median_usd": 972,
+   "median_uah": 43353,
    "low_n": false
   },
   {
    "rooms": "4+",
    "floors": "10+",
    "n": 21,
-   "median_usd": 900,
-   "median_uah": 40309,
+   "median_usd": 911,
+   "median_uah": 40730,
    "low_n": true
   }
  ],
  "by_rooms": [
   {
    "name": "1",
-   "n": 437,
-   "median_usd": 1185,
-   "median_uah": 52945,
+   "n": 504,
+   "median_usd": 1202,
+   "median_uah": 53691,
    "low_n": false
   },
   {
    "name": "2",
-   "n": 495,
-   "median_usd": 1146,
-   "median_uah": 51235,
+   "n": 500,
+   "median_usd": 1164,
+   "median_uah": 52057,
    "low_n": false
   },
   {
    "name": "3",
-   "n": 201,
-   "median_usd": 1040,
-   "median_uah": 46504,
+   "n": 214,
+   "median_usd": 1041,
+   "median_uah": 46558,
    "low_n": false
   },
   {
    "name": "4+",
-   "n": 70,
-   "median_usd": 900,
-   "median_uah": 40309,
+   "n": 67,
+   "median_usd": 916,
+   "median_uah": 40807,
    "low_n": false
   }
  ],
  "by_floors": [
   {
    "name": "до 5",
-   "n": 379,
-   "median_usd": 1150,
-   "median_uah": 51424,
+   "n": 413,
+   "median_usd": 1182,
+   "median_uah": 52764,
    "low_n": false
   },
   {
    "name": "6-9",
-   "n": 289,
-   "median_usd": 1132,
-   "median_uah": 50719,
+   "n": 299,
+   "median_usd": 1172,
+   "median_uah": 52329,
    "low_n": false
   },
   {
    "name": "10+",
-   "n": 591,
-   "median_usd": 1100,
-   "median_uah": 49266,
+   "n": 621,
+   "median_usd": 1107,
+   "median_uah": 49471,
    "low_n": false
   }
  ]
