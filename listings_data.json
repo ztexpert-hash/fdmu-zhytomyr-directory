@@ -1,16 +1,16 @@
 {
- "generated": "01.10.2026 10:41",
- "date": "2026-10-01",
+ "generated": "06.10.2026 10:52",
+ "date": "2026-10-06",
  "source": "активні оголошення про продаж, м. Житомир",
- "total": 1596,
+ "total": 1595,
  "used": 1392,
- "excluded": 204,
+ "excluded": 203,
  "no_floors_data": 1,
- "no_rooms_data": 62,
+ "no_rooms_data": 65,
  "min_n": 30,
  "city": {
-  "median_usd": 1157,
-  "median_uah": 51730
+  "median_usd": 1156,
+  "median_uah": 51703
  },
  "rooms_axis": [
   "1",
@@ -28,62 +28,62 @@
    "rooms": "1",
    "floors": "до 5",
    "n": 127,
-   "median_usd": 1311,
-   "median_uah": 58750,
+   "median_usd": 1298,
+   "median_uah": 58146,
    "low_n": false
   },
   {
    "rooms": "1",
    "floors": "6-9",
-   "n": 94,
-   "median_usd": 1273,
-   "median_uah": 56958,
+   "n": 90,
+   "median_usd": 1269,
+   "median_uah": 56778,
    "low_n": false
   },
   {
    "rooms": "1",
    "floors": "10+",
-   "n": 293,
-   "median_usd": 1181,
-   "median_uah": 52597,
+   "n": 287,
+   "median_usd": 1182,
+   "median_uah": 52911,
    "low_n": false
   },
   {
    "rooms": "2",
    "floors": "до 5",
-   "n": 199,
-   "median_usd": 1194,
-   "median_uah": 53463,
+   "n": 203,
+   "median_usd": 1196,
+   "median_uah": 53550,
    "low_n": false
   },
   {
    "rooms": "2",
    "floors": "6-9",
-   "n": 84,
-   "median_usd": 1212,
-   "median_uah": 54155,
+   "n": 83,
+   "median_usd": 1198,
+   "median_uah": 53377,
    "low_n": false
   },
   {
    "rooms": "2",
    "floors": "10+",
-   "n": 246,
-   "median_usd": 1134,
-   "median_uah": 50717,
+   "n": 243,
+   "median_usd": 1136,
+   "median_uah": 50772,
    "low_n": false
   },
   {
    "rooms": "3",
    "floors": "до 5",
-   "n": 71,
-   "median_usd": 1079,
-   "median_uah": 48108,
+   "n": 76,
+   "median_usd": 1052,
+   "median_uah": 47093,
    "low_n": false
   },
   {
    "rooms": "3",
    "floors": "6-9",
-   "n": 82,
+   "n": 80,
    "median_usd": 1149,
    "median_uah": 51359,
    "low_n": false
@@ -91,7 +91,7 @@
   {
    "rooms": "3",
    "floors": "10+",
-   "n": 67,
+   "n": 69,
    "median_usd": 990,
    "median_uah": 44340,
    "low_n": false
@@ -99,15 +99,15 @@
   {
    "rooms": "4+",
    "floors": "до 5",
-   "n": 17,
-   "median_usd": 928,
-   "median_uah": 41544,
+   "n": 16,
+   "median_usd": 951,
+   "median_uah": 42472,
    "low_n": true
   },
   {
    "rooms": "4+",
    "floors": "6-9",
-   "n": 30,
+   "n": 32,
    "median_usd": 1151,
    "median_uah": 51400,
    "low_n": false
@@ -115,62 +115,62 @@
   {
    "rooms": "4+",
    "floors": "10+",
-   "n": 19,
+   "n": 20,
    "median_usd": 911,
-   "median_uah": 40730,
+   "median_uah": 40768,
    "low_n": true
   }
  ],
  "by_rooms": [
   {
    "name": "1",
-   "n": 515,
-   "median_usd": 1221,
-   "median_uah": 54632,
+   "n": 505,
+   "median_usd": 1212,
+   "median_uah": 54345,
    "low_n": false
   },
   {
    "name": "2",
    "n": 529,
    "median_usd": 1168,
-   "median_uah": 52229,
+   "median_uah": 52252,
    "low_n": false
   },
   {
    "name": "3",
-   "n": 220,
-   "median_usd": 1059,
-   "median_uah": 47221,
+   "n": 225,
+   "median_usd": 1057,
+   "median_uah": 47195,
    "low_n": false
   },
   {
    "name": "4+",
-   "n": 66,
-   "median_usd": 920,
-   "median_uah": 41056,
+   "n": 68,
+   "median_usd": 925,
+   "median_uah": 41394,
    "low_n": false
   }
  ],
  "by_floors": [
   {
    "name": "до 5",
-   "n": 437,
-   "median_usd": 1180,
-   "median_uah": 52585,
+   "n": 445,
+   "median_usd": 1169,
+   "median_uah": 52429,
    "low_n": false
   },
   {
    "name": "6-9",
-   "n": 311,
-   "median_usd": 1198,
-   "median_uah": 53605,
+   "n": 309,
+   "median_usd": 1193,
+   "median_uah": 53337,
    "low_n": false
   },
   {
    "name": "10+",
-   "n": 643,
+   "n": 637,
    "median_usd": 1130,
-   "median_uah": 50408,
+   "median_uah": 50580,
    "low_n": false
   }
  ]
