@@ -1,0 +1,2210 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#16302B">
+<link rel="manifest" href="manifest.json">
+<title>Довідник зареєстрованих оцінок ФДМУ — Житомир</title>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<style>
+:root{--ink:#16302B;--paper:#F4F1EA;--card:#fff;--teal:#1B6B5A;--gold:#C6912B;--line:#DED7CA;--muted:#6B7A72;--red:#B91C1C;--green:#15803D;--blue:#1F4E79;--safe-top:env(safe-area-inset-top,0px);--safe-bot:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;margin:0;padding:0} body{background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;line-height:1.45}.app-header{background:var(--ink);color:#fff;padding:calc(var(--safe-top) + 18px) 18px 18px}.brand{display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,.14);padding-bottom:12px;margin-bottom:12px}.logo{width:56px;height:56px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:3px}.logo img{width:100%;height:100%;object-fit:contain}.brand h1{font-size:19px;line-height:1.2}.brand p{font-size:12px;color:#B8C8C2;margin-top:2px}.chips{display:flex;gap:7px;flex-wrap:wrap}.chip{font-size:11px;color:#F4D38D;border:1px solid rgba(244,211,141,.35);border-radius:18px;padding:4px 10px;font-weight:700}.topline{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}.company{margin-top:8px;font-size:13px;color:#E8F0ED;line-height:1.45}.company b{color:#F4D38D;letter-spacing:.02em}.phone{color:#fff;text-decoration:none;font-weight:900}.header-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.update-btn{border:1px solid rgba(244,211,141,.45);background:rgba(244,211,141,.12);color:#F4D38D;border-radius:11px;padding:9px 12px;font-weight:900;cursor:pointer}.update-btn:active{transform:scale(.98)}.client-btn{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;border-radius:11px;padding:9px 12px;font-weight:900;cursor:pointer}.version-pill{display:inline-flex;align-items:center;border:1px solid rgba(244,211,141,.35);color:#F4D38D;background:rgba(244,211,141,.08);border-radius:11px;padding:9px 12px;font-weight:900;font-size:13px}.call-btn{display:inline-flex;align-items:center;text-decoration:none}.usdline{font-size:15px;color:var(--muted);font-weight:800;margin-top:4px}.reliability{display:inline-flex;align-items:center;justify-content:center;margin-top:10px;padding:7px 12px;border-radius:999px;font-size:12px;font-weight:900}.rel-high{background:#DCFCE7;color:#166534}.rel-mid{background:#FEF3C7;color:#92400E}.rel-low{background:#FEE2E2;color:#991B1B}.mobile-actions{display:none;position:fixed;left:0;right:0;bottom:0;z-index:5000;padding:10px 12px calc(var(--safe-bot) + 10px);background:rgba(244,241,234,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line);gap:8px}.mobile-actions .ma{flex:1;text-align:center;border-radius:12px;padding:12px 9px;font-size:13px;font-weight:900;text-decoration:none;border:0}.mobile-actions .pdf{background:var(--blue);color:#fff}.mobile-actions .call{background:var(--green);color:#fff}.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#16302B;color:#fff;padding:10px 14px;border-radius:12px;font-size:13px;font-weight:800;box-shadow:0 8px 28px rgba(0,0,0,.22);z-index:9999;display:none;max-width:90%;text-align:center}.wrap{max-width:1180px;margin:0 auto;padding:14px 14px calc(var(--safe-bot) + 20px)}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.035)}.section{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);font-weight:800;margin-bottom:12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;font-size:12px;color:var(--muted);font-weight:700;margin-bottom:5px}input,select{width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:11px;background:#FCFBF8;font-size:15px;color:var(--ink);outline:none}input:focus,select:focus{border-color:var(--teal)}.hint{font-size:11px;color:var(--muted);margin-top:5px}.btn-row{display:flex;gap:8px;flex-wrap:wrap}.btn{border:none;border-radius:12px;padding:12px 14px;background:var(--teal);color:#fff;font-weight:800;font-size:14px;cursor:pointer}.btn.secondary{background:#EEF4F1;color:var(--teal);border:1px solid #BFD4CC}.btn.warn{background:#FFF2D6;color:#8A5D00;border:1px solid #E6C16B}.btn.gray{background:#F1F1F1;color:#444;border:1px solid #D5D5D5}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px}.stat{background:#F6F4EF;border-radius:12px;padding:10px}.stat .l{font-size:11px;color:var(--muted)}.stat .v{font-size:18px;font-weight:900;color:var(--ink);margin-top:3px}.main-result{text-align:center}.label{font-size:12px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.06em}.big{font-size:34px;font-weight:900;color:var(--ink);margin-top:4px}.range{font-size:13px;color:var(--muted);margin-top:4px}.methods{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.method{background:#F4F1EA;border-radius:12px;padding:10px;text-align:center}.method.primary{border:2px solid var(--teal);background:#EAF4F0}.method .m1{font-size:10px;color:var(--muted);font-weight:800;text-transform:uppercase}.method .m2{font-size:15px;font-weight:900;margin-top:4px}.controls{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.search{max-width:320px}.search-count{display:inline-flex;align-items:center;background:var(--teal);color:#fff;border-radius:20px;padding:5px 12px;font-weight:900;font-size:13px;white-space:nowrap;margin-left:8px}.analog-list{max-height:470px;overflow:auto;border:1px solid var(--line);border-radius:12px}.analog{display:grid;grid-template-columns:34px 58px 1fr 115px;gap:8px;align-items:center;padding:9px 10px;border-bottom:1px solid #EEE8DD;font-size:13px}.analog:last-child{border-bottom:none}.analog input{width:18px;height:18px}.score{background:#AFAAA1;color:#fff;border-radius:20px;padding:3px 8px;text-align:center;font-weight:900;font-size:12px}.score.good{background:var(--green)}.score.mid{background:var(--gold)}.addr{font-weight:700;color:#25433D}.meta{color:#2F4F49}.ppm{text-align:right;color:var(--teal);font-weight:900}.empty{padding:18px;text-align:center;color:var(--muted)}.notice{background:#FFF7E6;border-left:4px solid var(--gold);padding:10px 12px;border-radius:8px;color:#6B4A00;font-size:12px;margin-top:10px}.error{background:#FEE2E2;border:1px solid #FCA5A5;color:var(--red);padding:12px;border-radius:12px;margin-bottom:12px;display:none}.footer{text-align:center;color:var(--muted);font-size:11px;line-height:1.6;margin-top:12px}
+.sample-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:12px}.mini-stat{background:#F6F4EF;border-radius:12px;padding:10px;border:1px solid #E8E1D6}.mini-stat .l{font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase}.mini-stat .v{font-size:17px;font-weight:900;margin-top:3px}.top-table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px}.top-table{width:100%;border-collapse:collapse;font-size:12px;min-width:960px}.top-table th{background:var(--ink);color:#fff;text-align:left;padding:8px 7px;white-space:nowrap}.top-table td{border-bottom:1px solid #EEE8DD;padding:7px;vertical-align:top}.top-table tr:last-child td{border-bottom:none}.top-table .num{text-align:right;white-space:nowrap;font-weight:800}.top-table .center{text-align:center;white-space:nowrap}.top-table .executor{font-size:11px;line-height:1.25;color:#2F4F49;max-width:230px}.top-note{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.45}
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.panel-wide{grid-column:1 / -1}
+.trend-wrap{position:relative}
+.trend-hit{cursor:pointer}
+.trend-hit:hover circle.dot{r:8}
+.trend-tip{position:absolute;pointer-events:none;background:#123A32;color:#fff;border-radius:10px;padding:10px 13px;font-size:12.5px;line-height:1.5;box-shadow:0 8px 22px rgba(0,0,0,.28);max-width:330px;white-space:normal;opacity:0;transition:opacity .12s;z-index:5}
+.trend-tip b{color:#8FD9C4}.analytics-panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#FCFBF8}.analytics-panel h3{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--teal);padding:10px 12px;border-bottom:1px solid var(--line);background:#F6F4EF}.analytics-table{width:100%;border-collapse:collapse;font-size:12px}.analytics-table th{background:#16302B;color:#fff;text-align:left;padding:7px}.analytics-table th.num{text-align:right}
+.bars{display:flex;flex-direction:column;gap:7px}
+.bar-row{display:grid;grid-template-columns:minmax(96px,26%) 1fr minmax(118px,auto);gap:9px;align-items:center;font-size:12px}
+.bar-lab{color:#25433D;font-weight:700;line-height:1.25}
+.bar-track{background:#EFEBE1;border-radius:7px;height:16px;overflow:hidden}
+.bar-fill{height:100%;border-radius:7px;transition:width .35s ease}
+.bar-val{text-align:right;font-weight:900;color:#25433D;white-space:nowrap}
+.bar-n{font-weight:600;color:#8A938F;font-size:11px}
+.bar-d{font-weight:800;font-size:11px}
+.insight{margin-top:11px;background:#F2F7F4;border-left:4px solid var(--teal);padding:10px 12px;border-radius:8px;font-size:12.5px;line-height:1.5;color:#26443E}
+.insight b{color:#0F5C4A}.analytics-table td{border-bottom:1px solid #EEE8DD;padding:7px;vertical-align:top}.analytics-table .num{text-align:right;font-weight:900;white-space:nowrap}.analytics-table tr:last-child td{border-bottom:none}.analytics-note{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.45}@media(max-width:900px){.analytics-grid{grid-template-columns:1fr}}.executor-search-card{margin-top:12px;border:1px solid var(--line);border-radius:12px;background:#FCFBF8;padding:12px}.executor-search-box{display:grid;grid-template-columns:1fr auto;gap:8px;margin:8px 0 10px}.executor-search-box input{min-width:240px}.executor-result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:10px 0}.executor-result-grid .stat{border:1px solid #E8E1D6}.executor-months-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:10px}.executor-months-wrap table{width:100%;border-collapse:collapse;font-size:12px;min-width:520px}.executor-months-wrap th{background:#16302B;color:#fff;text-align:left;padding:7px}.executor-months-wrap td{border-bottom:1px solid #EEE8DD;padding:7px}.executor-months-wrap .num{text-align:right;font-weight:900}.executor-suggest{font-size:11px;color:var(--muted);margin-top:5px}.executor-market-box{margin-top:14px;border-top:1px solid #E8E1D6;padding-top:10px}.executor-market-title{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--teal);font-weight:900;margin-bottom:8px}
+.executor-detail-tools{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.executor-detail-tools button{font-size:12px}.executor-details details{border:1px solid #E8E1D6;border-radius:12px;background:#fff;margin:8px 0;overflow:hidden}.executor-details summary{cursor:pointer;font-weight:900;color:#16302B;background:#F6F4EF;padding:10px 12px;list-style:none}.executor-details summary::-webkit-details-marker{display:none}.executor-details summary:before{content:'▶';display:inline-block;margin-right:6px;color:#1B6B5A}.executor-details details[open]>summary:before{content:'▼'}.executor-details .inner{padding:10px}.executor-works-table{width:100%;border-collapse:collapse;font-size:11px;min-width:860px}.executor-works-table th{background:#16302B;color:#fff;text-align:left;padding:7px}.executor-works-table td{border-bottom:1px solid #EEE8DD;padding:6px;vertical-align:top}.executor-works-table .num{text-align:right;font-weight:900;white-space:nowrap}.executor-works-table .center{text-align:center;white-space:nowrap}.executor-works-wrap{overflow:auto;border:1px solid #EEE8DD;border-radius:10px}.executor-code{font-size:11px;color:#6B7A72;font-weight:800;margin-top:3px}
+.collapsible-panel{border:1px solid var(--line);border-radius:12px;background:#FCFBF8;overflow:hidden}.collapsible-panel>summary{cursor:pointer;list-style:none;padding:10px 12px;background:#F6F4EF;color:var(--teal);font-weight:900;text-transform:uppercase;letter-spacing:.06em;font-size:12px;border-bottom:1px solid var(--line)}.collapsible-panel>summary::-webkit-details-marker{display:none}.collapsible-panel>summary:before{content:'▶';display:inline-block;margin-right:7px;color:#1B6B5A}.collapsible-panel[open]>summary:before{content:'▼'}.collapsible-panel .panel-body{padding:10px 12px}.scroll-limited{max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}.executor-months-wrap.scroll-limited{max-height:360px}.analytics-panel h3{margin:0}.quick-jump{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.quick-jump .btn{padding:8px 10px;font-size:12px}
+
+
+.compact-header-actions{align-items:center}
+.compact-header-actions .client-btn,.compact-header-actions .update-btn{padding:8px 10px;font-size:13px}
+.compact-header-actions .compact-icon{width:40px;min-width:40px;padding:8px 0;text-align:center}
+.logout-btn{opacity:.88}
+.dev-menu{position:relative;display:inline-block}
+.dev-summary{list-style:none;cursor:pointer;border:1px solid rgba(244,211,141,.45);background:rgba(244,211,141,.12);color:#F4D38D;border-radius:11px;padding:8px 10px;font-weight:900;font-size:13px}
+.dev-summary::-webkit-details-marker{display:none}
+.dev-menu[open] .dev-summary{background:#9A6500;color:#fff;border-color:#9A6500}
+.dev-panel{position:absolute;right:0;top:calc(100% + 8px);z-index:7000;width:270px;background:#fff;color:#16302B;border:1px solid #DED7CA;border-radius:14px;padding:10px;box-shadow:0 16px 44px rgba(0,0,0,.22)}
+.dev-line{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;font-size:12px;padding:7px 6px;border-bottom:1px solid #EEE8DD}
+.dev-line span{color:#6B7A72;font-weight:800}.dev-line b{text-align:right;word-break:break-word}
+.dev-action{width:100%;margin-top:8px;border:1px solid #BFD4CC;background:#EEF4F1;color:#1B6B5A;border-radius:10px;padding:10px 11px;font-weight:900;cursor:pointer;text-align:left}
+.dev-action:hover{background:#DDF4EC}
+@media(max-width:720px){.dev-menu{position:static}.dev-panel{left:12px;right:12px;width:auto}.compact-header-actions .client-btn,.compact-header-actions .update-btn,.dev-summary{font-size:12px;padding:8px 9px}}
+@media(max-width:720px){.app-header{padding-left:12px;padding-right:12px}.brand{align-items:flex-start}.logo{width:48px;height:48px}.brand h1{font-size:17px}.header-actions{width:100%}.header-actions .client-btn,.header-actions .update-btn,.header-actions .version-pill{font-size:12px;padding:8px 10px}.wrap{padding:10px 10px calc(var(--safe-bot) + 86px)}.card{padding:13px;border-radius:14px}.grid,.stats,.methods{grid-template-columns:1fr}.btn-row .btn{flex:1;min-width:145px}.analog-list{max-height:none;overflow:visible}.analog{grid-template-columns:28px 48px 1fr;padding:10px 8px;font-size:12px}.ppm{grid-column:3;text-align:left;font-size:13px}.big{font-size:28px}.mobile-actions{display:flex}}
+
+.auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#16302B,#1B6B5A);padding:18px}
+.auth-card{width:100%;max-width:420px;background:#fff;border-radius:18px;padding:22px;box-shadow:0 18px 60px rgba(0,0,0,.28)}
+.auth-card h2{font-size:21px;color:#16302B;margin-bottom:6px}
+.auth-card p{font-size:13px;color:#6B7A72;margin-bottom:14px}
+.auth-card .field{margin-bottom:10px}
+.auth-error{display:none;background:#FEE2E2;color:#991B1B;border:1px solid #FCA5A5;border-radius:10px;padding:10px;margin-top:10px;font-size:13px;font-weight:800}
+.auth-note{font-size:11px;color:#6B7A72;line-height:1.45;margin-top:12px}
+body.locked .app-header,body.locked main,body.locked .mobile-actions{display:none!important}
+body:not(.locked) #authScreen{display:none!important}
+.user-pill{display:inline-flex;align-items:center;border:1px solid rgba(255,255,255,.18);color:#fff;background:rgba(255,255,255,.08);border-radius:11px;padding:9px 12px;font-weight:900;font-size:13px}
+.hidden-by-role{display:none!important}
+
+
+.collapse-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.collapse-toggle{border:1px solid #BFD4CC;background:#EEF4F1;color:#1B6B5A;border-radius:12px;padding:11px 13px;font-weight:900;cursor:pointer;transition:.15s ease}
+.collapse-toggle.admin{border-color:#E6C16B;background:#FFF2D6;color:#8A5D00}
+.collapse-toggle.is-active{background:var(--teal);border-color:var(--teal);color:#fff;box-shadow:0 0 0 3px rgba(27,107,90,.16)}
+.collapse-toggle.admin.is-active{background:#9A6500;border-color:#9A6500;color:#fff;box-shadow:0 0 0 3px rgba(154,101,0,.16)}
+.field.is-active label{color:#0B5B4D;font-weight:900}
+.field.is-active input,.field.is-active select{border-color:#0B7A63;background:#DDF4EC;box-shadow:0 0 0 3px rgba(27,107,90,.22);font-weight:800}
+.field.is-active .hint{color:#0B5B4D;font-weight:700}
+.field.is-active::before{content:'✓ активний фільтр';display:inline-block;margin-bottom:4px;font-size:10px;font-weight:900;color:#0B5B4D;background:#CFF7E4;border:1px solid #8BD8B6;border-radius:999px;padding:2px 7px}
+.btn.is-active{box-shadow:0 0 0 3px rgba(27,107,90,.16);transform:translateY(-1px)}
+.collapsed-section{display:none}
+.collapsed-section.open{display:block}
+
+
+/* v11.7 · двоколонковий блок «Результат»: реєстр ФДМУ vs інструмент безкоштовної оцінки */
+.results-duo{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:6px}
+.results-duo .main-result{position:relative;border-radius:14px;padding:16px 14px 14px;border:1.5px solid var(--line);background:#F6F4EF}
+.results-duo .main-result.registry{background:#EAF4F0;border-color:#1B6B5A}
+.results-duo .main-result.fund{background:#FDF6E7;border-color:#C6912B}
+.results-duo .main-result .mr-badge{display:inline-block;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.05em;padding:4px 10px;border-radius:999px;background:#1B6B5A;color:#fff;margin-bottom:8px}
+.results-duo .main-result .mr-badge.fund{background:#C6912B;color:#fff}
+.results-duo .main-result .label{color:var(--muted)}
+.results-duo .main-result.fund .big{color:#8A5D00}
+.results-duo .main-result.fund .usdline{color:#8A5D00}
+.results-duo .main-result.fund .range{color:#8A5D00}
+.fund-note{font-size:11px;color:#6B4A00;margin-top:10px;line-height:1.4;font-style:italic;text-align:left;padding-top:8px;border-top:1px dashed #E6C16B}
+@media(max-width:820px){.results-duo{grid-template-columns:1fr}}
+.quality-box{margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+.quality-item{background:#F6F4EF;border:1px solid #E8E1D6;border-radius:12px;padding:10px}
+.quality-item .q-label{font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase}
+.quality-item .q-value{font-size:18px;font-weight:900;margin-top:4px;color:var(--ink)}
+.grade{display:inline-flex;align-items:center;justify-content:center;min-width:42px;height:42px;border-radius:999px;font-size:22px;font-weight:900}
+.grade-a{background:#DCFCE7;color:#166534}
+.grade-b{background:#FEF3C7;color:#92400E}
+.grade-c{background:#FEE2E2;color:#991B1B}
+.grade-d{background:#E5E7EB;color:#374151}
+
+
+/* v10.0 PDF preview + back navigation */
+.result-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+.pdf-preview-overlay{display:none;position:fixed;inset:0;z-index:9500;background:#F4F1EA;overflow:auto;padding:18px}
+.pdf-preview-toolbar{position:sticky;top:0;z-index:2;display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between;background:#fff;border:1px solid #DED7CA;border-radius:14px;padding:10px;margin:0 auto 12px;max-width:980px;box-shadow:0 2px 16px rgba(0,0,0,.08)}
+.pdf-preview-toolbar .left,.pdf-preview-toolbar .right{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.pdf-preview-title{font-size:13px;font-weight:900;color:#16302B}.pdf-preview-content{max-width:980px;margin:0 auto;background:#fff;border:1px solid #DED7CA;border-radius:16px;padding:24px;box-shadow:0 4px 24px rgba(0,0,0,.08)}
+.pdf-report{font-family:Arial,sans-serif;color:#16302B;line-height:1.45}.pdf-report .head{display:flex;align-items:center;gap:18px;border-bottom:3px solid #16302B;padding-bottom:14px;margin-bottom:18px}.pdf-report .logoimg{width:110px;height:90px;object-fit:contain}.pdf-report h1{font-size:22px;margin:0;color:#16302B}.pdf-report .sub{font-size:13px;color:#52645D;margin-top:3px}.pdf-report .title{font-size:20px;font-weight:800;margin:18px 0 10px;text-transform:uppercase;letter-spacing:.03em}.pdf-report .note{background:#FFF7E6;border-left:5px solid #C6912B;padding:12px 14px;border-radius:8px;color:#6B4A00;font-size:13px;margin:12px 0}.pdf-report .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}.pdf-report .card{border:1px solid #DED7CA;border-radius:12px;padding:12px;background:#FCFBF8;margin:0;box-shadow:none}.pdf-report .label{font-size:11px;color:#6B7A72;text-transform:uppercase;font-weight:800}.pdf-report .value{font-size:18px;font-weight:800;margin-top:4px}.pdf-report .bigbox{background:#EAF4F0;border:2px solid #1B6B5A;border-radius:14px;padding:18px;text-align:center;margin:16px 0}.pdf-report .bigbox .main{font-size:32px;font-weight:900}.pdf-report .range{font-size:15px;color:#52645D;margin-top:6px}.pdf-report .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.pdf-report .stat{border:1px solid #DED7CA;border-radius:10px;padding:10px;background:#fff}.pdf-report .stat .v{font-size:18px;font-weight:900}.pdf-report .stat .l{font-size:11px;color:#6B7A72}.pdf-report table{width:100%;border-collapse:collapse;margin-top:10px;font-size:10.5px;table-layout:fixed}.pdf-report th{background:#16302B;color:#fff;text-align:left;padding:7px 6px}.pdf-report td{border-bottom:1px solid #E7E0D5;padding:6px 6px;vertical-align:top}.pdf-report .c{text-align:center}.pdf-report .nowrap{white-space:nowrap}.pdf-report .money{white-space:nowrap;text-align:right;font-weight:700}.pdf-report .addr-col{width:18%;word-break:break-word}.pdf-report .exec-col{width:24%;font-size:9.5px;line-height:1.25;word-break:break-word;color:#243f39}.pdf-report .foot{border-top:2px solid #DED7CA;margin-top:22px;padding-top:12px;font-size:12px;color:#52645D}.pdf-report .sign{margin-top:14px;font-size:14px;font-weight:800;color:#16302B}
+@media(max-width:720px){.pdf-preview-content{padding:14px}.pdf-report .grid,.pdf-report .stats,.pdf-report .bigbox-duo{grid-template-columns:1fr}.pdf-report .head{align-items:flex-start}.pdf-report .logoimg{width:82px;height:68px}}
+@media print{body.printing-pdf-report>*:not(#pdfPreviewOverlay){display:none!important}body.printing-pdf-report{background:#fff!important}.pdf-preview-overlay{display:block!important;position:static!important;inset:auto!important;overflow:visible!important;padding:0!important;background:#fff!important}.pdf-preview-toolbar{display:none!important}.pdf-preview-content{max-width:none!important;margin:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:12px!important}.pdf-report .note,.pdf-report .card,.pdf-report .bigbox{break-inside:avoid}.pdf-report table{page-break-inside:auto}.pdf-report tr{page-break-inside:avoid;page-break-after:auto}}
+
+
+/* v10.2 one-page PDF certificate */
+.pdf-report.one-page{font-family:Arial,sans-serif;color:#16302B;line-height:1.25;font-size:12px}
+.pdf-report.one-page .head{display:flex;align-items:center;gap:12px;border-bottom:2px solid #16302B;padding-bottom:8px;margin-bottom:10px}
+.pdf-report.one-page .logoimg{width:78px;height:56px;object-fit:contain}
+.pdf-report.one-page h1{font-size:18px;margin:0;color:#16302B}
+.pdf-report.one-page .sub{font-size:11px;color:#52645D;margin-top:2px}
+.pdf-report.one-page .title{font-size:16px;font-weight:900;margin:10px 0 8px;text-transform:uppercase;letter-spacing:.02em}
+.pdf-report.one-page .note{background:#FFF7E6;border-left:4px solid #C6912B;padding:8px 10px;border-radius:7px;color:#5F4200;font-size:11.4px;margin:8px 0}
+.pdf-report.one-page .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:8px 0}
+.pdf-report.one-page .card{border:1px solid #DED7CA;border-radius:9px;padding:8px;background:#FCFBF8;margin:0;box-shadow:none}
+.pdf-report.one-page .label{font-size:9.4px;color:#6B7A72;text-transform:uppercase;font-weight:900;letter-spacing:.03em}
+.pdf-report.one-page .value{font-size:12.2px;font-weight:900;margin-top:3px;color:#16302B}
+.pdf-report.one-page .bigbox{background:#EAF4F0;border:2px solid #1B6B5A;border-radius:12px;padding:11px;text-align:center;margin:10px 0}
+.pdf-report.one-page .bigbox .main{font-size:27px;font-weight:900;line-height:1.05}
+.pdf-report.one-page .range{font-size:11.5px;color:#52645D;margin-top:4px}
+/* v11.7 · PDF: два bigbox поряд (реєстр + прогноз інструменту ФДМУ) */
+.pdf-report .bigbox-duo{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+.pdf-report .bigbox-duo .bigbox{margin:0}
+.pdf-report .bigbox.fundbox{background:#FDF6E7;border-color:#C6912B}
+.pdf-report .bigbox.fundbox .main{color:#8A5D00}
+.pdf-report .bigbox.fundbox .range{color:#7A5100}
+.pdf-report .src-tag{display:inline-block;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.04em;padding:3px 8px;border-radius:999px;background:#1B6B5A;color:#fff;margin-bottom:6px}
+.pdf-report .src-tag.fund{background:#C6912B}
+.pdf-report .fund-note-pdf{font-size:10px;color:#6B4A00;margin-top:8px;line-height:1.35;font-style:italic;text-align:left;padding-top:6px;border-top:1px dashed #E6C16B}
+.pdf-report.one-page .bigbox-duo{gap:8px;margin:8px 0}
+.pdf-report.one-page .bigbox-duo .bigbox{padding:9px}
+.pdf-report.one-page .bigbox-duo .bigbox .main{font-size:22px}
+.pdf-report.one-page .src-tag{font-size:9px;padding:2px 6px;margin-bottom:4px}
+.pdf-report.one-page .fund-note-pdf{font-size:9px;margin-top:5px;padding-top:4px}
+.pdf-report.one-page .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
+.pdf-report.one-page .stat{border:1px solid #DED7CA;border-radius:8px;padding:8px;background:#fff}
+.pdf-report.one-page .stat .v{font-size:15px;font-weight:900;line-height:1.1}
+.pdf-report.one-page .stat .l{font-size:9.6px;color:#6B7A72;font-weight:800;text-transform:uppercase}
+.pdf-report.one-page .foot{border-top:1.5px solid #DED7CA;margin-top:10px;padding-top:8px;font-size:10.8px;color:#52645D;line-height:1.28}
+.pdf-report.one-page .sign{margin-top:7px;font-size:11.7px;font-weight:800;color:#16302B;line-height:1.28}
+@page{size:A4 portrait;margin:8mm}
+@media print{.pdf-preview-content{width:194mm!important;max-width:194mm!important;margin:0!important;padding:0!important}.pdf-report.one-page{font-size:10.5pt!important;line-height:1.18!important}.pdf-report.one-page .head{padding-bottom:6px!important;margin-bottom:8px!important}.pdf-report.one-page .title{font-size:15pt!important;margin:7px 0!important}.pdf-report.one-page .note{font-size:9.4pt!important;margin:6px 0!important;padding:6px 8px!important}.pdf-report.one-page .card{padding:6px!important}.pdf-report.one-page .value{font-size:10pt!important}.pdf-report.one-page .bigbox{margin:7px 0!important;padding:8px!important}.pdf-report.one-page .bigbox .main{font-size:23pt!important}.pdf-report.one-page .stats{gap:5px!important}.pdf-report.one-page .stat{padding:6px!important}.pdf-report.one-page .foot{font-size:8.8pt!important;margin-top:7px!important;padding-top:6px!important}.pdf-report.one-page .sign{font-size:9.4pt!important;margin-top:5px!important}}
+
+/* ═══ v11.8 · Analog Advanced (dashboard card) — namespace .aa-* / .card-style-toggle ═══
+   Ізольований від .analog/.score/.addr/.meta/.ppm — стара розмітка не зачіпається.
+   Включається через localStorage.fdmu_card_style='v2' або перемикач у панелі. */
+.card-style-toggle{display:inline-flex;gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.card-style-toggle button{border:0;background:transparent;padding:6px 11px;font-size:12px;font-weight:800;color:#52645D;cursor:pointer}
+.card-style-toggle button.active{background:var(--teal);color:#fff}
+.card-style-toggle button+button{border-left:1px solid var(--line)}
+.aa-card{display:grid;grid-template-columns:26px 42px 1fr 160px;gap:12px;align-items:start;padding:12px 12px;border-bottom:1px solid #EEE8DD;font-size:13px;background:#fff}
+.aa-card:last-child{border-bottom:none}
+.aa-card>input[type=checkbox]{width:18px;height:18px;margin-top:4px;justify-self:center}
+.aa-score{width:38px;height:38px;border-radius:50%;background:#AFAAA1;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;line-height:1}
+.aa-score.good{background:var(--green)}
+.aa-score.mid{background:var(--gold)}
+.aa-body{min-width:0}
+.aa-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.aa-addr{font-weight:800;color:#25433D;font-size:14px}
+.aa-date{color:#6B7A72;font-size:12px}
+.aa-fresh{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:800;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.aa-fresh.fresh{background:#E1F5EE;color:#085041}
+.aa-fresh.mid{background:#FAEEDA;color:#633806}
+.aa-fresh.old{background:#F1EFE8;color:#444441}
+.aa-badges{display:flex;flex-wrap:wrap;gap:5px;margin:4px 0 6px}
+.aa-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;background:#F6F4EF;color:#2F4F49;white-space:nowrap;line-height:1.3}
+.aa-badge.dist-bohun{background:#EEEDFE;color:#3C3489}
+.aa-badge.dist-korol{background:#FBEAF0;color:#72243E}
+.aa-badge.dist-none{background:#F1EFE8;color:#444441}
+.aa-badge.dist-oliivka{background:#E1F5EE;color:#085041}
+.aa-badge.warn{background:#FAEEDA;color:#633806}
+.aa-badge.info{background:#EEEDFE;color:#3C3489}
+.aa-badge.alert{background:#FCEBEB;color:#791F1F}
+.aa-exec{display:flex;align-items:center;gap:6px;font-size:11.5px;color:#52645D;margin-top:2px}
+.aa-exec-name{font-weight:700;color:#2F4F49}
+.aa-edrpou{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10.5px;color:#8A9A94}
+.aa-right{text-align:right;min-width:0}
+.aa-ppm-label{font-size:10px;color:#8A9A94;text-transform:uppercase;letter-spacing:.05em;font-weight:800}
+.aa-ppm{font-size:19px;font-weight:900;color:#16302B;line-height:1.1;margin-top:1px;white-space:nowrap}
+.aa-ppm .unit{font-size:11px;color:#6B7A72;font-weight:800}
+.aa-delta{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:800;padding:2px 8px;border-radius:10px;margin-top:5px;white-space:nowrap}
+.aa-delta.up{background:#E1F5EE;color:#0F6E56}
+.aa-delta.down{background:#FCEBEB;color:#791F1F}
+.aa-delta.flat{background:#F6F4EF;color:#5F5E5A}
+.aa-total{font-size:11.5px;color:#52645D;margin-top:5px;white-space:nowrap;font-weight:700}
+@media(max-width:720px){
+  .aa-card{grid-template-columns:24px 36px 1fr;padding:11px 8px;gap:8px}
+  .aa-score{width:34px;height:34px;font-size:13px}
+  .aa-addr{font-size:13px}
+  .aa-right{grid-column:2 / span 2;text-align:left;margin-top:4px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .aa-ppm-label{display:none}
+  .aa-ppm{font-size:16px}
+  .aa-delta{margin-top:0}
+  .aa-total{margin-top:0}
+}
+</style>
+</head><body class="locked">
+<div id="authScreen" class="auth-screen">
+  <div class="auth-card">
+    <h2>Доступ до довідника ФДМУ</h2>
+    <p>Вхід за іменним логіном і паролем. Тимчасова тестова авторизація без сервера.</p>
+    <div class="field"><label>Логін</label><input id="authLogin" autocomplete="username"></div>
+    <div class="field"><label>Пароль</label><input id="authPassword" type="password" autocomplete="current-password"></div>
+    <button class="btn" style="width:100%" onclick="authLogin()">Увійти</button>
+    <div id="authError" class="auth-error">Невірний логін або пароль</div>
+    <div class="auth-note">Доступ поділений за ролями: адміністратор бачить усе; рієлтор бачить довідник без аналітики оцінювачів. Це інтерфейсне обмеження без сервера.</div>
+  </div>
+</div>
+
+<header class="app-header">
+  <div class="topline">
+    <div class="brand" style="border-bottom:none;margin-bottom:0;padding-bottom:0">
+      <div class="logo"><img src="logo.jpg" alt="Експертна Думка"></div>
+      <div>
+        <h1>Довідник зареєстрованих оцінок ФДМУ — Житомир</h1>
+        <p>Орієнтовний діапазон за даними вже зареєстрованих оцінок ФДМУ</p>
+        <div class="company"><b>ТОВ «ЕКСПЕРТНА ДУМКА»</b><br>Оцінка майна · <a class="phone" href="tel:+380979213772">097 921 37 72</a></div>
+      </div>
+    </div>
+    <div class="header-actions compact-header-actions">
+      <button class="update-btn" onclick="refreshApp()">🔄 Оновити</button>
+      <input id="excelImport" type="file" accept=".xlsx,.xls" style="display:none" onchange="importExcelFile(event)">
+      <button class="client-btn" onclick="generatePdfReference()">📄 PDF</button>
+      <button class="client-btn" onclick="copyClientText()">📋 Текст</button>
+      <a class="client-btn call-btn" href="tel:+380979213772">📞 Оцінка</a>
+      <button id="installBtn" class="client-btn compact-icon" onclick="installApp()" title="Встановити додаток">📲</button>
+      <details class="dev-menu admin-only">
+        <summary class="dev-summary">⚙ Розробник</summary>
+        <div class="dev-panel">
+          <div class="dev-line"><span>Користувач</span><b id="authUserPill">—</b></div>
+          <div class="dev-line"><span>Версія сайту</span><b id="versionTop">v11.9-beta</b></div>
+          <button class="dev-action" onclick="openImport(); this.closest('details').open=false;">📂 Імпорт Excel ФДМУ</button>
+          <button class="dev-action" onclick="refreshApp(); this.closest('details').open=false;">🔄 Очистити кеш / оновити</button>
+        </div>
+      </details>
+      <button class="client-btn logout-btn" onclick="authLogout()">Вийти</button>
+    </div>
+  </div>
+  
+</header>
+<main class="wrap">
+<section class="card"><div class="section">Призначення</div><div class="notice">Інструмент показує, які вартості вже реєструвалися у ФДМУ по квартирах у Житомирі та новобудовах Оліївки 2018+. Це довідник для попереднього інформування клієнта, а не автоматична оцінка і не є автоматично придатним джерелом для звіту без окремого аналізу оцінювачем.</div><div class="notice" style="margin-top:8px"><b>Межі повноти даних.</b> База формується з відкритих даних ФДМУ. Звіти, зареєстровані після рецензування, до відкритих даних не потрапляють і в довіднику відсутні — за вибірковою перевіркою це близько 10% зареєстрованих оцінок. Медіани за останні 12 місяців відображають поточний ринок; повний архів 2019+ містить оцінки до подорожчання і для визначення поточної вартості не придатний.</div></section>
+
+<section class="card" id="updateCard" style="display:none">
+  <div class="section">Останнє оновлення бази</div>
+  <div id="upd-last" class="notice" style="line-height:1.7"></div>
+  <div style="margin-top:10px">
+    <button class="btn gray" type="button" onclick="toggleUpdHistory()" id="upd-toggle" style="display:none">Показати історію оновлень</button>
+  </div>
+  <div id="upd-history" style="display:none;margin-top:10px"></div>
+</section>
+<div id="err" class="error"></div>
+
+<section class="card">
+  <div class="section">Додаткові модулі</div>
+  <div class="collapse-actions">
+    <button class="collapse-toggle" onclick="toggleSection('dbCard', this)">Показати інформацію про базу</button>
+    <button class="collapse-toggle" onclick="toggleSection('sampleCard', this)">Показати деталі вибірки</button>
+    <button class="collapse-toggle" onclick="toggleSection('recordsCard', this)">Показати зареєстровані оцінки</button>
+    <button class="collapse-toggle" onclick="toggleSection('marketCard', this)">Показати аналітику ринку</button>
+    <button class="collapse-toggle" onclick="toggleSection('lstCard', this)">Показати ринок пропозицій</button>
+    <button class="collapse-toggle admin executor-analytics-only" onclick="toggleSection('analyticsCard', this)">Показати аналітику оцінювачів</button>
+    <button class="collapse-toggle" onclick="toggleAllSections(this)" id="toggleAllBtn">Активувати всі</button>
+  </div>
+  <div class="hint">Основний екран залишено чистим. Деталі, список оцінок і аналітика відкриваються тільки за потреби.</div>
+</section>
+
+<section class="card admin-only" id="importCard" style="display:none">
+  <div class="section">Імпорт Excel ФДМУ</div>
+  <div class="notice">Виберіть Excel-файл ФДМУ. Сайт сформує новий <b>calc_data.json</b> по Житомиру: Богунський, Корольовський, записи без району; Оліївка враховується у складі міської зони. Після завантаження JSON потрібно замінити файл у GitHub і натиснути Commit changes.</div>
+  <div class="stats" style="margin-top:10px">
+    <div class="stat"><div class="l">Імпортовано</div><div class="v" id="imp-total">—</div></div>
+    <div class="stat"><div class="l">Квартири</div><div class="v" id="imp-apts">—</div></div>
+    <div class="stat"><div class="l">Кімнати/гуртожитки</div><div class="v" id="imp-dorms">—</div></div>
+    <div class="stat"><div class="l">Виконавців</div><div class="v" id="imp-exec">—</div></div>
+  </div>
+  <div class="btn-row" style="margin-top:12px">
+    <button class="btn" onclick="document.getElementById('excelImport').click()">Обрати Excel-файл</button>
+    <button class="btn secondary" id="downloadJsonBtn" style="display:none" onclick="downloadImportedJson()">⬇ Завантажити calc_data.json</button>
+  </div>
+</section>
+
+<section class="card" id="params-card"><div class="section">Параметри об’єкта</div><div class="grid"><div class="field"><label>Тип об’єкта</label><select id="objectType"><option value="apartment">Квартира</option><option value="dorm">Кімната в гуртожитку</option><option value="house">Будинок</option></select></div><div class="field"><label>Район / зона</label><select id="district"><option value="all">Житомир — вся база</option><option value="Богунський">Богунський</option><option value="Корольовський">Корольовський</option><option value="Житомир (без району)">Житомир без району</option></select></div><div class="field"><label>Період реєстрації оцінок</label><select id="dataScope"><option value="1">Останній 1 місяць (30 днів)</option><option value="2">Останні 2 місяці (60 днів)</option><option value="3">Останні 3 місяці (90 днів)</option><option value="4">Останні 4 місяці (120 днів)</option><option value="5">Останні 5 місяців (150 днів)</option><option value="6">Останні 6 місяців (180 днів)</option><option value="12" selected>Останні 12 місяців</option><option value="archive">Повний архів 2019+ (⚠ historic — занижує)</option></select><div class="hint">джерело завжди ФДМУ; вибір визначає глибину періоду для розрахунку. Для оцінки поточної вартості використовуйте 3–12 місяців</div></div><div class="field"><label>Кімнатність</label><select id="rooms"><option value="1">1-кімнатна</option><option value="2">2-кімнатна</option><option value="3">3-кімнатна</option><option value="4">4+ кімнатна</option></select></div><div class="field"><label>Вулиця</label><input id="street" type="text" list="streetList" autocomplete="off" placeholder="напр., Велика Бердичівська"><datalist id="streetList"></datalist><div class="hint">фактор схожості, а не жорсткий фільтр</div></div><div class="field"><label>Загальна площа, кв.м</label><input id="area" type="number" step="0.1"></div><div class="field"><label>Рік побудови</label><input id="year" type="number"><div class="hint">фактор схожості, а не жорсткий фільтр</div></div><div class="field"><label>Поверх</label><input id="floor" type="number"></div><div class="field"><label>Поверховість будинку</label><input id="totalFloors" type="number"><div class="hint">якщо невідомо — залиште порожнім</div></div></div><div class="notice">Оліївка включена до загальної міської бази Житомира. Режим «Житомир — вся база» охоплює Богунський, Корольовський, Житомир без району та Оліївку 2018+. Без загальної площі система показує тільки загальну статистику бази. Вибірка зареєстрованих оцінок формується після введення площі; рік і поверх враховуються лише якщо вони заповнені.</div><div class="btn-row" style="margin-top:12px"><button class="btn" onclick="runAuto()">Сформувати вибірку ФДМУ</button><button class="btn secondary" onclick="selectAll(true)">Вибрати всі</button><button class="btn warn" onclick="selectAll(false)">Очистити всі</button><button class="btn gray" onclick="recalcSelected()">Перерахувати</button></div></section>
+<section class="card collapsed-section" id="dbCard"><div class="section">Інформація про базу</div><div class="stats"><div class="stat"><div class="l">Версія сайту</div><div class="v" id="st-version">11.9-beta</div></div><div class="stat"><div class="l">Записів у робочій базі</div><div class="v" id="st-count">—</div></div><div class="stat"><div class="l">Квартири</div><div class="v" id="st-apts">—</div></div><div class="stat"><div class="l">Кімнати/гуртожитки</div><div class="v" id="st-dorms">—</div></div><div class="stat"><div class="l">Показано оцінок</div><div class="v" id="st-shown">—</div></div><div class="stat"><div class="l">Вибрано</div><div class="v" id="st-selected">—</div></div><div class="stat"><div class="l">Оновлено базу</div><div class="v" id="st-updated" style="font-size:15px">—</div></div><div class="stat"><div class="l">Всього Житомирська міська зона</div><div class="v" id="st-raw-city">—</div></div><div class="stat"><div class="l">Придатні до дедублікації</div><div class="v" id="st-before-dup">—</div></div><div class="stat"><div class="l">Не входять у довідник</div><div class="v" id="st-excluded">—</div></div><div class="stat"><div class="l">Вилучено не місто за адресою</div><div class="v" id="st-noncity-removed">—</div></div><div class="stat"><div class="l">Прибрано дублікатів</div><div class="v" id="st-dup">—</div></div><div class="stat"><div class="l">Виконавців</div><div class="v" id="st-exec">—</div></div><div class="stat"><div class="l">Медіана грн/м²</div><div class="v" id="st-medppm">—</div></div><div class="stat"><div class="l">Оліївка у складі Житомира
+12 міс. / архів</div><div class="v" id="st-oliivka">—</div></div></div></section>
+<section class="card" id="result-card"><div class="section">Результат</div><div class="results-duo"><div class="main-result registry"><div class="mr-badge">За реєстром ФДМУ · зареєстровані оцінки</div><div class="label">Орієнтовний діапазон за вибраними зареєстрованими оцінками</div><div class="big" id="total">—</div><div class="usdline" id="totalUsd">—</div><div class="range" id="range">—</div><div class="usdline" id="rangeUsd">—</div><div id="reliability" class="reliability rel-low" style="display:none">—</div></div><div class="main-result fund"><div class="mr-badge fund">Інструмент «безкоштовної оцінки» ФДМУ · прогноз</div><div class="label">Прогнозний результат сервісу evaluation.spfu.gov.ua</div><div class="big" id="totalFund">—</div><div class="usdline" id="totalFundUsd">—</div><div class="range" id="rangeFund">—</div><div class="usdline" id="rangeFundUsd">—</div><div class="fund-note">≈ +24% до результату за реєстром — типова надбавка інструменту «безкоштовної оцінки» ФДМУ. Фактичне значення сервісу може відрізнятися.</div></div></div><div class="methods"><div class="method primary"><div class="m1">Зважена</div><div class="m2" id="weighted">—</div></div><div class="method"><div class="m1">Середня</div><div class="m2" id="simple">—</div></div><div class="method"><div class="m1">Медіана</div><div class="m2" id="median">—</div></div></div><div class="quality-box">
+  <div class="quality-item"><div class="q-label">Надійність прогнозу</div><div class="q-value"><span id="qualityGrade" class="grade grade-d">—</span></div></div>
+  <div class="quality-item"><div class="q-label">Використано оцінок</div><div class="q-value" id="usedRecords">—</div></div>
+  <div class="quality-item"><div class="q-label">Основний діапазон грн/м²</div><div class="q-value" id="iqrPpm">—</div></div>
+  <div class="quality-item"><div class="q-label">Основний діапазон вартості</div><div class="q-value" id="iqrValue">—</div></div>
+</div><div class="result-actions"><button class="btn gray" onclick="scrollToParams()">← Крок назад</button><button class="btn secondary" onclick="generatePdfReference()">📄 PDF-довідка</button></div><div id="details" class="notice" style="display:none"></div></section>
+<section class="card collapsed-section" id="sampleCard">
+  <div class="section">Структура використаної вибірки</div>
+  <div class="sample-grid">
+    <div class="mini-stat"><div class="l">Знайдено</div><div class="v" id="sum-found">—</div></div>
+    <div class="mini-stat"><div class="l">Вибрано</div><div class="v" id="sum-selected">—</div></div>
+    <div class="mini-stat"><div class="l">Виконавців</div><div class="v" id="sum-executors">—</div></div>
+    <div class="mini-stat"><div class="l">Період оцінок</div><div class="v" id="sum-period" style="font-size:13px">—</div></div>
+    <div class="mini-stat"><div class="l">Середня грн/м²</div><div class="v" id="sum-avgppm">—</div></div>
+    <div class="mini-stat"><div class="l">Медіана грн/м²</div><div class="v" id="sum-medppm">—</div></div><div class="mini-stat"><div class="l">Q1 грн/м²</div><div class="v" id="sum-q1ppm">—</div></div><div class="mini-stat"><div class="l">Q3 грн/м²</div><div class="v" id="sum-q3ppm">—</div></div>
+    <div class="mini-stat"><div class="l">Богунський</div><div class="v" id="sum-bohun">—</div></div>
+    <div class="mini-stat"><div class="l">Корольовський</div><div class="v" id="sum-korol">—</div></div>
+    <div class="mini-stat"><div class="l">Без району</div><div class="v" id="sum-none">—</div></div><div class="mini-stat"><div class="l">Оліївка</div><div class="v" id="sum-oliivka">—</div></div>
+  </div>
+  <div class="section" style="margin-top:12px">ТОП-10 зареєстрованих оцінок у вибірці</div>
+  <div class="top-table-wrap"><table class="top-table" id="topAnalogTable"><tbody><tr><td>Вибірка ще не сформована</td></tr></tbody></table></div>
+  <div class="top-note">Таблиця показує ТОП-10 за балом схожості. У розрахунку використовуються всі вибрані зареєстровані оцінки. Дата — дата реєстрації оцінки у базі ФДМУ. ЄДРПОУ не відображається.</div>
+</section>
+<section class="card collapsed-section" id="marketCard">
+  <div class="section">Аналітика ринку житла</div>
+  <div class="analytics-grid" style="margin-top:12px">
+    <details class="collapsible-panel panel-wide" open><summary>Динаміка ціни за м² — графік</summary><div class="panel-body"><div class="quick-jump" style="margin:0 0 10px"><label style="font-size:12px;color:var(--muted);align-self:center">Розріз:</label><select id="trendScale" style="max-width:130px"><option value="month">По місяцях</option><option value="year">По роках</option></select><select id="trendRange" style="max-width:150px"><option value="all">Весь період</option><option value="36">Останні 3 роки</option><option value="24">Останні 2 роки</option><option value="12">Останні 12 міс</option></select></div><div id="priceTrend"></div></div></details>
+    <details class="collapsible-panel"><summary>Сезонність попиту на оцінку</summary><div class="panel-body" id="seasonChart"></div></details>
+    <details class="collapsible-panel"><summary>Активність ринку по роках</summary><div class="panel-body" id="activityChart"></div></details>
+    <details class="collapsible-panel"><summary>Динаміка по місяцях — таблиця</summary><div class="panel-body scroll-limited" id="analytics-months"></div></details>
+  </div>
+  <div class="analytics-note">Ринкова аналітика будується на квартирах, бо змішування квартир, будинків і гуртожитків спотворює ціну за м². Медіана стійкіша за середню — вона не «пливе» від поодиноких дорогих об'єктів. Показники довідкові й не замінюють аналіз оцінювача.</div>
+</section>
+<section class="card collapsed-section" id="lstCard"><!-- lst-card-v1 -->
+  <div class="section">Ринок пропозицій — активні оголошення</div>
+  <div class="sample-grid">
+    <div class="mini-stat"><div class="l">Медіана по місту, $/м²</div><div class="v" id="lst-med-usd">—</div></div>
+    <div class="mini-stat"><div class="l">Медіана по місту, грн/м²</div><div class="v" id="lst-med-uah">—</div></div>
+    <div class="mini-stat"><div class="l">Квартир у розрахунку</div><div class="v" id="lst-used">—</div></div>
+    <div class="mini-stat"><div class="l">Дата зрізу</div><div class="v" id="lst-date" style="font-size:15px">—</div></div>
+  </div>
+  <div id="lst-admin" class="admin-only hidden-by-role" style="margin-top:10px"><!-- lst-admin-v1: лише роль admin (authApply) -->
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <a class="btn" style="text-decoration:none;display:inline-block" href="fdmu-listings://run" onclick="lstAdminClick()">⟳ Оновити ринок пропозицій</a>
+      <a class="btn secondary" style="text-decoration:none;display:inline-block" href="https://github.com/ztexpert-hash/fdmu-zhytomyr-directory/upload/main" target="_blank" rel="noopener">Завантажити на GitHub</a>
+    </div>
+    <div class="hint" id="lst-admin-hint" style="margin-top:6px">Працює лише на ПК, де зареєстровано протокол fdmu-listings://. Результат: listings_data.json на Робочому столі → «Завантажити на GitHub».</div>
+  </div>
+  <div class="analytics-grid" style="margin-top:12px">
+    <details class="collapsible-panel panel-wide" open><summary>Кімнатність і поверховість</summary><div class="panel-body" id="lst-matrix"></div></details>
+    <details class="collapsible-panel"><summary>За кімнатністю</summary><div class="panel-body" id="lst-rooms"></div></details>
+    <details class="collapsible-panel"><summary>За поверховістю</summary><div class="panel-body" id="lst-floors"></div></details>
+  </div>
+  <div class="analytics-note">Це ціни <b>пропозиції</b> — за скільки просять у діючих оголошеннях. Зареєстровані оцінки ФДМУ в інших блоках довідника показують інше: за скільки оформили угоду. Дві величини наводяться окремо і не порівнюються між собою. Сегменти з позначкою «мало даних» (менше 30 об'єктів) не є ринковим показником.</div>
+</section>
+<section class="card executor-analytics-only collapsed-section" id="analyticsCard">
+  <div class="section">Аналітика оцінювачів (СОД)</div>
+  <div class="sample-grid">
+    <div class="mini-stat"><div class="l">Місяців у базі</div><div class="v" id="an-months">—</div></div>
+    <div class="mini-stat"><div class="l">Медіана останнього місяця</div><div class="v" id="an-last-med">—</div></div>
+    <div class="mini-stat"><div class="l">Усього оцінювачів</div><div class="v" id="an-exec-count">—</div></div>
+    <div class="mini-stat"><div class="l">Частка топ-5</div><div class="v" id="an-top5">—</div></div>
+  </div>
+  <div class="quick-jump"><button class="btn secondary" onclick="jumpToExecutorSearch()">Перейти до пошуку виконавця</button><button class="btn secondary" onclick="jumpToMarketMonths()">Місячна активність всієї бази</button></div>
+  <div class="analytics-grid" style="margin-top:12px">
+    <details class="collapsible-panel" open><summary>Виконавці — ТОП</summary><div class="panel-body"><div class="quick-jump" style="margin:0 0 10px"><label style="font-size:12px;color:var(--muted);align-self:center">Період:</label><select id="execPeriodKind" style="max-width:120px"><option value="all">За весь час</option><option value="year">По роках</option><option value="month">По місяцях</option></select><select id="execPeriodValue" style="max-width:140px;display:none"></select></div><div id="analytics-executors"></div></div></details>
+    <details class="collapsible-panel"><summary>Виконавці по роках</summary><div class="panel-body scroll-limited" id="analytics-districts"></div></details>
+  </div>
+  <div class="analytics-note">Аналітика оцінювачів побудована на архівній базі. Показники довідкові: кількість зареєстрованих оцінок, частка ринку, медіана грн/м² та дата останньої роботи.</div>
+</section>
+<section class="card collapsed-section" id="recordsCard"><div class="controls"><div><div class="section" style="margin-bottom:4px">Зареєстровані оцінки</div><div class="hint">Число в кружечку — бал близькості до заданих параметрів, не номер об’єкта.</div></div><input class="search" id="search" placeholder="Пошук по адресі (працює без площі)" oninput="renderList()"><span id="searchCount" class="search-count" style="display:none"></span><div class="card-style-toggle" title="Стиль карток"><button type="button" id="cs-v1" onclick="setCardStyle('v1')">Компакт</button><button type="button" id="cs-v2" onclick="setCardStyle('v2')">Дашборд</button></div></div><div class="search-filters" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><select id="searchType" onchange="renderList()" style="width:auto;min-width:120px"><option value="all" selected>Всі типи</option><option value="apartment">Квартира</option><option value="dorm">Кімната в гуртожитку</option><option value="house">Будинок</option></select><select id="searchDistrict" onchange="renderList()" style="width:auto;min-width:150px"><option value="all" selected>Житомир — вся база</option><option value="Богунський">Богунський</option><option value="Корольовський">Корольовський</option><option value="Житомир (без району)">Житомир без району</option></select><select id="searchScope" onchange="renderList()" style="width:auto;min-width:170px"><option value="12" selected>Останні 12 місяців</option><option value="1">Останній 1 місяць</option><option value="3">Останні 3 місяці</option><option value="6">Останні 6 місяців</option><option value="archive">Повний архів 2019+</option></select></div><div class="hint" style="margin-top:5px">Фільтри пошуку по адресі незалежні від параметрів об'єкта вище</div><div class="analog-list" id="list" style="margin-top:12px"><div class="empty">Завантаження бази...</div></div></section>
+<div class="footer">Довідкова інформація. Не є звітом про оцінку майна. Зареєстровані оцінки ФДМУ мають довідковий характер і не є автоматично придатним джерелом для звіту без окремого аналізу оцінювачем. Використовується база: Житомирська міська зона; службові реквізити не відображаються.<br><b>ТОВ «ЕКСПЕРТНА ДУМКА» · Оцінка майна · 097 921 37 72</b><br>Версія сайту: 11.3-beta · компактна верхня панель · довіра A/B/C · IQR · Оліївка = Житомир</div>
+</main>
+<div id="toast" class="toast"></div>
+<script>
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js')}
+let deferredInstallPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstallPrompt=e;const b=document.getElementById('installBtn');if(b)b.style.display='inline-block'});
+function installApp(){if(!deferredInstallPrompt){showToast('Встановлення: у Chrome/Edge натисніть меню браузера → Додати на головний екран або Встановити додаток');return} deferredInstallPrompt.prompt(); deferredInstallPrompt.userChoice.finally(()=>{deferredInstallPrompt=null; const b=document.getElementById('installBtn'); if(b)b.style.display='none';});}
+
+
+function percentileSorted(sorted,p){
+  if(!sorted.length)return 0;
+  if(sorted.length===1)return sorted[0];
+  const idx=(sorted.length-1)*p;
+  const lo=Math.floor(idx), hi=Math.ceil(idx);
+  if(lo===hi)return sorted[lo];
+  return sorted[lo]+(sorted[hi]-sorted[lo])*(idx-lo);
+}
+function getIqr(values){
+  const arr=(values||[]).map(Number).filter(x=>isFinite(x)&&x>0).sort((a,b)=>a-b);
+  if(!arr.length)return {q1:0,q2:0,q3:0};
+  return {
+    q1:Math.round(percentileSorted(arr,0.25)),
+    q2:Math.round(percentileSorted(arr,0.50)),
+    q3:Math.round(percentileSorted(arr,0.75))
+  };
+}
+function qualityGrade(n){
+  if(n>=30)return {g:'A',cls:'grade-a',txt:'висока'};
+  if(n>=10)return {g:'B',cls:'grade-b',txt:'середня'};
+  if(n>=3)return {g:'C',cls:'grade-c',txt:'низька'};
+  return {g:'—',cls:'grade-d',txt:'недостатньо даних'};
+}
+function setQualityBlock(selected, area){
+  const used=(selected||[]).length;
+  const grade=qualityGrade(used);
+  const el=document.getElementById('qualityGrade');
+  if(el){
+    el.textContent=grade.g;
+    el.className='grade '+grade.cls;
+    el.title=grade.txt;
+  }
+  const ur=document.getElementById('usedRecords');
+  if(ur)ur.textContent=used||'—';
+  const iqr=getIqr((selected||[]).map(r=>r.цкв));
+  const ppm=document.getElementById('iqrPpm');
+  if(ppm)ppm.textContent=iqr.q1&&iqr.q3 ? `${fmt(iqr.q1)} – ${fmt(iqr.q3)}` : '—';
+  const val=document.getElementById('iqrValue');
+  const a=parseFloat(area||0);
+  if(val)val.textContent=iqr.q1&&iqr.q3&&a ? `${fmt(Math.round(iqr.q1*a))} – ${fmt(Math.round(iqr.q3*a))} грн` : '—';
+  const q1=document.getElementById('sum-q1ppm');
+  const q3=document.getElementById('sum-q3ppm');
+  if(q1)q1.textContent=iqr.q1 ? fmt(iqr.q1) : '—';
+  if(q3)q3.textContent=iqr.q3 ? fmt(iqr.q3) : '—';
+}
+
+function toggleSection(id,btn,opts){
+  const el=document.getElementById(id);
+  if(!el)return;
+  const open=(opts&&typeof opts.force==='boolean')
+    ? (opts.force ? (el.classList.add('open'),true) : (el.classList.remove('open'),false))
+    : el.classList.toggle('open');
+  if(btn){
+    btn.classList.toggle('is-active', open);
+    btn.setAttribute('aria-pressed', open ? 'true' : 'false');
+    const txt=btn.textContent.replace(/^Показати /,'').replace(/^Сховати /,'');
+    btn.textContent=(open?'Сховати ':'Показати ')+txt;
+  }
+}
+
+const ALL_MODULE_IDS=['dbCard','sampleCard','recordsCard','marketCard','lstCard','analyticsCard'];
+function toggleAllSections(btn){
+  const visible=ALL_MODULE_IDS.filter(id=>{const el=document.getElementById(id); return el && !el.classList.contains('hidden-by-role');});
+  const anyClosed=visible.some(id=>!document.getElementById(id).classList.contains('open'));
+  document.querySelectorAll('.collapse-actions .collapse-toggle').forEach(b=>{
+    const m=b.getAttribute('onclick')?.match(/toggleSection\('([^']+)'/);
+    if(m) toggleSection(m[1], b, {force:anyClosed});
+  });
+  if(btn) btn.textContent = anyClosed ? 'Згорнути всі' : 'Активувати всі';
+}
+
+function showToast(t){const el=document.getElementById('toast'); el.textContent=t; el.style.display='block'; clearTimeout(window.__toastTimer); window.__toastTimer=setTimeout(()=>el.style.display='none',2600)}
+async function refreshApp(){
+  showToast('Оновлюю сторінку та кеш...');
+  try{ if('caches' in window){ const keys=await caches.keys(); await Promise.all(keys.map(k=>caches.delete(k))); } }catch(e){}
+  try{ if('serviceWorker' in navigator){ const regs=await navigator.serviceWorker.getRegistrations(); await Promise.all(regs.map(r=>r.update())); } }catch(e){}
+  setTimeout(()=>location.reload(true),600);
+}
+function copyClientText(){
+  const total=document.getElementById('total').textContent||'';
+  const range=document.getElementById('range').textContent||'';
+  const selected=document.getElementById('st-selected').textContent||'0';
+  const text=`За даними зареєстрованих оцінок ФДМУ по об’єктах зі схожими характеристиками у вибраному сегменті довідника орієнтовний результат за вибіркою становить: ${total}. ${range}. Використано зареєстрованих оцінок: ${selected}. Інформація має довідковий характер і не є звітом про оцінку майна.
+
+ТОВ «ЕКСПЕРТНА ДУМКА»
+Оцінка майна
+тел. 097 921 37 72`;
+  navigator.clipboard.writeText(text).then(()=>showToast('Текст для клієнта скопійовано')).catch(()=>showToast('Не вдалося скопіювати текст'));
+}
+
+function getExecutor(r){
+  const name = r['вик'] || r['виконавець'] || r['Виконавець'] || r['сод'] || r['СОД'] || r['executor'] || '';
+  const code = r['ЄДРПОУ'] || r['edrpou'] || '';
+  const n = String(name || '').trim();
+  const c = String(code || '').trim();
+  if(n && c) return n + ' · ' + c;
+  if(n) return n;
+  if(c) return 'ЄДРПОУ ' + c;
+  return 'не вказано в поточній базі';
+}
+function executorSummary(records){
+  const map = new Map();
+  records.forEach(r=>{
+    const ex=getExecutor(r);
+    if(!ex || ex==='не вказано в поточній базі') return;
+    map.set(ex,(map.get(ex)||0)+1);
+  });
+  const arr=[...map.entries()].sort((a,b)=>b[1]-a[1]).slice(0,5);
+  if(!arr.length) return '<div class="note"><b>Виконавці оцінок:</b> у поточному calc_data.json це поле відсутнє. Після оновлення бази з Excel/CSV ФДМУ воно буде відображатися автоматично.</div>';
+  return '<h3>Виконавці оцінок у вибірці</h3><table><thead><tr><th>Виконавець</th><th>Кількість записів</th></tr></thead><tbody>'+arr.map(x=>`<tr><td>${safe(x[0])}</td><td>${x[1]}</td></tr>`).join('')+'</tbody></table>';
+}
+
+function getSelectedRecordsForPdf(){
+  try{return CAND.filter(r=>SELECTED.has(r._id));}catch(e){return []}
+}
+function currentObjectDescription(){
+  const t=target();
+  const type=t.objectType==='dorm'?'кімната в гуртожитку':'квартира';
+  const district=(t.district==='all')?'Житомир — вся база':t.district;
+  const rooms=t.rooms?`${t.rooms}-кімнатна`:'';
+  const area=t.area?`${t.area} кв.м`:'не вказано';
+  const year=t.year?`${t.year} р.`:'не вказано';
+  const floor=t.floor?`${t.floor}${t.totalFloors?'/'+t.totalFloors:''}`:'не вказано';
+  return {type,district,rooms,area,year,floor};
+}
+
+function scrollToParams(){
+  const el=document.getElementById('params-card')||document.querySelector('section.card');
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function getSelectedRecordsForPdf(){
+  try{return CAND.filter(r=>SELECTED.has(r._id));}catch(e){return []}
+}
+function currentObjectDescription(){
+  const t=target();
+  const type=t.objectType==='dorm'?'кімната в гуртожитку':'квартира';
+  const district=(t.district==='all')?'Житомир — вся база':t.district;
+  const rooms=t.rooms?`${t.rooms}-кімнатна`:'';
+  const area=t.area?`${t.area} кв.м`:'не вказано';
+  const year=t.year?`${t.year} р.`:'не вказано';
+  const floor=t.floor?`${t.floor}${t.totalFloors?'/'+t.totalFloors:''}`:'не вказано';
+  return {type,district,rooms,area,year,floor};
+}
+function buildPdfReferenceHtml(){
+  const total=document.getElementById('total').textContent||'—';
+  if(total==='—') {showToast('Спочатку введіть площу і сформуйте вибірку'); return null;}
+  const range=document.getElementById('range').textContent||'';
+  const totalFund=document.getElementById('totalFund').textContent||'—';
+  const rangeFund=document.getElementById('rangeFund').textContent||'';
+  const selected=getSelectedRecordsForPdf();
+  if(!selected.length){showToast('Немає вибраних оцінок для PDF-довідки'); return null;}
+  const obj=currentObjectDescription();
+  const values=selected.map(r=>+r['цкв']||0).filter(Boolean);
+  const avgPpm = values.length ? Math.round(values.reduce((s,v)=>s+v,0)/values.length) : 0;
+  const medPpm = values.length ? median(values) : 0;
+  const minPpm = values.length ? Math.min(...values) : 0;
+  const maxPpm = values.length ? Math.max(...values) : 0;
+  const today=new Date().toLocaleDateString('uk-UA');
+  const updated=document.getElementById('st-updated')?.textContent||'—';
+  const period=document.getElementById('sum-period')?.textContent||'—';
+  return `<div class="pdf-report one-page">
+    <div class="head"><img class="logoimg" src="logo.jpg" alt="Експертна Думка"><div><h1>ТОВ «ЕКСПЕРТНА ДУМКА»</h1><div class="sub">Оцінка майна · Житомир · тел. 097 921 37 72</div><div class="sub"><b>Довідник зареєстрованих оцінок ФДМУ</b></div></div></div>
+    <div class="title">Довідка про орієнтовний рівень зареєстрованих вартостей</div>
+    <div class="note">Інформація сформована автоматично за даними зареєстрованих оцінок ФДМУ. Документ має довідковий характер, не є звітом про оцінку майна та не замінює висновок оцінювача.</div>
+    <div class="grid"><div class="card"><div class="label">Тип / зона</div><div class="value">${obj.type}<br>${obj.district}</div></div><div class="card"><div class="label">Кімнатність / площа</div><div class="value">${obj.rooms || '—'}<br>${obj.area}</div></div><div class="card"><div class="label">Рік / поверх</div><div class="value">${obj.year}<br>пов. ${obj.floor}</div></div><div class="card"><div class="label">Період оцінок</div><div class="value">${safe(period)}</div></div></div>
+    <div class="bigbox-duo"><div class="bigbox registry"><div class="src-tag">За реєстром ФДМУ · зареєстровані оцінки</div><div class="label">Орієнтовний результат за вибіркою</div><div class="main">${total}</div><div class="range">≈ ${fmtUsd(numFromText(total)/USD_RATE)} · довідково</div><div class="range">${range}</div></div><div class="bigbox fundbox"><div class="src-tag fund">Інструмент «безкоштовної оцінки» ФДМУ · прогноз</div><div class="label">Прогнозний результат сервісу evaluation.spfu.gov.ua</div><div class="main">${totalFund}</div><div class="range">≈ ${fmtUsd(numFromText(totalFund)/USD_RATE)} · довідково</div><div class="range">${rangeFund}</div><div class="fund-note-pdf">≈ +24% до результату за реєстром — типова надбавка інструменту «безкоштовної оцінки» ФДМУ. Фактичне значення сервісу може відрізнятися.</div></div></div>
+    <div class="stats"><div class="stat"><div class="l">Використано оцінок</div><div class="v">${selected.length}</div></div><div class="stat"><div class="l">Середня грн/м²</div><div class="v">${fmt(avgPpm)}</div></div><div class="stat"><div class="l">Медіана грн/м²</div><div class="v">${fmt(medPpm)}</div></div><div class="stat"><div class="l">Діапазон грн/м²</div><div class="v">${fmt(minPpm)}–${fmt(maxPpm)}</div></div></div>
+    <div class="note"><b>База:</b> зареєстровані оцінки ФДМУ. <b>Дата оновлення бази:</b> ${safe(updated)}. <b>Дата формування довідки:</b> ${safe(today)}.</div>
+    <div class="foot">Наведений результат є орієнтовним узагальненням зареєстрованих вартостей за вибраними параметрами. Для коректного визначення вартості конкретного об’єкта необхідний окремий аналіз документів, технічного стану, місця розташування та ринкових умов сертифікованим оцінювачем.</div>
+    <div class="sign">За професійною оцінкою та уточненням результату звертайтесь:<br><b>ТОВ «ЕКСПЕРТНА ДУМКА»</b> · тел. 097 921 37 72</div>
+  </div>`;
+}
+function ensurePdfPreviewOverlay(){
+  let overlay=document.getElementById('pdfPreviewOverlay');
+  if(overlay) return overlay;
+  overlay=document.createElement('div');
+  overlay.id='pdfPreviewOverlay';
+  overlay.className='pdf-preview-overlay';
+  overlay.innerHTML=`<div class="pdf-preview-toolbar"><div class="left"><button class="btn gray" onclick="backFromPdfPreview()">← Крок назад</button><span class="pdf-preview-title">PDF-довідка перед збереженням</span></div><div class="right"><button class="btn" onclick="printPdfPreview()">Зберегти / друк PDF</button><button class="btn warn" onclick="closePdfPreview()">Закрити</button></div></div><div id="pdfPreviewContent" class="pdf-preview-content"></div>`;
+  document.body.appendChild(overlay);
+  return overlay;
+}
+function generatePdfReference(){
+  const html=buildPdfReferenceHtml();
+  if(!html) return;
+  const overlay=ensurePdfPreviewOverlay();
+  document.getElementById('pdfPreviewContent').innerHTML=html;
+  overlay.style.display='block';
+  document.body.classList.add('pdf-preview-open');
+  overlay.scrollTop=0;
+}
+function closePdfPreview(){
+  const overlay=document.getElementById('pdfPreviewOverlay');
+  if(overlay) overlay.style.display='none';
+  document.body.classList.remove('pdf-preview-open','printing-pdf-report');
+}
+function backFromPdfPreview(){
+  closePdfPreview();
+  setTimeout(scrollToParams,50);
+}
+function printPdfPreview(){
+  document.body.classList.add('printing-pdf-report');
+  setTimeout(()=>{window.print();},80);
+}
+window.addEventListener('afterprint',()=>document.body.classList.remove('printing-pdf-report'));
+
+
+function openImport(){
+  const card=document.getElementById('importCard');
+  card.style.display = card.style.display==='none' ? 'block' : 'none';
+  if(card.style.display==='block') card.scrollIntoView({behavior:'smooth',block:'start'});
+}
+let IMPORTED_JSON=null;
+function normalizeText(v){return String(v??'').trim();}
+function findCol(headers, patterns){
+  const hs=headers.map(h=>String(h||'').toLowerCase());
+  for(const pat of patterns){
+    const p=pat.toLowerCase();
+    const idx=hs.findIndex(h=>h.includes(p));
+    if(idx>=0) return headers[idx];
+  }
+  return null;
+}
+function normDistrictByTown(town, year, address){
+  const t=(String(town||'')+' '+String(address||'')).toUpperCase();
+  const y=parseInt(String(year||'').match(/\d{4}/)?.[0]||'0',10);
+  const oliivka = t.includes('ОЛІЇВК') || t.includes('ОЛИЕВК') || t.includes('ОЛІЕВК') || t.includes('OLIIV') || t.includes('OLIYIV');
+  if(t.includes('БОГУНСЬК')) return 'Богунський';
+  if(t.includes('КОРОЛЬОВСЬК')) return 'Корольовський';
+  if(oliivka) return y>=2018 ? 'Оліївка новобудови' : '';
+  if(t.includes('ЖИТОМИР') && !t.includes('РАЙОН')) return 'Житомир (без району)';
+  return '';
+}
+function parseExecutor(sod){
+  const s=normalizeText(sod);
+  if(!s) return {edrpou:'',name:''};
+  const m=s.match(/^(\d{6,12})\s*,\s*(.+)$/);
+  if(m) return {edrpou:m[1],name:m[2]};
+  return {edrpou:'',name:s};
+}
+function toNum(v){
+  if(v===null||v===undefined||v==='') return null;
+  const n=parseFloat(String(v).replace(/\s/g,'').replace(',','.'));
+  return Number.isFinite(n)?n:null;
+}
+function roomCat(area){
+  if(area<40) return 1;
+  if(area<65) return 2;
+  if(area<90) return 3;
+  return 4;
+}
+function parseFloor(v){
+  const m=String(v||'').match(/\d+/);
+  return m?parseInt(m[0],10):null;
+}
+function isDormText(type,address){
+  const t=(String(type||'')+' '+String(address||'')).toUpperCase();
+  return t.includes('ГУРТОЖ') || t.includes('КІМНАТ') || t.includes('КОМУНАЛ');
+}
+async function importExcelFile(ev){
+  const file=ev.target.files && ev.target.files[0];
+  if(!file) return;
+  if(!window.XLSX){showToast('Не завантажена бібліотека XLSX. Перевірте інтернет-з’єднання.');return;}
+  const buf=await file.arrayBuffer();
+  const wb=XLSX.read(buf,{type:'array'});
+  const ws=wb.Sheets[wb.SheetNames[0]];
+  const rows=XLSX.utils.sheet_to_json(ws,{defval:''});
+  if(!rows.length){showToast('У файлі не знайдено рядків');return;}
+  const headers=Object.keys(rows[0]);
+  const colTown=findCol(headers,['Населений пункт']);
+  const colStatus=findCol(headers,['Статус звіту']);
+  const colType=findCol(headers,['Вид об','нерухомості']);
+  const colArea=findCol(headers,['Загальна площа']);
+  const colFloor=findCol(headers,['Поверх']);
+  const colYear=findCol(headers,['введення','Рік']);
+  const colValue=findCol(headers,["Оціночна вартість об",'Вартість']);
+  const colStreet=findCol(headers,['Вулиця']);
+  const colStreetType=findCol(headers,['Тип вулиці']);
+  const colDate=findCol(headers,['Дата оцінки']);
+  const colSod=findCol(headers,['СОД','Виконавець']);
+  if(!colTown||!colType||!colArea||!colValue){showToast('Не знайдено обов’язкові колонки ФДМУ');return;}
+  const records=[];
+  const execs=new Set();
+  for(const row of rows){
+    if(colStatus && String(row[colStatus]).trim() && String(row[colStatus]).toUpperCase()!=='ЗАРЕЄСТРОВАНО') continue;
+    const yearVal=parseFloor(row[colYear]);
+    const streetForDistrict=(normalizeText(row[colStreetType])+' '+normalizeText(row[colStreet])).trim();
+    const district=normDistrictByTown(row[colTown], yearVal, streetForDistrict);
+    if(!district) continue;
+    const street=(normalizeText(row[colStreetType])+' '+normalizeText(row[colStreet])).trim() || normalizeText(row[colStreet]);
+    const address=street.replace(/\s+/g,' ').trim();
+    const adU=address.toUpperCase();
+    if(blacklist.some(b=>adU.includes(b))) continue;
+    const area=toNum(row[colArea]);
+    const value=toNum(row[colValue]);
+    if(!area||!value||area<=5) continue;
+    const ppm=value/area;
+    if(ppm<3000 || ppm>80000) continue;
+    const type=normalizeText(row[colType]);
+    const ex=parseExecutor(colSod?row[colSod]:'');
+    if(ex.name) execs.add(ex.name);
+    records.push({
+      'р':district,
+      'к':roomCat(area),
+      'пл':Math.round(area*10)/10,
+      'пов':parseFloor(row[colFloor]),
+      'пх':null,
+      'рік':yearVal,
+      'цкв':Math.round(ppm),
+      'в':Math.round(value),
+      'ад':address.slice(0,90),
+      'дата':normalizeText(colDate?row[colDate]:''),
+      'тип':isDormText(type,address)?'Кімната в гуртожитку':'Квартира',
+      'вик':ex.name,
+      'ЄДРПОУ':ex.edrpou
+    });
+  }
+  IMPORTED_JSON={records, count:records.length, updated:new Date().toISOString().slice(0,10), source:'ФДМУ evaluation.spfu.gov.ua', version:'4.0'};
+  const dorms=records.filter(isDormRec).length;
+  document.getElementById('imp-total').textContent=records.length;
+  document.getElementById('imp-apts').textContent=records.length-dorms;
+  document.getElementById('imp-dorms').textContent=dorms;
+  document.getElementById('imp-exec').textContent=execs.size;
+  document.getElementById('downloadJsonBtn').style.display='inline-block';
+  showToast('Імпорт готовий. Завантажте calc_data.json і замініть файл у GitHub.');
+}
+function downloadImportedJson(){
+  if(!IMPORTED_JSON){showToast('Спочатку імпортуйте Excel');return;}
+  const blob=new Blob([JSON.stringify(IMPORTED_JSON,null,0)],{type:'application/json;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download='calc_data.json'; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+
+const AUTH_USERS=[
+  {name:'Андрій',login:'andrii',role:'admin',expires:'2027-12-31',hash:'240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9'},
+  {name:'Ріелтор',login:'test1',role:'rieltor',expires:'2026-12-31',hash:'ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae'}
+];
+
+async function sha256Text(text){
+  const data=new TextEncoder().encode(text);
+  const hash=await crypto.subtle.digest('SHA-256',data);
+  return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+function authCurrent(){
+  try{return JSON.parse(sessionStorage.getItem('fdmu_auth_user')||'null')}catch(e){return null}
+}
+function authExpired(u){
+  if(!u || !u.expires)return true;
+  const today=new Date().toISOString().slice(0,10);
+  return String(u.expires)<today;
+}
+function roleLabel(role){
+  if(role==='admin') return 'адмін';
+  if(role==='rieltor') return 'ріелтор';
+  return 'користувач';
+}
+function hasRoleAccess(u, feature){
+  if(!u) return false;
+  if(feature==='admin') return u.role==='admin';
+  if(feature==='executorAnalytics') return u.role==='admin';
+  return true;
+}
+function authApply(){
+  const u=authCurrent();
+  if(!u || authExpired(u)){
+    document.body.classList.add('locked');
+    sessionStorage.removeItem('fdmu_auth_user');
+    return false;
+  }
+  document.body.classList.remove('locked');
+  const pill=document.getElementById('authUserPill');
+  if(pill) pill.textContent=u.name+' · '+roleLabel(u.role)+' · до '+u.expires;
+  document.querySelectorAll('.admin-only').forEach(el=>{
+    if(hasRoleAccess(u,'admin')) el.classList.remove('hidden-by-role');
+    else el.classList.add('hidden-by-role');
+  });
+  document.querySelectorAll('.executor-analytics-only').forEach(el=>{
+    if(hasRoleAccess(u,'executorAnalytics')) el.classList.remove('hidden-by-role');
+    else {
+      el.classList.add('hidden-by-role');
+      if(el.id==='analyticsCard') el.classList.add('collapsed-section');
+    }
+  });
+  return true;
+}
+async function authLogin(){
+  const login=(document.getElementById('authLogin')?.value||'').trim().toLowerCase();
+  const pass=document.getElementById('authPassword')?.value||'';
+  const err=document.getElementById('authError');
+  const h=await sha256Text(pass);
+  const u=AUTH_USERS.find(x=>x.login.toLowerCase()===login && x.hash===h);
+  if(!u || authExpired(u)){
+    if(err){err.style.display='block';err.textContent=!u?'Невірний логін або пароль':'Строк доступу завершився';}
+    return;
+  }
+  sessionStorage.setItem('fdmu_auth_user',JSON.stringify({name:u.name,login:u.login,role:u.role,expires:u.expires}));
+  if(err) err.style.display='none';
+  authApply();
+  if((typeof DATA==='undefined') || !DATA || !DATA.length) if(authApply()) loadData();
+}
+function authLogout(){
+  sessionStorage.removeItem('fdmu_auth_user');
+  location.reload();
+}
+
+const APP_VERSION='11.9-beta';
+const USD_RATE=41.5; // довідковий курс для відображення USD
+let DATA=[], WORK_DATA=[], ARCHIVE_DATA=[], CAND=[], SELECTED=new Set(), TARGET=null, ARCHIVE_ANALYTICS=null, ACTIVE_SOURCE='work';
+const allowed = new Set(['Богунський','Корольовський','Житомир (без району)','Оліївка новобудови']);
+const blacklist = ['БЕРДИЧ','НОВОГРАД','ЗВЯГ','КОРОСТ','МАЛИН','РАЙОН','АНДРУШ','ЧУДНІВ','ОВРУЧ'];
+function fmt(n){return Math.round(n).toLocaleString('uk-UA').replace(/\u00A0/g,' ')}
+function fmtUsd(n){return '$'+Math.round(n).toLocaleString('uk-UA').replace(/\u00A0/g,' ')}
+function numFromText(t){return +String(t||'').replace(/[^0-9]/g,'')||0}
+// Статистична похибка медіани залежить від розміру вибірки (перевірено
+// бутстрепом на робочому вікні: n=3 → ±23%, n=10 → ±12%, n=30+ → ±8%).
+// Формула 38/√n відтворює фактичний розкид з похибкою <1.5 п.п.
+function rangePct(n){ if(!n||n<1) return 10; return Math.round(Math.max(8, Math.min(30, 38/Math.sqrt(n)))); }
+function reliabilityText(n){if(n>=20)return ['Висока надійність вибірки', 'rel-high']; if(n>=8)return ['Середня надійність вибірки', 'rel-mid']; return ['Низька надійність вибірки', 'rel-low'];}
+function err(t){const e=document.getElementById('err'); e.style.display=t?'block':'none'; e.textContent=t||''}
+function fmtNum(n){ return String(n??0).replace(/\B(?=(\d{3})+(?!\d))/g,' '); }
+
+async function loadUpdateSummary(){
+  try{
+    const r = await fetch('update_summary.json?v='+APP_VERSION+'&t='+Date.now(), {cache:'reload'});
+    if(!r.ok) return;
+    const data = await r.json();
+    const last = data.last || (data.updates && data.updates[0]);
+    if(!last) return;
+
+    const card = document.getElementById('updateCard');
+    const el   = document.getElementById('upd-last');
+
+    let parts = [];
+    parts.push('<b>Версія:</b> ' + (last.version||'—'));
+    parts.push('<b>Дата:</b> ' + (last.date||'—'));
+
+    let added = [];
+    if(last.added_apts)  added.push('квартир: +' + fmtNum(last.added_apts));
+    if(last.added_dorms) added.push('гуртожитків: +' + fmtNum(last.added_dorms));
+    const addedStr = added.length ? added.join(', ') : 'нових об’єктів немає';
+
+    el.innerHTML =
+      parts.join(' &nbsp;•&nbsp; ') +
+      '<br><b>Додано цього разу:</b> ' + addedStr +
+      ' <span style="color:#8a8a8a">(усього ' + fmtNum(last.added_total||0) + ')</span>' +
+      '<br><span style="color:#8a8a8a">У базі: робоча ' + fmtNum(last.working_total||0) +
+      ', архів ' + fmtNum(last.archive_total||0) +
+      (last.median_ppm ? ', медіана ' + fmtNum(last.median_ppm) + ' грн/м²' : '') + '</span>';
+
+    card.style.display = 'block';
+
+    const hist = (data.updates||[]).slice(0, 10);
+    if(hist.length > 1){
+      const rows = hist.map(u => {
+        const a = [];
+        if(u.added_apts)  a.push('кв +'+fmtNum(u.added_apts));
+        if(u.added_dorms) a.push('гурт +'+fmtNum(u.added_dorms));
+        const aStr = a.length ? a.join(', ') : '—';
+        return '<tr>'+
+          '<td style="padding:4px 10px 4px 0;white-space:nowrap">'+(u.date||'—')+'</td>'+
+          '<td style="padding:4px 10px 4px 0">'+(u.version||'—')+'</td>'+
+          '<td style="padding:4px 0">'+aStr+' <span style="color:#8a8a8a">('+fmtNum(u.added_total||0)+')</span></td>'+
+          '</tr>';
+      }).join('');
+      document.getElementById('upd-history').innerHTML =
+        '<table style="width:100%;border-collapse:collapse;font-size:14px">'+
+        '<thead><tr style="color:#8a8a8a;text-align:left">'+
+        '<th style="padding:4px 10px 4px 0">Дата</th>'+
+        '<th style="padding:4px 10px 4px 0">Версія</th>'+
+        '<th style="padding:4px 0">Додано</th></tr></thead>'+
+        '<tbody>'+rows+'</tbody></table>';
+      document.getElementById('upd-toggle').style.display = 'inline-block';
+    }
+  }catch(_e){ /* тихо: підсумок необов'язковий */ }
+}
+
+function toggleUpdHistory(){
+  const h = document.getElementById('upd-history');
+  const btn = document.getElementById('upd-toggle');
+  const show = h.style.display === 'none';
+  h.style.display = show ? 'block' : 'none';
+  btn.textContent = show ? 'Сховати історію оновлень' : 'Показати історію оновлень';
+}
+
+async function loadData(){try{
+  const r=await fetch('calc_data.json?v='+APP_VERSION+'&t='+Date.now(),{cache:'reload'});
+  if(!r.ok) throw new Error('HTTP '+r.status);
+  const d=await r.json();
+  WORK_DATA=(d.records||[]).filter(validCity).map(cityZoneRecord);
+  DATA=WORK_DATA;
+  ARCHIVE_ANALYTICS=d.archive_analytics||null;
+  window.__MR = d.market_research || null;
+  window.__DATA_COUNT = d.count || (d.records||[]).length || 0;
+  try{
+    const ar=await fetch('archive_calc_data.json?v='+APP_VERSION+'&t='+Date.now(),{cache:'reload'});
+    if(ar.ok){
+      const ad=await ar.json();
+      ARCHIVE_DATA=(ad.records||[]).filter(validCity).map(cityZoneRecord);
+    }
+  }catch(_e){ARCHIVE_DATA=[];}
+  try{
+    const lr=await fetch('listings_data.json?v='+APP_VERSION+'&t='+Date.now(),{cache:'reload'});
+    if(lr.ok){ window.__LST=await lr.json(); }
+  }catch(_e){ window.__LST=null; }
+  try{ renderListings(); }catch(_e){}
+  if(d.version && d.version!==APP_VERSION){console.warn('Версія бази не збігається', d.version, APP_VERSION);}
+  const dorms=WORK_DATA.filter(isDormRec).length;
+  const houses=WORK_DATA.filter(isHouseRec).length;
+  document.getElementById('st-version').textContent=APP_VERSION;
+  document.getElementById('versionTop').textContent='v'+APP_VERSION;
+  try{initCardStyleToggle()}catch(e){}
+  document.getElementById('st-count').textContent=WORK_DATA.length;
+  document.getElementById('st-apts').textContent=WORK_DATA.length-dorms-houses;
+  document.getElementById('st-dorms').textContent=dorms;
+  document.getElementById('st-updated').textContent=d.updated||'—';
+  if(document.getElementById('st-raw-city')) document.getElementById('st-raw-city').textContent=fmt(d.count || WORK_DATA.length);
+  if(document.getElementById('st-before-dup')) document.getElementById('st-before-dup').textContent=d.eligible_city_count_before_duplicates||'—';
+  if(document.getElementById('st-excluded')) document.getElementById('st-excluded').textContent=(d.raw_city_count&&d.eligible_city_count_before_duplicates)?(d.raw_city_count-d.eligible_city_count_before_duplicates):'—';
+  if(document.getElementById('st-noncity-removed')) document.getElementById('st-noncity-removed').textContent=d.non_city_address_removed??'—';
+  if(document.getElementById('st-dup')) document.getElementById('st-dup').textContent=d.duplicates_removed??'—';
+  if(document.getElementById('st-exec')) document.getElementById('st-exec').textContent=(d.stats&&d.stats.executors)||'—';
+  if(document.getElementById('st-medppm')) document.getElementById('st-medppm').textContent=d.stats&&d.stats.median_ppm?fmt(d.stats.median_ppm):'—';
+  if(document.getElementById('st-oliivka')) document.getElementById('st-oliivka').textContent='включена в Житомир';
+  populateStreetList(); renderAnalytics(); ensureExecutorSearchBlock(); renderExecutorMarketMonths(); renderExecutorProfile(false); runAuto(); loadUpdateSummary();
+}catch(ex){err('Не вдалося завантажити calc_data.json: '+ex.message+'. Запустіть через локальний сервер або GitHub Pages.')}}
+/* lst-card-v1 — блок «Ринок пропозицій». Нічого не рахує: показує готові числа з listings_data.json */
+function lstCell(x){
+  if(!x) return '<td class="num">—</td>';
+  const n='<span class="hint" style="white-space:nowrap">n='+x.n+(x.low_n?', мало даних':'')+'</span>';
+  return '<td class="num">'+fmt(x.median_usd)+' $<br>'+n+'</td>';
+}
+/* lst-admin-v1 — кнопка запуску локального .bat через протокол fdmu-listings:// */
+function lstAdminClick(){
+  const h=document.getElementById('lst-admin-hint');
+  if(h) h.innerHTML='Запит на запуск надіслано. Якщо браузер спитав дозвіл — підтвердьте. Дочекайтеся «Готово» у вікні консолі, далі <b>Завантажити на GitHub</b> → listings_data.json з Робочого столу → Commit changes.';
+}
+function renderListings(){
+  const card=document.getElementById('lstCard');
+  if(!card) return;
+  const btn=document.querySelector('button[onclick*="lstCard"]');
+  if(!window.__LST || !window.__LST.city){
+    card.classList.remove('open');
+    if(btn) btn.style.display='none';
+    return;
+  }
+  if(btn) btn.style.display='';
+  const d=window.__LST;
+  document.getElementById('lst-med-usd').textContent=fmt(d.city.median_usd)+' $';
+  document.getElementById('lst-med-uah').textContent=fmt(d.city.median_uah);
+  document.getElementById('lst-used').textContent=fmt(d.used)+' з '+fmt(d.total);
+  document.getElementById('lst-date').textContent=d.generated||d.date||'—';
+
+  const cols=d.floors_axis||[], rowsAx=d.rooms_axis||[], mx=d.matrix||[];
+  const get=(r,f)=>mx.find(x=>x.rooms===r&&x.floors===f);
+  const head='<tr><th>Кімнат</th>'+cols.map(c=>'<th class="num">'+safe(c)+' пов.</th>').join('')+'</tr>';
+  const body=rowsAx.map(r=>'<tr><td>'+safe(r)+'</td>'+cols.map(c=>lstCell(get(r,c))).join('')+'</tr>').join('');
+  const mt=document.getElementById('lst-matrix');
+  if(mt) mt.innerHTML=mx.length
+    ? '<table class="analytics-table"><thead>'+head+'</thead><tbody>'+body+'</tbody></table>'
+    : '<div class="empty">Немає даних</div>';
+
+  const axTable=(arr,label)=>tableHtml([label,'Кількість','Медіана $/м²','Медіана грн/м²'],
+    (arr||[]).map(x=>'<tr><td>'+safe(x.name)+(x.low_n?' <span class="hint">(мало даних)</span>':'')
+      +'</td><td class="num">'+fmt(x.n)+'</td><td class="num">'+fmt(x.median_usd)
+      +'</td><td class="num">'+fmt(x.median_uah)+'</td></tr>'));
+  const rr=document.getElementById('lst-rooms');   if(rr) rr.innerHTML=axTable(d.by_rooms,'Кімнат');
+  const ff=document.getElementById('lst-floors');  if(ff) ff.innerHTML=axTable(d.by_floors,'Поверховість');
+}
+function normalizeAddressForCompare(v){
+  let s=String(v||'').toUpperCase();
+  // Нормалізація без \b, бо межі слова нестабільно працюють з кирилицею в різних браузерах.
+  s=s.replace(/(^|\s)(ВУЛ\.?|ВУЛИЦЯ|ПРОСП\.?|ПРОСПЕКТ|ПР-Т|ПЛ\.?|ПЛОЩА|ПРОВ\.?|ПРОВУЛОК|БУЛ\.?|БУЛЬВАР|ПРОЇЗД)(?=\s|$)/gi,' ');
+  s=s.replace(/[.,;:()\[\]«»"'`´\/]+/g,' ');
+  s=s.replace(/\s+/g,' ').trim();
+  const repl=[
+    [/ГРУШЕВСЬКОГО МИХАЙЛА|МИХАЙЛА ГРУШЕВСЬКОГО|ГРУШЕВСЬКОГО/g,'ГРУШЕВСЬКОГО'],
+    [/МАЗЕПИ ІВАНА|ІВАНА МАЗЕПИ/g,'МАЗЕПИ'],
+    [/ЛЕСІ УКРАЇНКИ|УКРАЇНКИ ЛЕСІ/g,'ЛЕСІ УКРАЇНКИ'],
+    [/КНЯЗІВ ОСТРОЗЬКИХ|ОСТРОЗЬКИХ КНЯЗІВ|КНЯЗІВ ОСТРОВСЬКИХ/g,'КНЯЗІВ ОСТРОЗЬКИХ'],
+    [/ГЕНЕРАЛА ВСЕВОЛОДА ПЕТРІВА|ПЕТРІВА ВСЕВОЛОДА ГЕНЕРАЛА|ПЕТРІВА ВСЕВОЛОДА|ГЕНЕРАЛА ВСЕВОЛОДА ПЕРТІВА/g,'ПЕТРІВА'],
+    [/МАЛА БЕРДИЧІВСЬКА|М БЕРДИЧІВСЬКА|МАЛА БЕРДИЧІВСКА/g,'МАЛА БЕРДИЧІВСЬКА'],
+    [/ВЕЛИКА БЕРДИЧІВСЬКА|В БЕРДИЧІВСЬКА|ВЕЛИКА БЕРДИЧІВСКА/g,'ВЕЛИКА БЕРДИЧІВСЬКА'],
+    [/СТЕПАНА БАНДЕРИ|БАНДЕРИ СТЕПАНА/g,'БАНДЕРИ'],
+    [/ЛЕХА КАЧИНСЬКОГО/g,'КАЧИНСЬКОГО'],
+    [/АКАДЕМІКА ТУТКОВСЬКОГО|ТУТКОВСЬКОГО АКАДЕМІКА/g,'ТУТКОВСЬКОГО'],
+    [/СЛЬОТИ ІВАНА|ІВАНА СЛЬОТИ/g,'СЛЬОТИ'],
+    [/ВОЛОДИМИРА ГНАТЮКА|ГНАТЮКА ВОЛОДИМИРА/g,'ГНАТЮКА'],
+    [/ІВАНА ОГІЄНКА|ОГІЄНКА ІВАНА|ІВАНА ОГІЄНКО/g,'ОГІЄНКА'],
+    [/ІВАНА БАГРЯНОГО|БАГРЯНОГО ІВАНА/g,'БАГРЯНОГО'],
+    [/ІВАНА КОЧЕРГИ|КОЧЕРГИ ІВАНА/g,'КОЧЕРГИ'],
+    [/ІВАНА БОГУНА|БОГУНА ІВАНА/g,'БОГУНА'],
+    [/ІВАНА ГОНТИ|ГОНТИ ІВАНА/g,'ГОНТИ'],
+    [/БОРИСА ТЕНА|ТЕНА БОРИСА/g,'ТЕНА'],
+    [/БОРИСА ЛЯТОШИНСЬКОГО|ЛЯТОШИНСЬКОГО БОРИСА/g,'ЛЯТОШИНСЬКОГО'],
+    [/ОЛЕКСАНДРА КЛОСОВСЬКОГО|КЛОСОВСЬКОГО ОЛЕКСАНДРА/g,'КЛОСОВСЬКОГО'],
+    [/ГЕТЬМАНА САМОЙЛОВИЧА|САМОЙЛОВИЧА ГЕТЬМАНА/g,'САМОЙЛОВИЧА']
+  ];
+  repl.forEach(([a,b])=>{s=s.replace(a,b)});
+  return s.replace(/\s+/g,' ').trim();
+}
+// «Ядро» вулиці: нормалізована адреса без номерів будинку/квартири та
+// дрібних фрагментів. Використовується для фактора схожості по вулиці.
+const _ROMAN={'І':'1','ІІ':'2','ІІІ':'3','ІV':'4','IV':'4','V':'5'};
+const _WORDNUM={'ПЕРШИЙ':'1','ДРУГИЙ':'2','ТРЕТІЙ':'3','ЧЕТВЕРТИЙ':'4','ПЯТИЙ':'5','ШОСТИЙ':'6','СЬОМИЙ':'7','ВОСЬМИЙ':'8'};
+const _TITLES=new Set(['ГЕНЕРАЛА','АКАДЕМІКА','ПРОФЕСОРА','МИТРОПОЛИТА','ІМЕНІ','ОТАМАНА','ОТАМАНІВ','ГЕТЬМАНА','АДМІРАЛА','КНЯЗІВ','КНЯЗЯ']);
+function streetCore(v){
+  let raw=String(v||'').toUpperCase();
+  // провулок зберігаємо як маркер: "вул. Чехова" ≠ "пров. Чехова"
+  const isLane=/(^|\s)(ПРОВУЛОК|ПРОВ)\.?(?=\s|$)/.test(raw);
+  // склеїти розріджені літери: "Ш е в ч е н к а" → "ШЕВЧЕНКА"
+  raw=raw.replace(/(?:(?<=\s)|^)(?:[А-ЯҐЄІЇ]\s+){2,}[А-ЯҐЄІЇ](?=\s|$)/g,m=>' '+m.replace(/\s+/g,'')+' ');
+  let s=normalizeAddressForCompare(raw);
+  s=s.replace(/(^|\s)(КВ|КВАРТ|КІМ|КІМНАТА|БУД|БУДИНОК)\.?\s*\d+[А-ЯҐЄІЇ]?/g,' '); // номер будинку/кв
+  // ініціали ПЕРЕД римськими цифрами, інакше "І." стане "1"
+  s=s.replace(/(^|\s)[А-ЯҐЄІЇ]\.\s*/g,' ');                 // "І.Огієнка"/"І. Огієнка" → "Огієнка"
+  s=s.replace(/(^|\s)([А-ЯҐЄІЇ])(?=\s|$)/g,' ');            // самотні літери-залишки ініціалів
+  s=s.replace(/(^|\s)(І{2,3}|ІV|V)(?:-?[ЙИЄ]{1,2})?(?=\s|$)/g,(m,p,r)=>' '+(_ROMAN[r]||r)+' '); // римські ІІ,ІІІ,IV,V
+  Object.keys(_WORDNUM).forEach(w=>{s=s.replace(new RegExp('(^|\\s)'+w+'(?=\\s|$)','g'),' '+_WORDNUM[w]+' ')});
+  s=s.replace(/(\d+)\s*-\s*(?:[ЙИЄ]{1,2})?(?=\s|$)/g,' $1 ');  // "1-й" → "1"
+  s=s.replace(/\d+[А-ЯҐЄІЇ]/g,' ');             // номери з літерою (12А)
+  s=s.replace(/[^А-ЯҐЄІЇA-Z0-9\s]/g,' ');
+  let toks=s.split(/\s+/).filter(t=>t && (/^\d+$/.test(t) || (t.length>1 && !_TITLES.has(t))));
+  // порядок слів не має значення: "Огієнка Івана" == "Івана Огієнка"
+  const nums=toks.filter(t=>/^\d+$/.test(t)).sort();
+  const words=toks.filter(t=>!/^\d+$/.test(t)).sort();
+  const core=nums.concat(words).join(' ').replace(/\s+/g,' ').trim();
+  return (isLane?'ПРОВ~':'')+core;
+}
+// Заповнює datalist унікальними назвами вулиць з бази (для автопідказки).
+function populateStreetList(){
+  const dl=document.getElementById('streetList'); if(!dl) return;
+  const map=new Map();
+  (WORK_DATA||[]).forEach(r=>{const c=streetCore(r['ад']); if(c&&c.length>2){map.set(c,(map.get(c)||0)+1)}});
+  const items=[...map.entries()].filter(([,n])=>n>=2).sort((a,b)=>b[1]-a[1]).map(([c])=>{
+    const lane=c.startsWith('ПРОВ~');
+    const body=lane?c.slice(5):c;
+    const nice=body.split(' ').map(w=>/^\d+$/.test(w)?w:w.charAt(0)+w.slice(1).toLowerCase()).join(' ');
+    return (lane?'пров. ':'')+nice;
+  });
+  dl.innerHTML=items.map(v=>'<option value="'+v.replace(/"/g,'&quot;')+'">').join('');
+}
+function showAddress(r){const raw=String(r['ад']||'—'); const n=r['ад_норм']||normalizeAddressForCompare(raw); return n&&n!==raw.toUpperCase()?raw+' · норм.: '+n:raw;}
+function validCity(r){
+  // Якщо район належить дозволеним — запис уже точно міський (Богунський/
+  // Корольовський/Житомир без району/Оліївка). Blacklist по тексту адреси
+  // НЕ застосовуємо, інакше відсікаються житомирські вулиці, названі на честь
+  // інших міст (вул. Велика Бердичівська, вул. Чуднівська тощо).
+  if(allowed.has(r['р'])) return true;
+  // Запасний фільтр лише для записів без валідного району:
+  const ad=String(r['ад']||'').toUpperCase();
+  return !blacklist.some(b=>ad.includes(b));
+}
+function isOliivkaRecord(r){
+  if(!r) return false;
+  const district=String(r['р']||'').toUpperCase();
+  const micro=String(r['мікрозона']||r['micro_location']||'').toUpperCase();
+  const addr=String(r['ад']||r['адреса']||'').toUpperCase();
+  return district.includes('ОЛІЇВК') || micro.includes('ОЛІЇВК') || addr.includes('РИХЛИК') || addr.includes('РИХЛІК') || addr.includes('ОЛІЇВК');
+}
+function cityZoneRecord(r){
+  if(!r) return r;
+  if(isOliivkaRecord(r)) return {...r, 'мікрозона':'Оліївка'};
+  return r;
+}
+function districtMatch(r,d){
+  if(d==='all') return true;
+  if(d==='Житомир (без району)') return r['р']==='Житомир (без району)' && !isOliivkaRecord(r);
+  return r['р']===d;
+}
+function target(){const scope=(document.getElementById('dataScope')?document.getElementById('dataScope').value:'12'); return {objectType:document.getElementById('objectType').value, district:document.getElementById('district').value, rooms:+document.getElementById('rooms').value, area:+document.getElementById('area').value||0, street:(document.getElementById('street')?document.getElementById('street').value:'').trim()||null, year:+document.getElementById('year').value||null, floor:+document.getElementById('floor').value||null, totalFloors:+document.getElementById('totalFloors').value||null, datePeriod:scope==='archive'?'all':scope, dataScope:scope, oliivkaPickMode:'similar'}}
+function activeRecords(t){
+  const useArchive = t && t.dataScope==='archive' && ARCHIVE_DATA && ARCHIVE_DATA.length;
+  ACTIVE_SOURCE = useArchive ? 'archive' : 'work';
+  return useArchive ? ARCHIVE_DATA : WORK_DATA;
+}
+function activeSourceLabel(){const t=TARGET||target(); if(ACTIVE_SOURCE==='archive') return 'Повний архів 2019+ (історичний)'; const m=parseInt(t.dataScope||'12',10); return 'Останні '+m+' '+monthWord(m)+' ('+(m*30)+' днів)';}
+function monthWord(n){n=+n; if(n===1)return 'місяць'; if(n>=2&&n<=4)return 'місяці'; return 'місяців';}
+function similarity(r,t){let s=100; const area=+r['пл']||0; if(t.area){const da=Math.abs(area-t.area)/t.area; s-=Math.min(da*135,48)} if(r['рік']&&t.year){const dy=Math.abs(+r['рік']-t.year); s-=Math.min(dy<=8?dy*.4:dy<=25?3.2+(dy-8)*1.2:23.6+(dy-25)*.5,32)} if(t.district!=='all' && !districtMatch(r,t.district))s-=12; if(t._streetCore){const rc=r['_stCore']!==undefined?r['_stCore']:streetCore(r['ад']); if(rc){if(rc===t._streetCore)s+=10; else if(rc.indexOf(t._streetCore)>=0||t._streetCore.indexOf(rc)>=0)s+=5; else s-=14;} } if(r['пов']&&t.floor){const tf=t.totalFloors&&t.floor===t.totalFloors; const rf=r['пх']&&r['пов']===r['пх']; if((t.floor===1)!=(r['пов']===1))s-=8; if(tf!==rf)s-=5; s-=Math.min(Math.abs((+r['пов']||0)-t.floor)*.4,6)} return Math.max(1,Math.round(s));}
+function areaOk(r,t){if(!t.area)return true; const a=+r['пл']; let pct=t.area<30?.35:t.area<=60?.28:.22; return a>=t.area*(1-pct)&&a<=t.area*(1+pct)}
+function isDormRec(r){const tp=String(r['тип']||r['вид']||r['об']||'').toUpperCase(); const ad=String(r['ад']||'').toUpperCase(); return tp.includes('ГУРТОЖ')||tp.includes('КОМУНАЛ')||tp.includes('КІМНАТ')||ad.includes('ГУРТОЖ');}
+function isHouseRec(r){const tp=String(r['тип']||r['вид']||r['об']||'').toUpperCase(); return tp.includes('БУДИНОК')||tp.includes('КОТЕДЖ')||tp.includes('ТАУНХАУС')||tp.includes('САДИБ')||tp.includes('ДАЧ');}
+function objectTypeOk(r,t){const isDorm=isDormRec(r); const isHouse=isHouseRec(r); if(t.objectType==='dorm') return isDorm; if(t.objectType==='house') return isHouse; return !isDorm && !isHouse;}
+function maxRecordDate(records){
+  const dates=records.map(r=>parseDateValue(recordDate(r))).filter(Boolean).sort((a,b)=>b-a);
+  return dates[0]||null;
+}
+function datePeriodOk(r,t){
+  if(!t.datePeriod || t.datePeriod==='all') return true;
+  const d=parseDateValue(recordDate(r));
+  if(!d) return true;
+  const months=parseInt(t.datePeriod,10);
+  if(!months) return true;
+  // v9.4: період рахується не календарними місяцями, а останніми 30*n днями
+  // від дати запиту користувача. Для 1 місяця це рівно останні 30 днів.
+  const today=new Date();
+  today.setHours(23,59,59,999);
+  const cutoff=new Date(today);
+  cutoff.setDate(cutoff.getDate()-(months*30));
+  cutoff.setHours(0,0,0,0);
+  return d>=cutoff && d<=today;
+}
+function baseStatsForCurrentType(){
+  const t=target();
+  const base=activeRecords(t).filter(r=>objectTypeOk(r,t));
+  const ppm=base.map(r=>+r['цкв']||0).filter(Boolean);
+  const med=ppm.length?Math.round(median(ppm)):0;
+  const avg=ppm.length?Math.round(ppm.reduce((a,b)=>a+b,0)/ppm.length):0;
+  const ex=new Set(base.map(r=>getExecutor(r)).filter(x=>x && x!=='не вказано в поточній базі'));
+  return {count:base.length, avg, med, execs:ex.size};
+}
+function showGeneralStatsOnly(){
+  const st=baseStatsForCurrentType();
+  CAND=[]; SELECTED.clear();
+  document.getElementById('st-shown').textContent='—';
+  document.getElementById('st-selected').textContent='—';
+  document.getElementById('list').innerHTML='<div class="empty">Вкажіть загальну площу об’єкта, щоб сформувати вибірку зареєстрованих оцінок. Поки площа не вказана, показується тільки загальна база: '+st.count+' записів, середня '+(st.avg?fmt(st.avg):'—')+' грн/м², медіана '+(st.med?fmt(st.med):'—')+' грн/м².</div>';
+  const rel=document.getElementById('reliability'); if(rel) rel.style.display='none'; const sc=document.getElementById('sampleCard'); if(sc) sc.classList.remove('open');
+  document.getElementById('total').textContent='—';
+  document.getElementById('totalUsd').textContent='';
+  document.getElementById('range').textContent='Для розрахунку потрібно вказати загальну площу об’єкта';
+  document.getElementById('rangeUsd').textContent='';
+  document.getElementById('totalFund').textContent='—';
+  document.getElementById('totalFundUsd').textContent='';
+  document.getElementById('rangeFund').textContent='—';
+  document.getElementById('rangeFundUsd').textContent='';
+  ['weighted','simple','median'].forEach(id=>document.getElementById(id).textContent='—');
+  const d=document.getElementById('details');
+  d.style.display='block';
+  d.textContent='Загальна статистика бази для вибраного типу об’єкта: '+st.count+' записів; середня ціна '+(st.avg?fmt(st.avg):'—')+' грн/м²; медіана '+(st.med?fmt(st.med):'—')+' грн/м²; виконавців: '+(st.execs||'—')+'. Вибірка не формується без площі.';
+}
+function buildCandidates(t){
+  let source=activeRecords(t);
+  let base=source.filter(r=>objectTypeOk(r,t) && datePeriodOk(r,t));
+  if(t.district!=='all') base=base.filter(r=>districtMatch(r,t.district));
+  if(t.objectType!=='house') base=base.filter(r=>+r['к']===t.rooms);
+  // Площа є обов'язковим параметром розрахунку, тому після її введення
+  // загальний пул одразу обмежується близькими за площею записами.
+  // Це прибирає помилку v9.0, коли для однієї квартири автоматично
+  // використовувались сотні записів по всьому місту.
+  if(t.area) base=base.filter(r=>areaOk(r,t));
+  t._streetCore = t.street ? streetCore(t.street) : null;
+  base=base.map((r,i)=>{const stc=streetCore(r['ад']); const rr={...r,'_stCore':stc,_adNorm:r['ад_норм']||normalizeAddressForCompare(r['ад'])}; rr._id=i+'-'+(r['ад_норм']||r['ад'])+'-'+r['пл']+'-'+r['в']+'-'+recordDate(r); rr._s=similarity(rr,t); return rr;});
+  base.sort((a,b)=>b._s-a._s);
+  return base;
+}
+function recommendedAutoSelection(cands,t){
+  if(!cands || !cands.length) return [];
+  // Автоматичний розрахунок не повинен брати всю базу.
+  // Беремо найбільш схожі оцінки; за потреби розширюємо вибірку,
+  // але залишаємо її керованою для стабільної медіани.
+  let pool=cands.filter(r=>(+r._s||0)>=70);
+  if(pool.length<15) pool=cands.filter(r=>(+r._s||0)>=60);
+  if(pool.length<15) pool=cands.slice(0, Math.min(60,cands.length));
+  const maxUse = t && t.dataScope==='archive' ? 120 : 80;
+  pool=pool.slice(0, Math.min(maxUse,pool.length));
+  return pool;
+}
+function runAuto(){
+  TARGET=target();
+  if(!TARGET.area){showGeneralStatsOnly(); setQualityBlock([],0); return;}
+  CAND=buildCandidates(TARGET);
+  SELECTED.clear();
+  recommendedAutoSelection(CAND,TARGET).forEach(r=>SELECTED.add(r._id));
+  renderList();
+  recalcSelected();
+}
+function selectAll(flag){const t=TARGET||target(); if(!t.area){showToast('Спочатку вкажіть загальну площу об’єкта'); showGeneralStatsOnly(); setQualityBlock([],0); return;} if(flag){CAND.forEach(r=>SELECTED.add(r._id))}else{SELECTED.clear()} renderList(); recalcSelected();}
+function toggleOne(id,checked){checked?SELECTED.add(id):SELECTED.delete(id); recalcSelected(); renderStats();}
+function renderStats(){const t=TARGET||target(); if(!t.area){document.getElementById('st-shown').textContent='—'; document.getElementById('st-selected').textContent='—'; return;} document.getElementById('st-shown').textContent=CAND.length; document.getElementById('st-selected').textContent=SELECTED.size;}
+/* ═══ Незалежні фільтри для прямого пошуку по адресі (recordsCard) ═══
+   Навмисно НЕ використовують objectTypeOk/districtMatch/activeRecords з
+   основного блоку «Параметри об'єкта», щоб зміна цих фільтрів під час
+   пошуку не залежала від стану основної форми розрахунку і не міняла
+   ACTIVE_SOURCE, який читає деталізація вибірки аналогів. */
+function searchFilterState(){
+  const byId=id=>{const el=document.getElementById(id); return el?el.value:'all'};
+  return {type:byId('searchType'), district:byId('searchDistrict'), scope:byId('searchScope')};
+}
+function searchObjectTypeOk(r,type){
+  if(type==='all') return true;
+  const isDorm=isDormRec(r), isHouse=isHouseRec(r);
+  if(type==='dorm') return isDorm;
+  if(type==='house') return isHouse;
+  return !isDorm && !isHouse;
+}
+function searchSourceRecords(scope){
+  return (scope==='archive' && ARCHIVE_DATA && ARCHIVE_DATA.length) ? ARCHIVE_DATA : WORK_DATA;
+}
+function setSearchCount(n, q){
+  const el=document.getElementById('searchCount');
+  if(!el) return;
+  if(n===null || n===undefined){ el.style.display='none'; el.textContent=''; return; }
+  el.style.display='inline-flex';
+  el.textContent='Знайдено: '+n;
+  el.style.background = n>0 ? 'var(--teal)' : 'var(--red)';
+}
+function renderList(){
+  const t=TARGET||target();
+  const q=document.getElementById('search').value.trim().toUpperCase();
+  const list=document.getElementById('list');
+  // РЕЖИМ ПРЯМОГО ПОШУКУ ПО АДРЕСІ: працює без площі й кімнатності
+  if(!t.area){
+    if(!q){ showGeneralStatsOnly(); setQualityBlock([],0); setSearchCount(null); return; }
+    const sf=searchFilterState();
+    let base=searchSourceRecords(sf.scope).filter(r=>searchObjectTypeOk(r,sf.type) && datePeriodOk(r,{datePeriod:sf.scope==='archive'?'all':sf.scope}));
+    if(sf.district!=='all') base=base.filter(r=>districtMatch(r,sf.district));
+    const qn=normalizeAddressForCompare(q);
+    let rows=base.filter(r=>{
+      const ad=String(r['ад']||'').toUpperCase();
+      const an=String(r['ад_норм']||'').toUpperCase();
+      return ad.includes(q) || (qn && an.includes(qn)) || an.includes(q);
+    });
+    rows=rows.map((r,i)=>({...r,_id:'addr-'+i+'-'+(r['ад_норм']||r['ад'])+'-'+r['пл']+'-'+r['в']+'-'+recordDate(r)}));
+    rows.sort((a,b)=>{const d=(parseDateValue(recordDate(b))||0)-(parseDateValue(recordDate(a))||0); return d;});
+    CAND=rows; 
+    document.getElementById('st-shown').textContent=rows.length;
+    setSearchCount(rows.length, q);
+    if(!rows.length){list.innerHTML='<div class="empty">За адресою «'+safe(q)+'» оцінок не знайдено (у межах обраного типу, району та періоду).</div>'; return;}
+    const _hintSearch='<div class="hint" style="margin-bottom:8px">Прямий пошук по адресі: знайдено '+rows.length+' оцінок. Площа й кімнатність не враховуються.</div>';
+    if(getCardStyle()==='v2'){
+      const _med=medianPpm(rows);
+      list.innerHTML=_hintSearch+rows.map(r=>renderAnalogCardV2(r,{medPpm:_med,mode:'search'})).join('');
+    } else {
+      list.innerHTML=_hintSearch+
+        rows.map(r=>`<div class="analog"><input type="checkbox" ${SELECTED.has(r._id)?'checked':''} onchange="toggleOne('${esc(r._id)}',this.checked)"><div class="score">${r['к']||'·'}</div><div><div class="addr">${safe(showAddress(r))}</div><div class="meta">${r['пл']} м² · ${safe(r['тип']||'')} · ${r['рік']||'?'} р. · пов. ${r['пов']||'?'}${r['пх']?'/'+r['пх']:''} · дата реєстрації: ${safe(recordDate(r))} · вартість: ${fmt(r['в']||((+r['цкв']||0)*(+r['пл']||0)))} грн · виконавець: ${safe(getExecutor(r))}${executorCode(r)?' · ЄДРПОУ: '+safe(executorCode(r)):''} · ${safe(isOliivkaRecord(r)?'Оліївка у складі Житомира':r['р'])}</div></div><div class="ppm">${fmt(r['цкв'])} грн/м²</div></div>`).join('');
+    }
+    return;
+  }
+  let rows=CAND.filter(r=>!q||String(r['ад']).toUpperCase().includes(q)||String(r['ад_норм']||'').toUpperCase().includes(q));
+  setSearchCount(q?rows.length:null, q);
+  if(!rows.length){list.innerHTML='<div class="empty">Зареєстровані оцінки не знайдені</div>'; renderStats(); return}
+  if(getCardStyle()==='v2'){
+    const _med=medianPpm(rows);
+    list.innerHTML=rows.map(r=>renderAnalogCardV2(r,{medPpm:_med,mode:'similarity'})).join('');
+  } else {
+    list.innerHTML=rows.map(r=>`<div class="analog"><input type="checkbox" ${SELECTED.has(r._id)?'checked':''} onchange="toggleOne('${esc(r._id)}',this.checked)"><div class="score ${r._s>=75?'good':r._s>=55?'mid':''}">${r._s}</div><div><div class="addr">${safe(showAddress(r))}</div><div class="meta">${r['пл']} м² · ${r['рік']||'?'} р. · пов. ${r['пов']||'?'}${r['пх']?'/'+r['пх']:''} · дата реєстрації: ${safe(recordDate(r))} · вартість: ${fmt(r['в']||((+r['цкв']||0)*(+r['пл']||0)))} грн · виконавець: ${safe(getExecutor(r))}${executorCode(r)?' · ЄДРПОУ: '+safe(executorCode(r)):''} · ${safe(isOliivkaRecord(r)?'Оліївка у складі Житомира':r['р'])}</div></div><div class="ppm">${fmt(r['цкв'])} грн/м²</div></div>`).join('');
+  }
+  renderStats();
+}
+
+/* ═══ v11.8 · Analog Advanced (dashboard) — рендерер v2 ═══
+   Не змінює жодну з існуючих функцій рендеру. Активний лише коли CARD_STYLE='v2'.
+   Δ від медіани — від відображеної вибірки (варіант 1). */
+function getCardStyle(){try{return localStorage.getItem('fdmu_card_style')==='v2'?'v2':'v1'}catch(e){return 'v1'}}
+function setCardStyle(v){
+  try{localStorage.setItem('fdmu_card_style', v==='v2'?'v2':'v1')}catch(e){}
+  const b1=document.getElementById('cs-v1'), b2=document.getElementById('cs-v2');
+  if(b1&&b2){b1.classList.toggle('active', v!=='v2'); b2.classList.toggle('active', v==='v2');}
+  try{renderList()}catch(e){}
+}
+function initCardStyleToggle(){
+  const s=getCardStyle();
+  const b1=document.getElementById('cs-v1'), b2=document.getElementById('cs-v2');
+  if(b1&&b2){b1.classList.toggle('active', s!=='v2'); b2.classList.toggle('active', s==='v2');}
+}
+function medianPpm(arr){
+  if(!arr||!arr.length) return 0;
+  const p=arr.map(r=>+r['цкв']||0).filter(Boolean).sort((a,b)=>a-b);
+  if(!p.length) return 0;
+  const m=Math.floor(p.length/2);
+  return p.length%2?p[m]:(p[m-1]+p[m])/2;
+}
+function daysBetween(dateStr){
+  const d=parseDateValue(dateStr); if(!d) return null;
+  const t=new Date(); t.setHours(0,0,0,0);
+  return Math.round((t - d)/(1000*60*60*24));
+}
+function freshnessInfo(dateStr){
+  const dd=daysBetween(dateStr);
+  if(dd===null) return {cls:'old', label:'дата невідома'};
+  if(dd<=30) return {cls:'fresh', label: dd<=1?'сьогодні': dd+' дн. тому'};
+  if(dd<=90) return {cls:'mid', label: dd+' дн. тому'};
+  if(dd<=365) return {cls:'old', label: Math.round(dd/30)+' міс. тому'};
+  return {cls:'old', label: Math.round(dd/365*10)/10+' р. тому'};
+}
+function distClass(r){
+  if(isOliivkaRecord(r)) return {cls:'dist-oliivka', label:'Оліївка'};
+  const d=String(r['р']||'').trim();
+  if(d==='Богунський') return {cls:'dist-bohun', label:'Богунський'};
+  if(d==='Корольовський') return {cls:'dist-korol', label:'Корольовський'};
+  return {cls:'dist-none', label:'Житомир б.р.'};
+}
+function outlierBadges(r){
+  const out=[];
+  const area=+r['пл']||0;
+  const yr=+r['рік']||0;
+  const fl=+r['пов']||0;
+  const tf=+r['пх']||0;
+  if(area && area<20) out.push({cls:'alert', label:'малогабарит'});
+  if(area && area>120) out.push({cls:'info', label:'велика'});
+  if(yr>=2018) out.push({cls:'info', label:'новобуд'});
+  if(yr && yr<1960) out.push({cls:'warn', label:'дов. фонд'});
+  if(fl===1) out.push({cls:'warn', label:'1-й пов.'});
+  if(fl && tf && fl===tf && tf>1) out.push({cls:'warn', label:'останній пов.'});
+  return out;
+}
+function isLegalEntity(r){
+  const c=executorCode(r); const s=String(c||'').replace(/\s/g,'');
+  return /^\d{8}$/.test(s);
+}
+function deltaBadge(ppm, med){
+  const p=+ppm||0;
+  if(!p || !med) return '';
+  const d=Math.round((p-med)/med*100);
+  if(d>0) return `<span class="aa-delta up">▲ +${d}% до медіани</span>`;
+  if(d<0) return `<span class="aa-delta down">▼ ${d}% до медіани</span>`;
+  return `<span class="aa-delta flat">≈ медіана</span>`;
+}
+function renderAnalogCardV2(r, ctx){
+  const mode=(ctx&&ctx.mode)||'similarity';
+  const scoreVal = mode==='search' ? (r['к']||'·') : (r._s||'—');
+  const scoreCls = mode==='similarity' ? (r._s>=75?'good':r._s>=55?'mid':'') : '';
+  const fresh=freshnessInfo(recordDate(r));
+  const dist=distClass(r);
+  const rooms=+r['к']||0;
+  const area=+r['пл']||0;
+  const yr=+r['рік']||0;
+  const fl=+r['пов']||0;
+  const tf=+r['пх']||0;
+  const total=+r['в']||(+r['цкв']||0)*area;
+  const ppm=+r['цкв']||0;
+  const outliers=outlierBadges(r);
+  const isLegal=isLegalEntity(r);
+  const execName=getExecutor(r);
+  const execCode=executorCode(r);
+  const execIcon=isLegal?'🏢':'👤';
+  const showExec = execName && execName!=='не вказано в поточній базі';
+  const baseBadges = [
+    `<span class="aa-badge ${dist.cls}">${safe(dist.label)}</span>`,
+    r['тип']?`<span class="aa-badge">${safe(r['тип'])}</span>`:'',
+    area?`<span class="aa-badge">${area} м²</span>`:'',
+    rooms?`<span class="aa-badge">${rooms} к.</span>`:'',
+    fl?`<span class="aa-badge">${fl}${tf?'/'+tf:''} пов.</span>`:'',
+    yr?`<span class="aa-badge">${yr} р.</span>`:'',
+    ...outliers.map(o=>`<span class="aa-badge ${o.cls}">${safe(o.label)}</span>`)
+  ].filter(Boolean).join('');
+  return `<div class="aa-card">
+    <input type="checkbox" ${SELECTED.has(r._id)?'checked':''} onchange="toggleOne('${esc(r._id)}',this.checked)">
+    <div class="aa-score ${scoreCls}" title="${mode==='search'?'кімнатність':'бал схожості'}">${safe(String(scoreVal))}</div>
+    <div class="aa-body">
+      <div class="aa-head">
+        <span class="aa-addr">${safe(showAddress(r))}</span>
+        <span class="aa-date">${safe(recordDate(r))}</span>
+        <span class="aa-fresh ${fresh.cls}">● ${safe(fresh.label)}</span>
+      </div>
+      <div class="aa-badges">${baseBadges}</div>
+      ${showExec?`<div class="aa-exec"><span aria-hidden="true">${execIcon}</span><span class="aa-exec-name">${safe(execName)}</span>${execCode?`<span class="aa-edrpou">· ЄДРПОУ ${safe(execCode)}</span>`:''}</div>`:''}
+    </div>
+    <div class="aa-right">
+      <div class="aa-ppm-label">за м²</div>
+      <div class="aa-ppm">${fmt(ppm)} <span class="unit">грн</span></div>
+      ${deltaBadge(ppm, ctx&&ctx.medPpm)}
+      <div class="aa-total">${fmt(Math.round(total))} грн</div>
+    </div>
+  </div>`;
+}
+
+function safe(s){return String(s??'').replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]))} function esc(s){return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
+function median(a){if(!a.length)return 0; a=[...a].sort((x,y)=>x-y); const m=Math.floor(a.length/2); return a.length%2?a[m]:(a[m-1]+a[m])/2}
+
+function parseDateValue(v){
+  const s=String(v||'').trim();
+  let m=s.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+  if(m) return new Date(+m[3], +m[2]-1, +m[1]);
+  m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+  if(m) return new Date(+m[1], +m[2]-1, +m[3]);
+  return null;
+}
+function fmtDateShort(d){return d?d.toLocaleDateString('uk-UA'):''}
+function recordDate(r){return r['дата']||r['Дата оцінки']||r['date']||'—'}
+function selectedPeriod(arr){
+  const dates=arr.map(r=>parseDateValue(r['дата']||r['Дата оцінки']||r['date'])).filter(Boolean).sort((a,b)=>a-b);
+  if(!dates.length) return '—';
+  return fmtDateShort(dates[0])+' – '+fmtDateShort(dates[dates.length-1]);
+}
+function districtCounts(arr){
+  return arr.reduce((acc,r)=>{
+    const k=isOliivkaRecord(r)?'Оліївка':(r['р']||'Житомир (без району)');
+    acc[k]=(acc[k]||0)+1;
+    return acc;
+  },{});
+}
+function renderSampleSummary(arr){
+  const card=document.getElementById('sampleCard');
+  if(!card) return;
+  if(!arr || !arr.length){card.classList.remove('open'); return;}
+  /* sampleCard відкривається тільки кнопкою */
+  const counts=districtCounts(arr);
+  const ppms=arr.map(r=>+r['цкв']||0).filter(Boolean);
+  const execs=new Set(arr.map(r=>getExecutor(r)).filter(x=>x && x!=='не вказано в поточній базі'));
+  document.getElementById('sum-found').textContent=CAND.length;
+  document.getElementById('sum-selected').textContent=arr.length;
+  document.getElementById('sum-executors').textContent=execs.size || '—';
+  document.getElementById('sum-period').textContent=selectedPeriod(arr);
+  document.getElementById('sum-avgppm').textContent=ppms.length?fmt(ppms.reduce((a,b)=>a+b,0)/ppms.length):'—';
+  document.getElementById('sum-medppm').textContent=ppms.length?fmt(median(ppms)):'—';
+  document.getElementById('sum-bohun').textContent=counts['Богунський']||0;
+  document.getElementById('sum-korol').textContent=counts['Корольовський']||0;
+  document.getElementById('sum-none').textContent=counts['Житомир (без району)']||0;
+  const so=document.getElementById('sum-oliivka'); if(so) so.textContent=counts['Оліївка']||0;
+  const top=[...arr].sort((a,b)=>(b._s||0)-(a._s||0)).slice(0,10);
+  const rows=top.map((r,i)=>`<tr><td class="center">${i+1}</td><td class="center"><span class="score ${r._s>=75?'good':r._s>=55?'mid':''}">${r._s||'—'}</span></td><td>${safe(r['ад']||'—')}</td><td class="center">${r['пл']||'—'}</td><td class="center">${r['пов']||'—'}${r['пх']?'/'+r['пх']:''}</td><td class="center">${r['рік']||'—'}</td><td class="center">${safe(recordDate(r))}</td><td class="num">${fmt(r['в']||((+r['цкв']||0)*(+r['пл']||0)))}</td><td class="num">${fmt(r['цкв']||0)}</td><td class="executor">${safe(getExecutor(r))}</td></tr>`).join('');
+  document.getElementById('topAnalogTable').innerHTML=`<thead><tr><th>№</th><th>Бал</th><th>Адреса</th><th>Площа</th><th>Поверх</th><th>Рік</th><th>Дата реєстрації</th><th>Вартість</th><th>грн/м²</th><th>Виконавець</th></tr></thead><tbody>${rows}</tbody>`;
+}
+
+function trimByPpm(arr){
+  // Відсікання цінових викидів за методом IQR (Тьюкі, 1.5×).
+  // Захищає середньозважену вартість від поодиноких аномальних грн/м².
+  // Запобіжники: при <6 записах не відсікаємо (вибірка замала);
+  // ніколи не прибираємо більше ~25% записів, щоб не «вирізати» половину бази.
+  const src=[...arr];
+  if(src.length<6) return {used:src, low:0, high:0, lowB:null, highB:null};
+  const ppms=src.map(r=>+r['цкв']||0).filter(x=>x>0).sort((a,b)=>a-b);
+  if(ppms.length<6) return {used:src, low:0, high:0, lowB:null, highB:null};
+  const q1=percentileSorted(ppms,0.25);
+  const q3=percentileSorted(ppms,0.75);
+  const iqr=q3-q1;
+  const lowB=q1-1.5*iqr;
+  const highB=q3+1.5*iqr;
+  let kept=src.filter(r=>{const p=+r['цкв']||0; return p>=lowB && p<=highB;});
+  let low=src.length-kept.filter(r=>(+r['цкв']||0)>=lowB).length;
+  let high=src.filter(r=>(+r['цкв']||0)>highB).length;
+  // Запобіжник: не відсікати більше за чверть вибірки.
+  const maxCut=Math.floor(src.length*0.25);
+  if(src.length-kept.length>maxCut){
+    // лишаємо найближчі до медіани, прибираємо тільки найекстремальніші
+    const med=percentileSorted(ppms,0.50);
+    const ranked=[...src].sort((a,b)=>Math.abs((+a['цкв']||0)-med)-Math.abs((+b['цкв']||0)-med));
+    kept=ranked.slice(0, src.length-maxCut);
+    const cutSet=new Set(kept);
+    low=src.filter(r=>!cutSet.has(r) && (+r['цкв']||0)<med).length;
+    high=src.filter(r=>!cutSet.has(r) && (+r['цкв']||0)>=med).length;
+  }
+  if(!kept.length) return {used:src, low:0, high:0, lowB, highB};
+  return {used:kept, low, high, lowB:Math.round(lowB), highB:Math.round(highB)};
+}
+function avgPpm(arr){const p=arr.map(r=>+r['цкв']||0).filter(Boolean); return p.length?p.reduce((a,b)=>a+b,0)/p.length:0;}
+
+function recalcSelected(){
+  const t=TARGET||target();
+  const rawArr=CAND.filter(r=>SELECTED.has(r._id));
+  renderStats();
+  const rel=document.getElementById('reliability');
+  if(!t.area){
+    document.getElementById('total').textContent='—';
+    document.getElementById('totalUsd').textContent='';
+    document.getElementById('range').textContent='Введіть загальну площу об’єкта';
+    document.getElementById('rangeUsd').textContent='';
+    document.getElementById('totalFund').textContent='—';
+    document.getElementById('totalFundUsd').textContent='';
+    document.getElementById('rangeFund').textContent='—';
+    document.getElementById('rangeFundUsd').textContent='';
+    if(rel) rel.style.display='none';
+    const _w=document.getElementById('thinSampleWarn'); if(_w) _w.style.display='none';
+    const _a=document.getElementById('archiveModeWarn'); if(_a) _a.style.display='none';
+    ['weighted','simple','median'].forEach(id=>document.getElementById(id).textContent='—');
+    setQualityBlock([],0);
+    document.getElementById('details').style.display='none';
+    const sc=document.getElementById('sampleCard'); if(sc) sc.classList.remove('open');
+    return;
+  }
+  if(!rawArr.length){
+    document.getElementById('total').textContent='—';
+    document.getElementById('totalUsd').textContent='';
+    document.getElementById('range').textContent='Не вибрано жодної зареєстрованої оцінки';
+    document.getElementById('rangeUsd').textContent='';
+    document.getElementById('totalFund').textContent='—';
+    document.getElementById('totalFundUsd').textContent='';
+    document.getElementById('rangeFund').textContent='—';
+    document.getElementById('rangeFundUsd').textContent='';
+    if(rel) rel.style.display='none';
+    const _w=document.getElementById('thinSampleWarn'); if(_w) _w.style.display='none';
+    const _a=document.getElementById('archiveModeWarn'); if(_a) _a.style.display='none';
+    ['weighted','simple','median'].forEach(id=>document.getElementById(id).textContent='—');
+    setQualityBlock([],0);
+    document.getElementById('details').style.display='none';
+    const sc=document.getElementById('sampleCard'); if(sc) sc.classList.remove('open');
+    return;
+  }
+  const trimmed=trimByPpm(rawArr);
+  const arr=trimmed.used;
+  setQualityBlock(arr, t.area);
+  // Поверх враховується тільки у балі схожості, але не змінює вартість.
+  const wsum=arr.reduce((s,r)=>s+(+r._s||1),0);
+  const wppm=arr.reduce((s,r)=>s+(+r._s||1)*(+r['цкв']||0),0)/wsum;
+  const sppm=avgPpm(arr);
+  const mppm=median(arr.map(r=>+r['цкв']||0));
+  // Робастна основа вартості:
+  // за замовчуванням — відсічене середньозважене за схожістю (wppm).
+  // Але якщо медіана й середньозважене розходяться >8% (ознака перекосу
+  // вибірки), основою стає медіана як стійкіша до асиметрії оцінка.
+  const skew = mppm>0 ? Math.abs(wppm-mppm)/mppm : 0;
+  const usedMedian = skew>0.08;
+  const basePpm = usedMedian ? mppm : wppm;
+  const total=basePpm*t.area;
+  const pct=rangePct(arr.length);
+  const k=pct/100;
+  document.getElementById('total').textContent=fmt(total)+' грн';
+  document.getElementById('totalUsd').textContent='≈ '+fmtUsd(total/USD_RATE)+' · довідково';
+  document.getElementById('range').textContent='Діапазон ±'+pct+'%: '+fmt(total*(1-k))+' — '+fmt(total*(1+k))+' грн';
+  document.getElementById('rangeUsd').textContent='≈ '+fmtUsd(total*(1-k)/USD_RATE)+' — '+fmtUsd(total*(1+k)/USD_RATE);
+  // v11.7 · прогноз інструменту «безкоштовної оцінки» ФДМУ (evaluation.spfu.gov.ua/main/evaluationreport/reference)
+  // Типова надбавка сервісу над медіаною реєстру зареєстрованих оцінок — близько +24%.
+  const FUND_MULTIPLIER = 1.24;
+  const totalFund = total * FUND_MULTIPLIER;
+  document.getElementById('totalFund').textContent=fmt(totalFund)+' грн';
+  document.getElementById('totalFundUsd').textContent='≈ '+fmtUsd(totalFund/USD_RATE)+' · довідково';
+  document.getElementById('rangeFund').textContent='Діапазон ±'+pct+'%: '+fmt(totalFund*(1-k))+' — '+fmt(totalFund*(1+k))+' грн';
+  document.getElementById('rangeFundUsd').textContent='≈ '+fmtUsd(totalFund*(1-k)/USD_RATE)+' — '+fmtUsd(totalFund*(1+k)/USD_RATE);
+  document.getElementById('weighted').textContent=fmt(wppm*t.area)+' грн';
+  document.getElementById('simple').textContent=fmt(sppm*t.area)+' грн';
+  document.getElementById('median').textContent=fmt(mppm*t.area)+' грн';
+  const avg=Math.round(arr.reduce((s,r)=>s+(+r._s||0),0)/arr.length);
+  // Попередження про історичний режим: медіана повного архіву (2019+)
+  // приблизно на 60% нижча за медіану останніх 12 міс через інфляцію.
+  let arcW=document.getElementById('archiveModeWarn');
+  if(!arcW && rel && rel.parentNode){
+    arcW=document.createElement('div');
+    arcW.id='archiveModeWarn';
+    arcW.style.cssText='margin-top:10px;padding:10px 12px;border-radius:10px;font-size:13px;line-height:1.5;background:#FBE9E7;border:1px solid #C0392B;color:#7B241C';
+    rel.parentNode.insertBefore(arcW, rel.nextSibling);
+  }
+  if(arcW){
+    if(ACTIVE_SOURCE==='archive'){
+      arcW.style.display='block';
+      arcW.innerHTML='<b>⚠ Історичний режим — вартість занижена.</b> Розрахунок за повним архівом 2019+ включає оцінки, зареєстровані до подорожчання: медіана архіву ≈13 250 грн/м² проти ≈35 800 грн/м² за останні 12 місяців. Для визначення <b>поточної</b> вартості оберіть період 3–12 місяців.';
+    } else { arcW.style.display='none'; }
+  }
+  const rr=reliabilityText(arr.length);
+  if(rel){rel.style.display='inline-flex'; rel.className='reliability '+rr[1]; rel.textContent=rr[0]+' · '+arr.length+' використано'}
+  // Явне попередження, якщо аналогів критично мало — щоб точне число
+  // не сприймалося як надійне.
+  let warn=document.getElementById('thinSampleWarn');
+  if(!warn && rel && rel.parentNode){
+    warn=document.createElement('div');
+    warn.id='thinSampleWarn';
+    warn.style.cssText='margin-top:10px;padding:10px 12px;border-radius:10px;font-size:13px;line-height:1.5;background:#FDF3E3;border:1px solid #E3B23C;color:#6B4E12';
+    rel.parentNode.insertBefore(warn, rel.nextSibling);
+  }
+  if(warn){
+    if(arr.length<5){
+      warn.style.display='block';
+      warn.innerHTML='<b>⚠ Вибірка замала для висновку.</b> Використано лише '+arr.length+' зареєстрован'+(arr.length===1?'у оцінку':'і оцінки')+'. Статистична похибка медіани за такої кількості — близько ±'+pct+'%. Результат придатний лише як орієнтир; для звіту потрібен окремий добір аналогів.';
+    } else if(arr.length<10){
+      warn.style.display='block';
+      warn.innerHTML='<b>Обмежена вибірка.</b> Використано '+arr.length+' оцінок — похибка близько ±'+pct+'%. Розширте період або зніміть частину фільтрів для надійнішого результату.';
+    } else { warn.style.display='none'; }
+  }
+  const d=document.getElementById('details');
+  d.style.display='block';
+  const execCount=new Set(arr.map(r=>getExecutor(r)).filter(x=>x&&x!=='не вказано в поточній базі')).size;
+  const cutN=(trimmed.low||0)+(trimmed.high||0);
+  const trimText = cutN>0
+    ? ` Відсічено цінових викидів: ${cutN} (за межами ${fmt(trimmed.lowB)}–${fmt(trimmed.highB)} грн/м²).`
+    : ' Цінових викидів не виявлено.';
+  const baseText = usedMedian
+    ? ` Через перекіс вибірки (${Math.round(skew*100)}%) за основу вартості взято медіану.`
+    : ' За основу вартості взято середньозважене за схожістю.';
+  const rangeText = ` Діапазон ±${pct}% розрахований від фактичного розміру вибірки (${arr.length} оцінок), а не фіксований.`;
+  d.textContent=`Знайдено у пулі: ${CAND.length}. Вибрано: ${rawArr.length}. Використано в розрахунку: ${arr.length}. Виконавців у вибірці: ${execCount||'—'}. Період реєстрації оцінок: ${selectedPeriod(arr)}. Період даних: ${activeSourceLabel()}. Оліївка врахована у складі Житомира. Середній бал схожості: ${avg}/100.${baseText}${trimText}${rangeText} Автоматичні коригування на поверх не застосовуються.`;
+  renderSampleSummary(arr);
+}
+
+function monthKeyFromDate(d){return d?String(d.getFullYear())+'-'+String(d.getMonth()+1).padStart(2,'0'):''}
+function monthLabel(k){if(!k)return '—'; const [y,m]=k.split('-'); return m+'.'+y}
+function groupStats(records, keyFn){
+  const map=new Map();
+  records.forEach(r=>{const k=keyFn(r); if(!k)return; if(!map.has(k))map.set(k,[]); map.get(k).push(r);});
+  return [...map.entries()].map(([key,arr])=>{
+    const ppm=arr.map(r=>+r['цкв']||0).filter(Boolean);
+    const dates=arr.map(r=>parseDateValue(recordDate(r))).filter(Boolean).sort((a,b)=>a-b);
+    return {key, count:arr.length, med:ppm.length?Math.round(median(ppm)):0, avg:ppm.length?Math.round(ppm.reduce((a,b)=>a+b,0)/ppm.length):0, min:ppm.length?Math.min(...ppm):0, max:ppm.length?Math.max(...ppm):0, last:dates.length?dates[dates.length-1]:null};
+  });
+}
+function barRows(items, valKey, labelKey, unit, opts){
+  opts=opts||{};
+  if(!items||!items.length) return '<div class="empty">Немає даних</div>';
+  const max=Math.max(...items.map(x=>Math.abs(x[valKey]||0)))||1;
+  const base=opts.baseline!==undefined?opts.baseline:null;
+  return '<div class="bars">'+items.map(x=>{
+    const v=x[valKey]||0, w=Math.max(2,Math.abs(v)/max*100);
+    const neg=v<0;
+    const col=opts.color||(neg?'#B4271F':'#0F5C4A');
+    const diff = base!==null && base ? Math.round((v/base-1)*100) : null;
+    return `<div class="bar-row">
+      <div class="bar-lab">${safe(x[labelKey])}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${w}%;background:${col}"></div></div>
+      <div class="bar-val">${neg?'':''}${fmt(v)}${unit||''}${x.count!==undefined?` <span class="bar-n">n=${x.count}</span>`:''}${diff!==null&&diff!==0?` <span class="bar-d" style="color:${diff>0?'#0F5C4A':'#B4271F'}">${diff>0?'+':''}${diff}%</span>`:''}</div>
+    </div>`;
+  }).join('')+'</div>';
+}
+
+function renderMarketResearch(){
+  const mr=window.__MR; if(!mr) return;
+  // фактори
+  const kind=(document.getElementById('factorKind')||{}).value||'floor';
+  const data=mr[kind]||[];
+  const box=document.getElementById('factorChart');
+  if(box){
+    const meds=data.map(x=>x.median_ppm).filter(Boolean);
+    const baseline=meds.length?Math.round(meds.reduce((a,b)=>a+b,0)/meds.length):0;
+    const titles={floor:'Поверх',age:'Вік будинку',area:'Площа квартири',zone:'Зона міста',
+                  house_type:'Тип будинку',house_class:'Клас житла',walls:'Матеріал стін'};
+    const sorted=[...data].sort((a,b)=>b.median_ppm-a.median_ppm);
+    const hi=sorted[0], lo=sorted[sorted.length-1];
+    const spread = (hi&&lo&&lo.median_ppm) ? Math.round((hi.median_ppm/lo.median_ppm-1)*100) : 0;
+    box.innerHTML=barRows(sorted,'median_ppm','name',' ₴/м²',{baseline})
+      + `<div class="hint">Медіана грн/м² · база: квартири ${mr.base_period} (${fmt(mr.base_count)} оцінок) · відсоток — відхилення від середньої по фактору.</div>`
+      + (spread? `<div class="insight"><b>Висновок.</b> За фактором «${titles[kind]}» розрив між найдорожчою (${safe(hi.name)}) і найдешевшою (${safe(lo.name)}) групою — <b>${spread}%</b> (${fmt(hi.median_ppm)} проти ${fmt(lo.median_ppm)} ₴/м²).</div>`:'');
+  }
+  // сезонність
+  const sb=document.getElementById('seasonChart');
+  if(sb && mr.season){
+    const best=[...mr.season].sort((a,b)=>b.count-a.count)[0];
+    const worst=[...mr.season].sort((a,b)=>a.count-b.count)[0];
+    sb.innerHTML=barRows(mr.season,'count','name','',{color:'#1F6F5C'})
+      +`<div class="hint">Кількість зареєстрованих оцінок по місяцях за весь період спостереження.</div>`
+      +`<div class="insight"><b>Висновок.</b> Пік попиту — <b>${safe(best.name)}</b> (${fmt(best.count)} оцінок, ${best.dev_pct>0?'+':''}${best.dev_pct}% до середньої), найтихіше — <b>${safe(worst.name)}</b> (${fmt(worst.count)}, ${worst.dev_pct}%). Різниця між піком і спадом — ${Math.round((best.count/worst.count-1)*100)}%: це орієнтир для планування завантаження.</div>`;
+  }
+  // активність
+  const ab=document.getElementById('activityChart');
+  if(ab && mr.activity){
+    const arr=mr.activity.map(x=>({name:x.year,count:x.count}));
+    const mx=[...arr].sort((a,b)=>b.count-a.count)[0];
+    const last=arr[arr.length-1];
+    ab.innerHTML=barRows(arr,'count','name','',{color:'#7A5C1E'})
+      +`<div class="hint">Кількість зареєстрованих оцінок за рік (усі типи нерухомості). Останній рік — неповний.</div>`
+      +`<div class="insight"><b>Висновок.</b> Найактивніший рік — <b>${mx.name}</b> (${fmt(mx.count)} оцінок). Поточний ${last.name} рік має ${fmt(last.count)} — рік ще триває, тож показник неповний.</div>`;
+  }
+  // типи нерухомості
+  const tb=document.getElementById('byTypeTable');
+  if(tb && mr.by_type){
+    const rows=mr.by_type.filter(x=>x.count).map(x=>
+      `<tr><td>${safe(x.name)}</td><td class="num">${fmt(x.count)}</td><td class="num">${fmt(x.median_ppm)}</td></tr>`);
+    const kv=mr.by_type.find(x=>x.name==='Квартира'), bd=mr.by_type.find(x=>x.name==='Будинок');
+    const diff=(kv&&bd&&bd.median_ppm)?Math.round((kv.median_ppm/bd.median_ppm-1)*100):0;
+    tb.innerHTML=tableHtml(['Тип нерухомості','Кількість оцінок','Медіана грн/м²'],rows)
+      +(diff?`<div class="insight"><b>Висновок.</b> Квартири дорожчі за приватні будинки на <b>${diff}%</b> у перерахунку на м² (${fmt(kv.median_ppm)} проти ${fmt(bd.median_ppm)} ₴/м²). Це очікувано: у будинку більша площа й частка «дешевих» допоміжних приміщень, а вартість ділянки в ціну за м² житла не входить.</div>`:'');
+  }
+  const fk=document.getElementById('factorKind');
+  if(fk && !fk.__wired){ fk.__wired=true; fk.addEventListener('change',renderMarketResearch); }
+}
+
+/* v11.8 · клієнтський розрахунок «жовтих точок» тренду.
+   Для кожного місяця з pts перевіряємо: чи є виконавець з часткою ≥20% робіт,
+   медіана якого відхиляється від решти ринку ≥15%. Якщо так — виключаємо
+   його з розрахунку p.med, зберігаємо оригінал у p.raw, ставимо p.adj=true.
+   Пороги збігаються з описом підказки під графіком. Не змінює жодну функцію
+   аналітики окрім рендеру тренду. */
+function enrichTrendWithDominant(pts){
+  if(!pts || !pts.length) return;
+  const source=(ARCHIVE_DATA && ARCHIVE_DATA.length ? ARCHIVE_DATA : (typeof WORK_DATA!=='undefined'?WORK_DATA:DATA))||[];
+  if(!source.length) return;
+  const apartments=source.filter(r=>!isDormRec(r) && !isHouseRec(r));
+  // Групуємо по місяцях
+  const byMonth=new Map();
+  for(const r of apartments){
+    const d=parseDateValue(recordDate(r)); if(!d) continue;
+    const key=monthKeyFromDate(d);
+    if(!byMonth.has(key)) byMonth.set(key,[]);
+    byMonth.get(key).push(r);
+  }
+  const DOM_SHARE=0.20, DOM_DELTA=0.15, MIN_TOTAL=8, MIN_TOP=3, MIN_OTHERS=5;
+  for(const p of pts){
+    const arr=byMonth.get(p.name); if(!arr || arr.length<MIN_TOTAL) continue;
+    // Ключ виконавця: спершу ЄДРПОУ (стабільніший), інакше нормалізоване ПІБ
+    const groups=new Map();
+    for(const r of arr){
+      const code=executorCode(r);
+      const name=getExecutor(r);
+      if(!name || name==='не вказано в поточній базі') continue;
+      const key=code || ('_n:'+String(name).trim().toUpperCase());
+      if(!groups.has(key)) groups.set(key,{name,code,records:[]});
+      groups.get(key).records.push(r);
+    }
+    if(!groups.size) continue;
+    let top=null;
+    for(const g of groups.values()){ if(!top || g.records.length>top.records.length) top=g; }
+    if(!top || top.records.length<MIN_TOP) continue;
+    const share=top.records.length/arr.length;
+    if(share<DOM_SHARE) continue;
+    const others=arr.filter(r=>!top.records.includes(r));
+    if(others.length<MIN_OTHERS) continue;
+    const ppmsTop=top.records.map(r=>+r['цкв']||0).filter(x=>x>0);
+    const ppmsOther=others.map(r=>+r['цкв']||0).filter(x=>x>0);
+    if(ppmsTop.length<MIN_TOP || ppmsOther.length<MIN_OTHERS) continue;
+    const medTop=median(ppmsTop), medOther=median(ppmsOther);
+    if(!medOther) continue;
+    const delta=(medTop-medOther)/medOther;
+    if(Math.abs(delta)<DOM_DELTA) continue;
+    // Умови виконуються — маркуємо як «adjusted»
+    p.raw = p.med;             // зберігаємо оригінал
+    p.med = Math.round(medOther); // скоригована медіана без домінанта
+    p.kept = others.length;
+    p.adj = true;
+    p.dom = [{
+      name: top.name,
+      code: top.code || '',
+      count: top.records.length,
+      share_pct: Math.round(share*100),
+      median_ppm: Math.round(medTop),
+      delta_pct: Math.round(delta*100)
+    }];
+  }
+}
+
+function renderPriceTrend(market){
+  if(market) window.__TREND_SRC=market;
+  const src=window.__TREND_SRC;
+  const box=document.getElementById('priceTrend');
+  if(!box) return;
+  if(!src || !src.months || !src.months.length){ box.innerHTML='<div class="empty">Немає даних для графіка</div>'; return; }
+  const scale=(document.getElementById('trendScale')||{}).value||'month';
+  const range=(document.getElementById('trendRange')||{}).value||'all';
+
+  let pts=src.months.map(m=>({name:m.name,count:m.count,med:m.median_ppm,avg:m.avg_ppm,
+                              raw:m.raw_median_ppm,kept:m.kept_count,adj:m.adjusted,dom:m.dominant||[]}))
+                    .filter(p=>p.name).sort((a,b)=>a.name.localeCompare(b.name));
+  // v11.8 · клієнтське збагачення жовтими точками (backend не заповнює adjusted/dominant)
+  if(scale==='month'){ try{ enrichTrendWithDominant(pts); }catch(e){ console.warn('trend enrich failed', e); } }
+  if(scale==='year'){
+    const g={};
+    pts.forEach(p=>{const y=p.name.slice(0,4); (g[y]=g[y]||[]).push(p);});
+    pts=Object.keys(g).sort().map(y=>{
+      const arr=g[y], cnt=arr.reduce((s,x)=>s+x.count,0);
+      const med=Math.round(arr.reduce((s,x)=>s+x.med*x.count,0)/(cnt||1));
+      const avg=Math.round(arr.reduce((s,x)=>s+(x.avg||x.med)*x.count,0)/(cnt||1));
+      return {name:y,count:cnt,med,avg};
+    });
+  } else if(range!=='all'){
+    pts=pts.slice(-parseInt(range,10));
+  }
+  if(pts.length<2){ box.innerHTML='<div class="empty">Замало точок для графіка</div>'; return; }
+
+  const W=1100,H=380,PL=76,PR=26,PT=22,PB=54;
+  const iw=W-PL-PR, ih=H-PT-PB;
+  const vals=pts.map(p=>p.med);
+  let lo=Math.min(...vals), hi=Math.max(...vals);
+  const pad=(hi-lo)*0.12||1000; lo=Math.max(0,lo-pad); hi=hi+pad;
+  const X=i=>PL+(pts.length===1?iw/2:i*iw/(pts.length-1));
+  const Y=v=>PT+ih-((v-lo)/(hi-lo))*ih;
+
+  // сітка
+  let grid='',ticks=5;
+  for(let i=0;i<=ticks;i++){
+    const v=lo+(hi-lo)*i/ticks, y=Y(v);
+    grid+=`<line x1="${PL}" y1="${y.toFixed(1)}" x2="${W-PR}" y2="${y.toFixed(1)}" stroke="#E6E0D5" stroke-width="1"/>`
+        + `<text x="${PL-10}" y="${(y+5).toFixed(1)}" text-anchor="end" font-size="13" fill="#6B7B76">${fmt(Math.round(v))}</text>`;
+  }
+  // area + line
+  const line=pts.map((p,i)=>`${i?'L':'M'}${X(i).toFixed(1)},${Y(p.med).toFixed(1)}`).join(' ');
+  const area=`M${X(0).toFixed(1)},${(PT+ih).toFixed(1)} `+pts.map((p,i)=>`L${X(i).toFixed(1)},${Y(p.med).toFixed(1)}`).join(' ')+` L${X(pts.length-1).toFixed(1)},${(PT+ih).toFixed(1)} Z`;
+
+  // підписи осі X
+  const step=Math.max(1,Math.ceil(pts.length/12));
+  let xlab='';
+  pts.forEach((p,i)=>{ if(i%step===0||i===pts.length-1)
+    xlab+=`<text x="${X(i).toFixed(1)}" y="${H-PB+24}" text-anchor="middle" font-size="12.5" fill="#6B7B76">${p.name}</text>`; });
+
+  // точки + широка невидима зона наведення (легко влучити курсором)
+  const hitR=Math.max(18, Math.min(34, iw/pts.length/1.6));
+  const dots=pts.map((p,i)=>{
+    const cx=X(i).toFixed(1), cy=Y(p.med).toFixed(1);
+    const ring=p.adj?`<circle cx="${cx}" cy="${cy}" r="11" fill="none" stroke="#C8951E" stroke-width="2" opacity=".85"/>`:'';
+    return `<g class="trend-hit" data-i="${i}" data-x="${cx}" data-y="${cy}">`
+      + `<circle cx="${cx}" cy="${cy}" r="${hitR.toFixed(0)}" fill="transparent"/>`
+      + ring
+      + `<circle class="dot" cx="${cx}" cy="${cy}" r="6" fill="${p.adj?'#C8951E':'#0F5C4A'}" stroke="#fff" stroke-width="2.4"/>`
+      + `</g>`;
+  }).join('');
+
+  const first=pts[0], last=pts[pts.length-1];
+  const growth=first.med?Math.round((last.med/first.med-1)*100):0;
+  const gcol=growth>=0?'#0F5C4A':'#B4271F';
+
+  box.innerHTML=
+    `<div class="trend-wrap">
+     <svg id="trendSvg" viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block;min-height:330px">
+      <defs><linearGradient id="tg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0F5C4A" stop-opacity=".22"/>
+        <stop offset="100%" stop-color="#0F5C4A" stop-opacity="0"/></linearGradient></defs>
+      ${grid}
+      <line id="trendGuide" x1="0" y1="${PT}" x2="0" y2="${PT+ih}" stroke="#0F5C4A" stroke-width="1.4" stroke-dasharray="4 4" opacity="0"/>
+      <path d="${area}" fill="url(#tg)"/>
+      <path d="${line}" fill="none" stroke="#0F5C4A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+      ${dots}${xlab}
+     </svg>
+     <div class="trend-tip" id="trendTip"></div>
+    </div>
+    <div class="stats" style="margin-top:12px">
+      <div class="stat"><div class="l">Початок (${first.name})</div><div class="v">${fmt(first.med)}</div></div>
+      <div class="stat"><div class="l">Кінець (${last.name})</div><div class="v">${fmt(last.med)}</div></div>
+      <div class="stat"><div class="l">Зміна за період</div><div class="v" style="color:${gcol}">${growth>=0?'+':''}${growth}%</div></div>
+      <div class="stat"><div class="l">Точок на графіку</div><div class="v">${pts.length}</div></div>
+    </div>
+    <div class="hint">Наведіть курсор на будь-яку частину графіка — з'явиться детальна картка періоду. Графік будується по квартирах. <b style="color:#C8951E">Жовті точки</b> — місяці, де один виконавець дав понад 20% оцінок із рівнем цін, що відхиляється від ринку більш ніж на 15%; його внесок виключено з медіани, щоб склад вибірки не видавався за рух ринку.</div>`;
+
+  // --- інтерактив: підказка на наведення ---
+  const svg=document.getElementById('trendSvg'), tip=document.getElementById('trendTip'),
+        guide=document.getElementById('trendGuide'), wrap=box.querySelector('.trend-wrap');
+  if(svg&&tip&&wrap){
+    const show=i=>{
+      const p=pts[i]; if(!p) return;
+      const prev=i>0?pts[i-1]:null;
+      const chg=prev&&prev.med?Math.round((p.med/prev.med-1)*1000)/10:null;
+      let html=`<b>${safe(p.name)}</b>`;
+      if(p.adj){
+        html+=`<div style="margin-top:5px;color:#FFD98A;font-size:11.5px">▲ Медіану скориговано: виключено перекіс складу вибірки</div>`
+          +`<div style="margin-top:6px">Медіана: <b>${fmt(p.med)}</b> ₴/м²</div>`
+          +`<div>Середня: ${fmt(p.avg||p.med)} ₴/м²</div>`
+          +`<div style="opacity:.75;font-size:11.5px">за ${fmt(p.kept||0)} оцінками без домінуючого виконавця</div>`
+          +`<div style="margin-top:6px;opacity:.8;font-size:11.5px">Без коригування: ${fmt(p.raw)} ₴/м² (усі ${fmt(p.count)} оцінок)</div>`
+          +`<div style="margin-top:6px;font-size:11.5px;color:#FFD98A">Виключено з розрахунку:</div>`
+          +p.dom.map(x=>`<div style="font-size:11.5px;opacity:.9">${safe(x.name)}<br>&nbsp;&nbsp;${x.count} оц. (${x.share_pct}% місяця), ${fmt(x.median_ppm)} ₴/м²</div>`).join('');
+      } else {
+        html+=`<div style="margin-top:6px">Медіана: <b>${fmt(p.med)}</b> ₴/м²</div>`
+          +`<div>Середня: ${fmt(p.avg||p.med)} ₴/м²</div>`
+          +`<div>Оцінок: ${fmt(p.count)}</div>`;
+      }
+      if(chg!==null) html+=`<div style="margin-top:5px">До попереднього періоду: <b style="color:${chg>=0?'#8FD9C4':'#FFB4AE'}">${chg>=0?'+':''}${chg}%</b></div>`;
+      tip.innerHTML=html;
+      const rect=wrap.getBoundingClientRect(), sc=rect.width/W;
+      const px=X(i)*sc, py=Y(p.med)*sc;
+      tip.style.opacity='1';
+      const tw=tip.offsetWidth||170;
+      tip.style.left=Math.max(4,Math.min(rect.width-tw-4,px-tw/2))+'px';
+      tip.style.top=Math.max(0,py-tip.offsetHeight-14)+'px';
+      guide.setAttribute('x1',X(i)); guide.setAttribute('x2',X(i)); guide.setAttribute('opacity','.55');
+      svg.querySelectorAll('circle.dot').forEach((c,j)=>c.setAttribute('r', j===i?'8.5':'6'));
+    };
+    const hide=()=>{ tip.style.opacity='0'; guide.setAttribute('opacity','0');
+      svg.querySelectorAll('circle.dot').forEach(c=>c.setAttribute('r','6')); };
+    // наведення будь-де по графіку — беремо найближчу точку
+    svg.addEventListener('mousemove',e=>{
+      const rect=svg.getBoundingClientRect();
+      const vx=(e.clientX-rect.left)/rect.width*W;
+      if(vx<PL-20||vx>W-PR+20) return hide();
+      let bi=0,bd=1e9;
+      pts.forEach((p,i)=>{const d=Math.abs(X(i)-vx); if(d<bd){bd=d;bi=i;}});
+      show(bi);
+    });
+    svg.addEventListener('mouseleave',hide);
+    // тач: тап по графіку
+    svg.addEventListener('touchstart',e=>{
+      const t=e.touches[0]; if(!t) return;
+      const rect=svg.getBoundingClientRect();
+      const vx=(t.clientX-rect.left)/rect.width*W;
+      let bi=0,bd=1e9;
+      pts.forEach((p,i)=>{const d=Math.abs(X(i)-vx); if(d<bd){bd=d;bi=i;}});
+      show(bi);
+    },{passive:true});
+  }
+
+  ['trendScale','trendRange'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el && !el.__wired){ el.__wired=true; el.addEventListener('change',()=>renderPriceTrend()); }
+  });
+  const rr=document.getElementById('trendRange');
+  if(rr) rr.style.display = scale==='year' ? 'none' : '';
+}
+
+function tableHtml(headers, rows){
+  if(!rows.length)return '<div class="empty">Немає даних</div>';
+  // числові заголовки вирівнюємо праворуч — щоб збігались із даними (.num)
+  const isNum=h=>/кількість|к-сть|частка|медіана|середня|діапазон|грн|дата|рік|%/i.test(String(h));
+  const th=headers.map((h,i)=>'<th'+(i>0&&isNum(h)?' class="num"':'')+'>'+h+'</th>').join('');
+  return '<table class="analytics-table"><thead><tr>'+th+'</tr></thead><tbody>'+rows.join('')+'</tbody></table>';
+}
+
+function executorNameOnly(r){
+  const raw = r['вик'] || r['виконавець'] || r['Виконавець'] || r['сод'] || r['СОД'] || r['executor'] || '';
+  return String(raw||'').replace(/^\s*\d{6,12}\s*,\s*/,'').trim();
+}
+function executorCode(r){
+  const vals=[r['єдрпоу'],r['ЄДРПОУ'],r['edrpou'],r['EDRPOU'],r['код'],r['code'],r['executor_code'],r['сод'],r['СОД'],r['вик']];
+  for(const v of vals){
+    const m=String(v||'').match(/\b\d{6,12}\b/);
+    if(m) return m[0];
+  }
+  return '';
+}
+function normExecName(v){return String(v||'').toUpperCase().replace(/[^А-ЯA-ZІЇЄҐ0-9\s\"'«»().-]+/g,' ').replace(/\s+/g,' ').trim();}
+/* v11.9 · мапа злиття ЄДРПОУ береться з уже завантаженого archive_calc_data.json
+   (archive_analytics.executors.top_all[].merged_codes) — жодних мережевих запитів,
+   офлайн-режим PWA не зачіпається. Джерело істини — executor_merge.json у пайплайні. */
+function execMergeMap(){
+  if(window.__EXEC_MERGE) return window.__EXEC_MERGE;
+  const m={};
+  const top=(ARCHIVE_ANALYTICS&&ARCHIVE_ANALYTICS.executors&&ARCHIVE_ANALYTICS.executors.top_all)||[];
+  top.forEach(x=>{
+    const canon=String(x.code||'');
+    if(!canon) return;
+    (x.merged_codes||[]).forEach(c=>{ if(c) m[String(c)]=canon; });
+  });
+  if(top.length) window.__EXEC_MERGE=m;
+  return m;
+}
+/* v11.9 · канонічна назва по коду — та сама, що в таблиці «Виконавці по роках» */
+function execCanonNameMap(){
+  if(window.__EXEC_NAMES) return window.__EXEC_NAMES;
+  const m={};
+  const top=(ARCHIVE_ANALYTICS&&ARCHIVE_ANALYTICS.executors&&ARCHIVE_ANALYTICS.executors.top_all)||[];
+  top.forEach(x=>{ if(x.code&&x.name) m[String(x.code)]=x.name; });
+  if(top.length) window.__EXEC_NAMES=m;
+  return m;
+}
+function canonExecCode(code){
+  const c=String(code||'');
+  if(!c) return '';
+  return execMergeMap()[c]||c;
+}
+function executorGroupKey(r){
+  const code=canonExecCode(executorCode(r));
+  const name=executorNameOnly(r);
+  return code ? ('CODE:'+code) : ('NAME:'+normExecName(name));
+}
+function executorDisplayName(row){return row && row.name ? row.name : '—';}
+function executorSourceRecords(){
+  const src=(ARCHIVE_DATA&&ARCHIVE_DATA.length)?ARCHIVE_DATA:((DATA&&DATA.length)?DATA:[]);
+  return src.filter(r=>getExecutor(r) && getExecutor(r)!=='не вказано в поточній базі');
+}
+function allExecutorRows(){
+  const src=executorSourceRecords();
+  const grouped=new Map();
+  src.forEach(r=>{
+    const key=executorGroupKey(r);
+    const name=executorNameOnly(r) || getExecutor(r);
+    const rawCode=executorCode(r);
+    const code=canonExecCode(rawCode);
+    if(!grouped.has(key)) grouped.set(key,{key,name,code,count:0,years:{},months:{},ppms:[],dates:[],records:[],nameCounts:{},codes:[]});
+    const g=grouped.get(key);
+    if(code && !g.code) g.code=code;
+    // v11.9 · усі фактичні коди групи — щоб пошук працював і по поглинутому ЄДРПОУ
+    if(rawCode && g.codes.indexOf(rawCode)===-1) g.codes.push(rawCode);
+    // один ЄДРПОУ може бути записаний різними назвами (ФДМУ пише по-різному) —
+    // рахуємо всі й показуємо найпоширенішу
+    if(name){ g.nameCounts[name]=(g.nameCounts[name]||0)+1; }
+    g.count++;
+    g.records.push(r);
+    const d=parseDateValue(recordDate(r));
+    if(d){
+      const y=String(d.getFullYear());
+      const m=monthKeyFromDate(d);
+      g.years[y]=(g.years[y]||0)+1;
+      g.months[m]=(g.months[m]||0)+1;
+      g.dates.push(d);
+    }
+    if(r['цкв']) g.ppms.push(+r['цкв']);
+  });
+  const total=src.length||1;
+  const rows=[...grouped.values()].map(g=>{
+    const dates=g.dates.sort((a,b)=>a-b);
+    const ppms=g.ppms.filter(Boolean).sort((a,b)=>a-b);
+    // найпоширеніша назва для цього ЄДРПОУ + решта написань як аліаси
+    const nc=Object.entries(g.nameCounts||{}).sort((a,b)=>b[1]-a[1]);
+    const freqName = nc.length ? nc[0][0] : (g.name||'—');
+    const bestName = (g.code && execCanonNameMap()[String(g.code)]) || freqName;
+    const aliases  = nc.map(x=>x[0]).filter(n=>normExecName(n)!==normExecName(bestName));
+    return {...g,
+      name:bestName, aliases,
+      share:Math.round(g.count/total*10000)/100,
+      first:dates.length?fmtDateShort(dates[0]):'—',
+      last:dates.length?fmtDateShort(dates[dates.length-1]):'—',
+      med:ppms.length?Math.round(median(ppms)):0,
+      avg:ppms.length?Math.round(ppms.reduce((a,b)=>a+b,0)/ppms.length):0,
+      months:Object.entries(g.months).map(([name,count])=>({name,count})).sort((a,b)=>a.name.localeCompare(b.name)),
+      records:g.records.sort((a,b)=>(parseDateValue(recordDate(b))||0)-(parseDateValue(recordDate(a))||0))
+    };
+  }).sort((a,b)=>b.count-a.count || executorDisplayName(a).localeCompare(executorDisplayName(b)));
+  return rows;
+}
+function jumpToExecutorSearch(){
+  try{ ensureExecutorSearchBlock(); }catch(_e){}
+  const el=document.getElementById('executorSearchBlock');
+  if(!el){ alert('Блок пошуку виконавця ще не готовий — зачекайте завантаження архівної бази.'); return; }
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+  setTimeout(()=>document.getElementById('executorSearchInput')?.focus(),400);
+}
+function jumpToMarketMonths(){
+  try{ ensureExecutorSearchBlock(); }catch(_e){}
+  const el=document.getElementById('marketMonthsDetails');
+  if(!el){ alert('Блок ще не готовий — зачекайте завантаження архівної бази.'); return; }
+  el.open=true;                       // розгорнути, якщо згорнутий
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function ensureExecutorSearchBlock(){
+  if(document.getElementById('executorSearchBlock'))return;
+  // блок має жити в секції аналітики ОЦІНЮВАЧІВ, після її сітки панелей
+  const host=document.querySelector('#analyticsCard .analytics-grid')
+          || document.querySelector('#analytics-executors')?.closest('.collapsible-panel')
+          || document.querySelector('#analyticsCard')
+          || document.querySelector('.analytics-grid');
+  if(!host)return;
+  const div=document.createElement('div');
+  div.id='executorSearchBlock';
+  div.className='executor-search-card';
+  div.innerHTML=`<h3 style="font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--teal);margin-bottom:8px">Пошук виконавця / СОД</h3>
+    <div class="executor-search-box"><input id="executorSearchInput" list="executorList" placeholder="Введіть ЄДРПОУ, ПІБ або назву СОД"><button class="btn secondary" onclick="renderExecutorProfile()">Показати</button></div>
+    <datalist id="executorList"></datalist>
+    <div class="executor-suggest">Пошук працює по архівній базі. Якщо в JSON є код ЄДРПОУ — пошук виконується і по коду. Розділи років і місяців можна розгортати.</div>
+    <div id="executorProfile" class="empty">Введіть ЄДРПОУ або назву виконавця і натисніть «Показати».</div>
+    <details class="collapsible-panel executor-market-box" id="marketMonthsDetails"><summary>Вся база — кількість оцінок по місяцях</summary><div class="panel-body"><div id="executorMarketMonths" class="empty">Завантаження помісячної статистики...</div></div></details>`;
+  host.insertAdjacentElement('afterend', div);
+  const input=div.querySelector('#executorSearchInput');
+  input.addEventListener('input',()=>renderExecutorProfile(false));
+  fillExecutorDatalist();
+  renderExecutorMarketMonths();
+}
+function fillExecutorDatalist(){
+  const dl=document.getElementById('executorList'); if(!dl)return;
+  const rows=allExecutorRows().slice(0,500);
+  dl.innerHTML=rows.map(x=>{
+    const label=(x.code?x.code+' · ':'')+x.name;
+    return `<option value="${safe(label)}"></option>`;
+  }).join('');
+}
+
+function renderExecutorMarketMonths(){
+  const box=document.getElementById('executorMarketMonths');
+  if(!box)return;
+  const src=(ARCHIVE_DATA&&ARCHIVE_DATA.length)?ARCHIVE_DATA:WORK_DATA;
+  const by={};
+  src.forEach(r=>{const d=parseDateValue(recordDate(r)); if(!d)return; const k=monthKeyFromDate(d); by[k]=(by[k]||0)+1;});
+  const rows=Object.entries(by).sort((a,b)=>b[0].localeCompare(a[0])).map(([m,c])=>`<tr><td>${safe(m)}</td><td class="num">${c}</td></tr>`).join('');
+  box.innerHTML=rows?`<div class="executor-months-wrap scroll-limited"><table><thead><tr><th>Місяць</th><th class="num">Кількість оцінок у всій базі</th></tr></thead><tbody>${rows}</tbody></table></div>`:'<div class="empty">Немає помісячних даних</div>';
+}
+function findExecutorRow(q){
+  const rows=allExecutorRows();
+  const raw=String(q||'').trim();
+  const code=(raw.match(/\b\d{6,12}\b/)||[''])[0];
+  const nq=normExecName(raw.replace(/\b\d{6,12}\b/g,'')).trim();
+  if(!raw)return null;
+  if(code){
+    const byCode=rows.find(x=>String(x.code||'')===code || (x.codes||[]).indexOf(code)!==-1);
+    if(byCode)return byCode;
+  }
+  if(!nq)return null;
+  const alias=x=>[x.name,...(x.aliases||[])].map(normExecName);
+  return rows.find(x=>alias(x).some(n=>n===nq))
+      || rows.find(x=>alias(x).some(n=>n.includes(nq)))
+      || rows.find(x=>alias(x).some(n=>n && nq.includes(n)));
+}
+function recordValue(r){return +r['в'] || ((+r['цкв']||0)*(+r['пл']||0)) || 0;}
+function executorMonthDetails(row){
+  const byYear=new Map();
+  (row.records||[]).forEach(r=>{
+    const d=parseDateValue(recordDate(r));
+    const y=d?String(d.getFullYear()):'Без дати';
+    const m=d?monthKeyFromDate(d):'Без дати';
+    if(!byYear.has(y))byYear.set(y,new Map());
+    const ym=byYear.get(y);
+    if(!ym.has(m))ym.set(m,[]);
+    ym.get(m).push(r);
+  });
+  const years=[...byYear.keys()].sort((a,b)=>String(b).localeCompare(String(a)));
+  return `<div class="executor-details">${years.map(y=>{
+    const months=[...byYear.get(y).keys()].sort((a,b)=>String(b).localeCompare(String(a)));
+    const yCount=months.reduce((s,m)=>s+byYear.get(y).get(m).length,0);
+    return `<details><summary>${safe(y)} — ${yCount} оцінок</summary><div class="inner">${months.map(m=>{
+      const arr=byYear.get(y).get(m).sort((a,b)=>(parseDateValue(recordDate(b))||0)-(parseDateValue(recordDate(a))||0));
+      const rows=arr.map(r=>`<tr><td class="center">${safe(recordDate(r)||'—')}</td><td>${safe(r['р']||'—')}</td><td>${safe(showAddress(r))}</td><td class="center">${r['к']||'—'}</td><td class="center">${r['пл']||'—'}</td><td class="center">${r['пов']||'—'}${r['пх']?'/'+r['пх']:''}</td><td class="center">${r['рік']||'—'}</td><td class="num">${fmt(recordValue(r))}</td><td class="num">${fmt(+r['цкв']||0)}</td></tr>`).join('');
+      return `<details><summary>${safe(m)} — ${arr.length} оцінок</summary><div class="inner"><div class="executor-works-wrap"><table class="executor-works-table"><thead><tr><th>Дата</th><th>Район</th><th>Адреса</th><th>К</th><th>Площа</th><th>Поверх</th><th>Рік</th><th>Вартість</th><th>грн/м²</th></tr></thead><tbody>${rows}</tbody></table></div></div></details>`;
+    }).join('')}</div></details>`;
+  }).join('')}</div>`;
+}
+function renderExecutorProfile(force=true){
+  const box=document.getElementById('executorProfile'); if(!box)return;
+  const q=(document.getElementById('executorSearchInput')?.value||'').trim();
+  // v11.8 · пусте поле → завжди повертаємо початковий плейсхолдер (інакше стара картка «зависає»)
+  if(!q){
+    box.innerHTML='<div class="empty">Введіть ЄДРПОУ або назву виконавця і натисніть «Показати».</div>';
+    return;
+  }
+  const row=findExecutorRow(q);
+  if(!row){ if(force || q.length>1) box.innerHTML='<div class="empty">Виконавця не знайдено. Пошук по ЄДРПОУ працює тільки якщо код є в JSON. Спробуйте ПІБ або назву СОД.</div>'; return; }
+  const years=Object.keys(row.years||{}).filter(y=>y!=='—').sort();
+  const yearStats=years.map(y=>`<div class="stat"><div class="l">${safe(y)}</div><div class="v">${(row.years&&row.years[y])||0}</div></div>`).join('');
+  const monthRows=(row.months||[]).slice().sort((a,b)=>String(b.name).localeCompare(String(a.name))).map(x=>`<tr><td>${safe(x.name)}</td><td class="num">${x.count||0}</td></tr>`).join('') || '<tr><td colspan="2">Немає помісячних даних</td></tr>';
+  box.innerHTML=`<div class="executor-result-grid">
+      <div class="stat"><div class="l">Виконавець</div><div class="v" style="font-size:13px;line-height:1.25">${safe(row.name)}</div>${row.code?`<div class="executor-code">ЄДРПОУ: ${safe(row.code)}${(row.codes&&row.codes.filter(c=>String(c)!==String(row.code)).length)?' · раніше: '+row.codes.filter(c=>String(c)!==String(row.code)).map(c=>safe(c)).join(', '):''}</div>`:''}${(row.aliases&&row.aliases.length)?`<div class="executor-code" style="opacity:.75;margin-top:3px">також у базі: ${row.aliases.map(a=>safe(a)).join(' · ')}</div>`:''}</div>
+      <div class="stat"><div class="l">Всього робіт</div><div class="v">${row.count||0}</div></div>
+      <div class="stat"><div class="l">Частка в архіві</div><div class="v">${row.share||0}%</div></div>
+      <div class="stat"><div class="l">Період</div><div class="v" style="font-size:13px">${safe(row.first||'—')} – ${safe(row.last||'—')}</div></div>
+      <div class="stat"><div class="l">Медіана грн/м²</div><div class="v">${row.med?fmt(row.med):'—'}</div></div>
+      <div class="stat"><div class="l">Середня грн/м²</div><div class="v">${row.avg?fmt(row.avg):'—'}</div></div>
+    </div>
+    <h3 style="margin-top:12px;font-size:12px;text-transform:uppercase;color:var(--teal)">Кількість оцінок по роках</h3>
+    <div class="executor-result-grid">${yearStats||'<div class="empty">Немає річної статистики</div>'}</div>
+    <details class="collapsible-panel" style="margin-top:12px"><summary>Кількість оцінок по місяцях</summary><div class="panel-body"><div class="executor-months-wrap scroll-limited"><table><thead><tr><th>Місяць</th><th class="num">Кількість оцінок</th></tr></thead><tbody>${monthRows}</tbody></table></div></div></details>
+    <details class="collapsible-panel" style="margin-top:12px"><summary>Усі роботи виконавця</summary><div class="panel-body">${executorMonthDetails(row)}</div></details>`;
+}
+
+function renderAnalytics(){
+  if(!DATA || !DATA.length)return;
+  const archive = ARCHIVE_ANALYTICS || null;
+  const market = archive && archive.market ? archive.market : null;
+  const execA = archive && archive.executors ? archive.executors : null;
+  const apartments=DATA.filter(r=>!isDormRec(r));
+
+  let monthRows=[];
+  if(market && market.months && market.months.length){
+    const months=[...market.months].sort((a,b)=>String(a.name).localeCompare(String(b.name)));
+    const last=months[months.length-1];
+    document.getElementById('an-months').textContent=months.length||'—';
+    document.getElementById('an-last-med').textContent=last&&last.median_ppm?fmt(last.median_ppm):'—';
+    monthRows=months.slice(-12).reverse().map(x=>`<tr><td>${safe(x.name)}</td><td class="num">${x.count}</td><td class="num">${fmt(x.median_ppm||0)}</td><td class="num">${fmt(x.avg_ppm||0)}</td></tr>`);
+  } else {
+    const byMonth=groupStats(apartments, r=>monthKeyFromDate(parseDateValue(recordDate(r)))).sort((a,b)=>a.key.localeCompare(b.key));
+    const last=byMonth[byMonth.length-1];
+    document.getElementById('an-months').textContent=byMonth.length||'—';
+    document.getElementById('an-last-med').textContent=last&&last.med?fmt(last.med):'—';
+    monthRows=byMonth.slice(-8).reverse().map(x=>`<tr><td>${monthLabel(x.key)}</td><td class="num">${x.count}</td><td class="num">${fmt(x.med)}</td><td class="num">${fmt(x.avg)}</td></tr>`);
+  }
+  document.getElementById('analytics-months').innerHTML=tableHtml(['Місяць','Кількість оцінок','Медіана грн/м²','Середня грн/м²'], monthRows);
+  renderPriceTrend(market);
+
+  // --- шапка ринкового блоку ---
+  if(market && market.months && market.months.length){
+    const ms=[...market.months].sort((a,b)=>String(a.name).localeCompare(String(b.name)));
+    const last=ms[ms.length-1], prev=ms.length>12?ms[ms.length-13]:ms[0];
+    const set=(id,v)=>{const e=document.getElementById(id); if(e) e.textContent=v;};
+    set('mk-last-med', last?fmt(last.median_ppm)+' ₴/м²':'—');
+    if(prev&&prev.median_ppm){
+      const yoy=Math.round((last.median_ppm/prev.median_ppm-1)*100);
+      const e=document.getElementById('mk-yoy');
+      if(e){ e.textContent=(yoy>0?'+':'')+yoy+'%'; e.style.color = yoy>=0?'#0F5C4A':'#B4271F'; }
+    }
+    set('mk-total', fmt((window.__DATA_COUNT)||0));
+    set('mk-period', ms.length?ms[0].name+' — '+last.name:'—');
+  }
+  renderMarketResearch();
+
+  let execRows=[];
+  if(execA && execA.top_all){
+    document.getElementById('an-exec-count').textContent=execA.executors_count||execA.top_all.length||'—';
+    const t5=document.getElementById('an-top5');
+    if(t5) t5.textContent = execA.concentration_top5_pct!==undefined
+      ? execA.concentration_top5_pct+'%'
+      : (execA.top_all.slice(0,5).reduce((s,x)=>s+(x.share_pct||0),0).toFixed(1)+'%');
+    window.__EXEC_A=execA;
+    renderExecTop();
+    setupExecPeriodControls();
+  } else {
+    const byExec=groupStats(apartments, r=>getExecutor(r)).filter(x=>x.key && x.key!=='не вказано в поточній базі').sort((a,b)=>b.count-a.count).slice(0,10);
+    document.getElementById('an-exec-count').textContent=byExec.length||'—';
+    execRows=byExec.map(x=>`<tr><td>${safe(x.key)}</td><td class="num">${x.count}</td><td class="num">${fmt(x.med)}</td><td class="num">${x.last?fmtDateShort(x.last):'—'}</td></tr>`);
+    document.getElementById('analytics-executors').innerHTML=tableHtml(['Виконавець','Кількість оцінок','Частка ринку','Остання дата'], execRows);
+  }
+
+  let yearRows=[];
+  if(execA && execA.top_all && execA.years){
+    const years=execA.years.slice(-5);
+    yearRows=execA.top_all.slice(0,10).map(x=>`<tr><td>${safe(x.name)}</td>${years.map(y=>`<td class="num">${(x.years&&x.years[y])||0}</td>`).join('')}</tr>`);
+    document.getElementById('analytics-districts').innerHTML=tableHtml(['Виконавець',...years], yearRows);
+  } else {
+    const byDistrict=groupStats(DATA, r=>r['р']||'—').sort((a,b)=>b.count-a.count);
+    const districtRows=byDistrict.map(x=>`<tr><td>${safe(x.key)}</td><td class="num">${x.count}</td><td class="num">${fmt(x.med)}</td><td class="num">${fmt(x.avg)}</td></tr>`);
+    document.getElementById('analytics-districts').innerHTML=tableHtml(['Район','Кількість оцінок','Медіана грн/м²','Середня грн/м²'], districtRows);
+  }
+}
+
+function renderExecTop(){
+  const execA=window.__EXEC_A; if(!execA||!execA.top_all) return;
+  const kind=(document.getElementById('execPeriodKind')||{}).value||'all';
+  const val=(document.getElementById('execPeriodValue')||{}).value||'';
+  let rows=execA.top_all.map(x=>{
+    let cnt=x.count;
+    if(kind==='year' && val) cnt=(x.years&&x.years[val])||0;
+    else if(kind==='month' && val) cnt=(x.months&&x.months[val])||0;
+    return {name:x.name, count:cnt, share:x.share_pct, last:x.last_date, med:x.median_ppm};
+  }).filter(x=>x.count>0);
+  // частка ринку в межах обраного періоду
+  const totalP=rows.reduce((s,x)=>s+x.count,0)||1;
+  rows.sort((a,b)=>b.count-a.count);
+  const top=rows.slice(0,12);
+  const headShare = kind==='all' ? 'Частка ринку' : 'Частка періоду';
+  const execRows=top.map(x=>{
+    const share = kind==='all' ? (x.share||0) : Math.round(x.count/totalP*1000)/10;
+    return `<tr><td>${safe(x.name)}</td><td class="num">${x.count}</td><td class="num">${share}%</td><td class="num">${fmt(x.med||0)}</td><td class="num">${x.last||'—'}</td></tr>`;
+  });
+  document.getElementById('analytics-executors').innerHTML=tableHtml(['Виконавець','Кількість оцінок',headShare,'Медіана грн/м²','Остання дата'], execRows);
+}
+
+function setupExecPeriodControls(){
+  const execA=window.__EXEC_A; if(!execA) return;
+  const kindSel=document.getElementById('execPeriodKind');
+  const valSel=document.getElementById('execPeriodValue');
+  if(!kindSel||!valSel||kindSel.__wired) return;
+  kindSel.__wired=true;
+  function fillValues(){
+    const kind=kindSel.value;
+    if(kind==='all'){ valSel.style.display='none'; valSel.innerHTML=''; return; }
+    valSel.style.display='';
+    const list = kind==='year' ? (execA.years||[]) : (execA.months_list||execA.months_available||[]);
+    const arr=[...list].reverse();
+    valSel.innerHTML=arr.map(v=>`<option value="${v}">${v}</option>`).join('');
+  }
+  kindSel.addEventListener('change',()=>{fillValues(); renderExecTop();});
+  valSel.addEventListener('change',renderExecTop);
+  fillValues();
+}
+
+
+function controlIsActive(id, el){
+  const v=String(el.value||'').trim();
+  const defaults={objectType:'apartment',district:'all',dataScope:'12',rooms:'1',area:'',year:'',floor:'',totalFloors:''};
+  if(id==='rooms') return true;
+  if(id==='area'||id==='year'||id==='floor'||id==='totalFloors') return v!=='';
+  return v!==String(defaults[id]??'');
+}
+function updateActiveControls(){
+  ['objectType','district','dataScope','rooms','area','year','floor','totalFloors'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el) return;
+    const field=el.closest('.field');
+    if(field) field.classList.toggle('is-active', controlIsActive(id, el));
+  });
+}
+function bindActiveControls(){
+  ['objectType','district','dataScope','rooms','area','year','floor','totalFloors'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el) return;
+    el.addEventListener('input', updateActiveControls);
+    el.addEventListener('change', updateActiveControls);
+  });
+  updateActiveControls();
+}
+
+['objectType','district','dataScope','rooms','area','year','floor','totalFloors'].forEach(id=>document.addEventListener('input',e=>{if(e.target.id===id){updateActiveControls(); runAuto();}}));
+document.addEventListener('change',e=>{if(['objectType','district','dataScope','rooms','area','year','floor','totalFloors'].includes(e.target.id)){updateActiveControls(); runAuto();}});
+bindActiveControls();
+if(authApply()) loadData();
+</script>
+<div class="mobile-actions"><button class="ma pdf" onclick="generatePdfReference()">📄 PDF-довідка</button><a class="ma call" href="tel:+380979213772">📞 Замовити оцінку</a></div>
+</body></html>
