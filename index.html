@@ -330,6 +330,13 @@ body:not(.locked) #authScreen{display:none!important}
     <div class="mini-stat"><div class="l">Квартир у розрахунку</div><div class="v" id="lst-used">—</div></div>
     <div class="mini-stat"><div class="l">Дата зрізу</div><div class="v" id="lst-date" style="font-size:15px">—</div></div>
   </div>
+  <div id="lst-admin" class="admin-only hidden-by-role" style="margin-top:10px"><!-- lst-admin-v1: лише роль admin (authApply) -->
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <a class="btn" style="text-decoration:none;display:inline-block" href="fdmu-listings://run" onclick="lstAdminClick()">⟳ Оновити ринок пропозицій</a>
+      <a class="btn secondary" style="text-decoration:none;display:inline-block" href="https://github.com/ztexpert-hash/fdmu-zhytomyr-directory/upload/main" target="_blank" rel="noopener">Завантажити на GitHub</a>
+    </div>
+    <div class="hint" id="lst-admin-hint" style="margin-top:6px">Працює лише на ПК, де зареєстровано протокол fdmu-listings://. Результат: listings_data.json на Робочому столі → «Завантажити на GitHub».</div>
+  </div>
   <div class="analytics-grid" style="margin-top:12px">
     <details class="collapsible-panel panel-wide" open><summary>Кімнатність і поверховість</summary><div class="panel-body" id="lst-matrix"></div></details>
     <details class="collapsible-panel"><summary>За кімнатністю</summary><div class="panel-body" id="lst-rooms"></div></details>
@@ -896,6 +903,11 @@ function lstCell(x){
   if(!x) return '<td class="num">—</td>';
   const n='<span class="hint" style="white-space:nowrap">n='+x.n+(x.low_n?', мало даних':'')+'</span>';
   return '<td class="num">'+fmt(x.median_usd)+' $<br>'+n+'</td>';
+}
+/* lst-admin-v1 — кнопка запуску локального .bat через протокол fdmu-listings:// */
+function lstAdminClick(){
+  const h=document.getElementById('lst-admin-hint');
+  if(h) h.innerHTML='Запит на запуск надіслано. Якщо браузер спитав дозвіл — підтвердьте. Дочекайтеся «Готово» у вікні консолі, далі <b>Завантажити на GitHub</b> → listings_data.json з Робочого столу → Commit changes.';
 }
 function renderListings(){
   const card=document.getElementById('lstCard');
