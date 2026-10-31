@@ -1,16 +1,16 @@
 {
- "generated": "19.10.2026 10:03",
- "date": "2026-10-19",
+ "generated": "31.10.2026 18:08",
+ "date": "2026-10-31",
  "source": "активні оголошення про продаж, м. Житомир",
- "total": 1584,
- "used": 1254,
- "excluded": 330,
- "no_floors_data": 1,
- "no_rooms_data": 75,
+ "total": 1607,
+ "used": 1285,
+ "excluded": 322,
+ "no_floors_data": 0,
+ "no_rooms_data": 73,
  "min_n": 30,
  "city": {
-  "median_usd": 1150,
-  "median_uah": 51523
+  "median_usd": 1143,
+  "median_uah": 51413
  },
  "rooms_axis": [
   "1",
@@ -27,150 +27,150 @@
   {
    "rooms": "1",
    "floors": "до 5",
-   "n": 87,
-   "median_usd": 1300,
-   "median_uah": 58604,
+   "n": 90,
+   "median_usd": 1306,
+   "median_uah": 58766,
    "low_n": false
   },
   {
    "rooms": "1",
    "floors": "6-9",
-   "n": 73,
-   "median_usd": 1229,
-   "median_uah": 55405,
+   "n": 82,
+   "median_usd": 1241,
+   "median_uah": 56000,
    "low_n": false
   },
   {
    "rooms": "1",
    "floors": "10+",
-   "n": 263,
-   "median_usd": 1188,
-   "median_uah": 53360,
+   "n": 272,
+   "median_usd": 1179,
+   "median_uah": 53128,
    "low_n": false
   },
   {
    "rooms": "2",
    "floors": "до 5",
-   "n": 179,
-   "median_usd": 1190,
-   "median_uah": 53463,
+   "n": 176,
+   "median_usd": 1186,
+   "median_uah": 53331,
    "low_n": false
   },
   {
    "rooms": "2",
    "floors": "6-9",
-   "n": 80,
-   "median_usd": 1205,
-   "median_uah": 54052,
+   "n": 81,
+   "median_usd": 1200,
+   "median_uah": 54008,
    "low_n": false
   },
   {
    "rooms": "2",
    "floors": "10+",
-   "n": 221,
-   "median_usd": 1110,
-   "median_uah": 49815,
+   "n": 234,
+   "median_usd": 1125,
+   "median_uah": 50582,
    "low_n": false
   },
   {
    "rooms": "3",
    "floors": "до 5",
-   "n": 72,
-   "median_usd": 1060,
-   "median_uah": 47807,
+   "n": 75,
+   "median_usd": 1105,
+   "median_uah": 49798,
    "low_n": false
   },
   {
    "rooms": "3",
    "floors": "6-9",
-   "n": 74,
-   "median_usd": 1124,
-   "median_uah": 50393,
+   "n": 70,
+   "median_usd": 1067,
+   "median_uah": 48091,
    "low_n": false
   },
   {
    "rooms": "3",
    "floors": "10+",
-   "n": 68,
-   "median_usd": 1000,
-   "median_uah": 44838,
+   "n": 67,
+   "median_usd": 960,
+   "median_uah": 42849,
    "low_n": false
   },
   {
    "rooms": "4+",
    "floors": "до 5",
-   "n": 15,
-   "median_usd": 969,
-   "median_uah": 43671,
+   "n": 18,
+   "median_usd": 1050,
+   "median_uah": 47764,
    "low_n": true
   },
   {
    "rooms": "4+",
    "floors": "6-9",
    "n": 24,
-   "median_usd": 1194,
-   "median_uah": 53740,
+   "median_usd": 1187,
+   "median_uah": 53466,
    "low_n": true
   },
   {
    "rooms": "4+",
    "floors": "10+",
-   "n": 22,
+   "n": 23,
    "median_usd": 911,
-   "median_uah": 40768,
+   "median_uah": 40806,
    "low_n": true
   }
  ],
  "by_rooms": [
   {
    "name": "1",
-   "n": 424,
-   "median_usd": 1202,
-   "median_uah": 54096,
+   "n": 444,
+   "median_usd": 1200,
+   "median_uah": 54063,
    "low_n": false
   },
   {
    "name": "2",
-   "n": 480,
-   "median_usd": 1161,
-   "median_uah": 52218,
+   "n": 491,
+   "median_usd": 1160,
+   "median_uah": 52184,
    "low_n": false
   },
   {
    "name": "3",
-   "n": 214,
-   "median_usd": 1045,
-   "median_uah": 46946,
+   "n": 212,
+   "median_usd": 1041,
+   "median_uah": 47002,
    "low_n": false
   },
   {
    "name": "4+",
-   "n": 61,
-   "median_usd": 928,
-   "median_uah": 41544,
+   "n": 65,
+   "median_usd": 940,
+   "median_uah": 42024,
    "low_n": false
   }
  ],
  "by_floors": [
   {
    "name": "до 5",
-   "n": 378,
-   "median_usd": 1167,
-   "median_uah": 52528,
+   "n": 384,
+   "median_usd": 1166,
+   "median_uah": 52470,
    "low_n": false
   },
   {
    "name": "6-9",
-   "n": 278,
-   "median_usd": 1173,
-   "median_uah": 52679,
+   "n": 282,
+   "median_usd": 1161,
+   "median_uah": 52236,
    "low_n": false
   },
   {
    "name": "10+",
-   "n": 597,
-   "median_usd": 1118,
-   "median_uah": 50293,
+   "n": 619,
+   "median_usd": 1114,
+   "median_uah": 50294,
    "low_n": false
   }
  ]
