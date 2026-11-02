@@ -360,7 +360,7 @@ body:not(.locked) #authScreen{display:none!important}
   </div>
   <div class="analytics-note">Аналітика оцінювачів побудована на архівній базі. Показники довідкові: кількість зареєстрованих оцінок, частка ринку, медіана грн/м² та дата останньої роботи.</div>
 </section>
-<section class="card collapsed-section" id="recordsCard"><div class="controls"><div><div class="section" style="margin-bottom:4px">Зареєстровані оцінки</div><div class="hint">Число в кружечку — бал близькості до заданих параметрів, не номер об’єкта.</div></div><input class="search" id="search" placeholder="Пошук по адресі (працює без площі)" oninput="renderList()"><span id="searchCount" class="search-count" style="display:none"></span><div class="card-style-toggle" title="Стиль карток"><button type="button" id="cs-v1" onclick="setCardStyle('v1')">Компакт</button><button type="button" id="cs-v2" onclick="setCardStyle('v2')">Дашборд</button></div></div><div class="search-filters" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><select id="searchType" onchange="renderList()" style="width:auto;min-width:120px"><option value="all" selected>Всі типи</option><option value="apartment">Квартира</option><option value="dorm">Кімната в гуртожитку</option><option value="house">Будинок</option></select><select id="searchDistrict" onchange="renderList()" style="width:auto;min-width:150px"><option value="all" selected>Житомир — вся база</option><option value="Богунський">Богунський</option><option value="Корольовський">Корольовський</option><option value="Житомир (без району)">Житомир без району</option></select><select id="searchScope" onchange="renderList()" style="width:auto;min-width:170px"><option value="12" selected>Останні 12 місяців</option><option value="1">Останній 1 місяць</option><option value="3">Останні 3 місяці</option><option value="6">Останні 6 місяців</option><option value="archive">Повний архів 2019+</option></select><span class="sf-group"><span class="sf-lbl">Площа, м²</span><input type="number" id="searchAreaMin" placeholder="від" min="0" step="0.1" inputmode="decimal" oninput="renderList()"><input type="number" id="searchAreaMax" placeholder="до" min="0" step="0.1" inputmode="decimal" oninput="renderList()"></span><span class="sf-group"><span class="sf-lbl">Дата реєстр.</span><input type="date" id="searchDateFrom" title="Дата реєстрації від" onchange="renderList()"><input type="date" id="searchDateTo" title="Дата реєстрації до" onchange="renderList()"></span><button type="button" class="sf-reset" onclick="resetSearchExtra()" title="Скинути площу і дати">✕</button></div><div class="hint" style="margin-top:5px">Фільтри пошуку по адресі незалежні від параметрів об'єкта вище. Якщо задано дати — період зі списку ігнорується</div><div class="analog-list" id="list" style="margin-top:12px"><div class="empty">Завантаження бази...</div></div></section>
+<section class="card collapsed-section" id="recordsCard"><div class="controls"><div><div class="section" style="margin-bottom:4px">Зареєстровані оцінки</div><div class="hint">Число в кружечку — бал близькості до заданих параметрів, не номер об’єкта.</div></div><input class="search" id="search" placeholder="Пошук по адресі (працює без площі)" oninput="renderList()"><span id="searchCount" class="search-count" style="display:none"></span><div class="card-style-toggle" title="Стиль карток"><button type="button" id="cs-v1" onclick="setCardStyle('v1')">Компакт</button><button type="button" id="cs-v2" onclick="setCardStyle('v2')">Дашборд</button></div></div><div class="search-filters" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><select id="searchType" onchange="renderList()" style="width:auto;min-width:120px"><option value="all" selected>Всі типи</option><option value="apartment">Квартира</option><option value="dorm">Кімната в гуртожитку</option><option value="house">Будинок</option></select><select id="searchDistrict" onchange="renderList()" style="width:auto;min-width:150px"><option value="all" selected>Житомир — вся база</option><option value="Богунський">Богунський</option><option value="Корольовський">Корольовський</option><option value="Житомир (без району)">Житомир без району</option></select><select id="searchScope" onchange="renderList()" style="width:auto;min-width:170px"><option value="12" selected>Останні 12 місяців</option><option value="1">Останній 1 місяць</option><option value="3">Останні 3 місяці</option><option value="6">Останні 6 місяців</option><option value="archive">Повний архів 2019+</option></select><span class="sf-group"><span class="sf-lbl">Площа, м²</span><input type="number" id="searchAreaMin" placeholder="від" min="0" step="0.1" inputmode="decimal" oninput="renderList()"><input type="number" id="searchAreaMax" placeholder="до" min="0" step="0.1" inputmode="decimal" oninput="renderList()"></span><span class="sf-group"><span class="sf-lbl">Місяць</span><input type="month" id="searchMonth" title="Місяць реєстрації — заповнює дати" onchange="setSearchMonth(this.value)"></span><span class="sf-group"><span class="sf-lbl">Дата реєстр.</span><input type="date" id="searchDateFrom" title="Дата реєстрації від" onchange="clearSearchMonth();renderList()"><input type="date" id="searchDateTo" title="Дата реєстрації до" onchange="clearSearchMonth();renderList()"></span><button type="button" class="sf-reset" onclick="resetSearchExtra()" title="Скинути площу і дати">✕</button></div><div class="hint" style="margin-top:5px">Фільтри пошуку по адресі незалежні від параметрів об'єкта вище. Якщо задано дати — період зі списку ігнорується</div><div class="analog-list" id="list" style="margin-top:12px"><div class="empty">Завантаження бази...</div></div></section>
 <div class="footer">Довідкова інформація. Не є звітом про оцінку майна. Зареєстровані оцінки ФДМУ мають довідковий характер і не є автоматично придатним джерелом для звіту без окремого аналізу оцінювачем. Використовується база: Житомирська міська зона; службові реквізити не відображаються.<br><b>ТОВ «ЕКСПЕРТНА ДУМКА» · Оцінка майна · 097 921 37 72</b><br>Версія сайту: 11.3-beta · компактна верхня панель · довіра A/B/C · IQR · Оліївка = Житомир</div>
 </main>
 <div id="toast" class="toast"></div>
@@ -1174,9 +1174,19 @@ function searchExtraOk(r,sf){
   return true;
 }
 function resetSearchExtra(){
-  ['searchAreaMin','searchAreaMax','searchDateFrom','searchDateTo'].forEach(id=>{const el=document.getElementById(id); if(el) el.value='';});
+  ['searchAreaMin','searchAreaMax','searchDateFrom','searchDateTo','searchMonth'].forEach(id=>{const el=document.getElementById(id); if(el) el.value='';});
   renderList();
 }
+function setSearchMonth(v){
+  const m=String(v||'').match(/^(\d{4})-(\d{2})$/);
+  const f=document.getElementById('searchDateFrom'), t=document.getElementById('searchDateTo');
+  if(!m){ if(f) f.value=''; if(t) t.value=''; renderList(); return; }
+  const last=new Date(+m[1], +m[2], 0).getDate();
+  if(f) f.value=m[1]+'-'+m[2]+'-01';
+  if(t) t.value=m[1]+'-'+m[2]+'-'+String(last).padStart(2,'0');
+  renderList();
+}
+function clearSearchMonth(){const el=document.getElementById('searchMonth'); if(el) el.value='';}
 function searchObjectTypeOk(r,type){
   if(type==='all') return true;
   const isDorm=isDormRec(r), isHouse=isHouseRec(r);
@@ -1201,12 +1211,13 @@ function renderList(){
   const list=document.getElementById('list');
   // РЕЖИМ ПРЯМОГО ПОШУКУ ПО АДРЕСІ: працює без площі й кімнатності
   if(!t.area){
-    if(!q){ showGeneralStatsOnly(); setQualityBlock([],0); setSearchCount(null); return; }
     const sf=searchFilterState();
+    const hasExtra=sf.areaMin!==null||sf.areaMax!==null||sf.dateFrom||sf.dateTo;
+    if(!q && !hasExtra){ showGeneralStatsOnly(); setQualityBlock([],0); setSearchCount(null); return; }
     let base=searchSourceRecords(sf.scope).filter(r=>searchObjectTypeOk(r,sf.type) && datePeriodOk(r,{datePeriod:(sf.scope==='archive'||sf.dateFrom||sf.dateTo)?'all':sf.scope}) && searchExtraOk(r,sf));
     if(sf.district!=='all') base=base.filter(r=>districtMatch(r,sf.district));
     const qn=normalizeAddressForCompare(q);
-    let rows=base.filter(r=>{
+    let rows=!q ? base : base.filter(r=>{
       const ad=String(r['ад']||'').toUpperCase();
       const an=String(r['ад_норм']||'').toUpperCase();
       return ad.includes(q) || (qn && an.includes(qn)) || an.includes(q);
@@ -1216,11 +1227,12 @@ function renderList(){
     CAND=rows; 
     document.getElementById('st-shown').textContent=rows.length;
     setSearchCount(rows.length, q);
-    if(!rows.length){list.innerHTML='<div class="empty">За адресою «'+safe(q)+'» оцінок не знайдено (у межах обраного типу, району, періоду, площі та дат).</div>'; return;}
-    const _hintSearch='<div class="hint" style="margin-bottom:8px">Прямий пошук по адресі: знайдено '+rows.length+' оцінок. Площа й кімнатність не враховуються.</div>';
+    if(!rows.length){list.innerHTML='<div class="empty">'+(q?'За адресою «'+safe(q)+'» оцінок не знайдено':'За заданими датами/площею оцінок не знайдено')+' (у межах обраного типу, району, періоду, площі та дат).</div>'; return;}
+    const _medS=medianPpm(rows);
+    const _per=(sf.dateFrom||sf.dateTo)?' за період '+(sf.dateFrom?fmtDateShort(sf.dateFrom):'…')+' – '+(sf.dateTo?fmtDateShort(sf.dateTo):'…'):'';
+    const _hintSearch='<div class="hint" style="margin-bottom:8px">'+(q?'Прямий пошук по адресі':'Перегляд оцінок')+_per+': знайдено '+rows.length+' оцінок'+(_medS?', медіана '+fmt(Math.round(_medS))+' грн/м²':'')+'. Сортування — від новіших. Площа об’єкта й кімнатність не враховуються.</div>';
     if(getCardStyle()==='v2'){
-      const _med=medianPpm(rows);
-      list.innerHTML=_hintSearch+rows.map(r=>renderAnalogCardV2(r,{medPpm:_med,mode:'search'})).join('');
+      list.innerHTML=_hintSearch+rows.map(r=>renderAnalogCardV2(r,{medPpm:_medS,mode:'search'})).join('');
     } else {
       list.innerHTML=_hintSearch+
         rows.map(r=>`<div class="analog"><input type="checkbox" ${SELECTED.has(r._id)?'checked':''} onchange="toggleOne('${esc(r._id)}',this.checked)"><div class="score">${r['к']||'·'}</div><div><div class="addr">${safe(showAddress(r))}</div><div class="meta">${r['пл']} м² · ${safe(r['тип']||'')} · ${r['рік']||'?'} р. · пов. ${r['пов']||'?'}${r['пх']?'/'+r['пх']:''} · дата реєстрації: ${safe(recordDate(r))} · вартість: ${fmt(r['в']||((+r['цкв']||0)*(+r['пл']||0)))} грн · виконавець: ${safe(getExecutor(r))}${executorCode(r)?' · ЄДРПОУ: '+safe(executorCode(r)):''} · ${safe(isOliivkaRecord(r)?'Оліївка у складі Житомира':r['р'])}</div></div><div class="ppm">${fmt(r['цкв'])} грн/м²</div></div>`).join('');
