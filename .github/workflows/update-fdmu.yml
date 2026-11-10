@@ -22,6 +22,9 @@ jobs:
       - name: Оновити базу
         run: python3 fdmu_autoupdate.py
 
+      - name: Аудит узгодженості даних (FAIL = коміт заборонено)
+        run: python3 tools/audit_data.py
+
       - name: Закомітити зміни
         run: |
           git config user.name  "fdmu-bot"

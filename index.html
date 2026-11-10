@@ -779,7 +779,7 @@ function authLogout(){
   location.reload();
 }
 
-const APP_VERSION='11.9-beta';
+const APP_VERSION='11.10';
 const USD_RATE=41.5; // довідковий курс для відображення USD
 let DATA=[], WORK_DATA=[], ARCHIVE_DATA=[], CAND=[], SELECTED=new Set(), TARGET=null, ARCHIVE_ANALYTICS=null, ACTIVE_SOURCE='work';
 const allowed = new Set(['Богунський','Корольовський','Житомир (без району)','Оліївка новобудови']);
@@ -2159,7 +2159,7 @@ function renderAnalytics(){
     const byExec=groupStats(apartments, r=>getExecutor(r)).filter(x=>x.key && x.key!=='не вказано в поточній базі').sort((a,b)=>b.count-a.count).slice(0,10);
     document.getElementById('an-exec-count').textContent=byExec.length||'—';
     execRows=byExec.map(x=>`<tr><td>${safe(x.key)}</td><td class="num">${x.count}</td><td class="num">${fmt(x.med)}</td><td class="num">${x.last?fmtDateShort(x.last):'—'}</td></tr>`);
-    document.getElementById('analytics-executors').innerHTML=tableHtml(['Виконавець','Кількість оцінок','Частка ринку','Остання дата'], execRows);
+    document.getElementById('analytics-executors').innerHTML=tableHtml(['Виконавець','Кількість оцінок','Медіана грн/м²','Остання дата'], execRows);
   }
 
   let yearRows=[];
@@ -2174,26 +2174,47 @@ function renderAnalytics(){
   }
 }
 
+/* v11.10 · AUD: для обраного року/місяця всі колонки рахуються В МЕЖАХ ПЕРІОДУ
+   з тих самих записів і тим самим групуванням, що й картка виконавця
+   (allExecutorRows) — числа ТОП і картки не можуть розходитися. */
+const AUD_MONTHS_UA=['січень','лютий','березень','квітень','травень','червень','липень','серпень','вересень','жовтень','листопад','грудень'];
+function AUD_periodLabel(kind,val){
+  if(kind==='month'&&/^\d{4}-\d{2}$/.test(val)) return AUD_MONTHS_UA[+val.slice(5)-1]+' '+val.slice(0,4)+' р.';
+  if(kind==='year'&&val) return val+' рік';
+  return 'весь час';
+}
+function AUD_execPeriodRows(kind,val){
+  const inP=r=>{if(kind==='all') return true; const d=parseDateValue(recordDate(r)); if(!d) return false;
+    return kind==='year' ? String(d.getFullYear())===val : monthKeyFromDate(d)===val;};
+  let total=0;
+  const rows=allExecutorRows().map(x=>{
+    const rs=(x.records||[]).filter(inP);
+    total+=rs.length;
+    if(!rs.length) return null;
+    const ppms=rs.map(r=>+r['цкв']||0).filter(Boolean);
+    const ds=rs.map(r=>parseDateValue(recordDate(r))).filter(Boolean).sort((a,b)=>a-b);
+    return {name:x.name, count:rs.length, med:ppms.length?Math.round(median(ppms)):0,
+            last:ds.length?fmtDateShort(ds[ds.length-1]):'—'};
+  }).filter(Boolean);
+  return {rows,total};
+}
 function renderExecTop(){
   const execA=window.__EXEC_A; if(!execA||!execA.top_all) return;
   const kind=(document.getElementById('execPeriodKind')||{}).value||'all';
   const val=(document.getElementById('execPeriodValue')||{}).value||'';
-  let rows=execA.top_all.map(x=>{
-    let cnt=x.count;
-    if(kind==='year' && val) cnt=(x.years&&x.years[val])||0;
-    else if(kind==='month' && val) cnt=(x.months&&x.months[val])||0;
-    return {name:x.name, count:cnt, share:x.share_pct, last:x.last_date, med:x.median_ppm};
-  }).filter(x=>x.count>0);
-  // частка ринку в межах обраного періоду
-  const totalP=rows.reduce((s,x)=>s+x.count,0)||1;
-  rows.sort((a,b)=>b.count-a.count);
+  let rows, totalP;
+  // і «за весь час», і період — один код з карткою (округлення медіани однакове)
+  const res=AUD_execPeriodRows((kind!=='all'&&val)?kind:'all', val); rows=res.rows; totalP=res.total||1;
+  rows.sort((a,b)=>b.count-a.count || String(a.name).localeCompare(String(b.name)));
   const top=rows.slice(0,12);
-  const headShare = kind==='all' ? 'Частка ринку' : 'Частка періоду';
+  const isAll = kind==='all' || !val;
+  const headShare = isAll ? 'Частка ринку' : 'Частка періоду';
   const execRows=top.map(x=>{
-    const share = kind==='all' ? (x.share||0) : Math.round(x.count/totalP*1000)/10;
+    const share = isAll ? Math.round(x.count/totalP*10000)/100 : Math.round(x.count/totalP*1000)/10;
     return `<tr><td>${safe(x.name)}</td><td class="num">${x.count}</td><td class="num">${share}%</td><td class="num">${fmt(x.med||0)}</td><td class="num">${x.last||'—'}</td></tr>`;
   });
-  document.getElementById('analytics-executors').innerHTML=tableHtml(['Виконавець','Кількість оцінок',headShare,'Медіана грн/м²','Остання дата'], execRows);
+  const cap=`<div class="aud-period-cap" style="font-size:12px;color:var(--muted);margin:0 0 6px">Період: <b style="color:var(--teal)">${safe(AUD_periodLabel(isAll?'all':kind,val))}</b> · оцінок у періоді: <b>${fmt(totalP)}</b> · виконавців: <b>${rows.length}</b>${isAll?'':' · медіана і остання дата — в межах періоду'}</div>`;
+  document.getElementById('analytics-executors').innerHTML=cap+tableHtml(['Виконавець','Кількість оцінок',headShare, isAll?'Медіана грн/м²':'Медіана грн/м² (період)', isAll?'Остання дата':'Остання дата (період)'], execRows);
 }
 
 function setupExecPeriodControls(){

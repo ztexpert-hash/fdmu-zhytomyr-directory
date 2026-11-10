@@ -16,7 +16,7 @@
         python3 fdmu_autoupdate.py --dry-run (тільки показати, що знайдено)
 """
 from __future__ import annotations
-import io, json, re, sys, zipfile, csv, statistics, argparse, datetime
+import hashlib, io, json, re, sys, zipfile, csv, statistics, argparse, datetime
 from collections import Counter, defaultdict
 from pathlib import Path
 from urllib.parse import urljoin
@@ -517,9 +517,12 @@ def main():
             if rows and cols is None:
                 cols = list(rows[0].keys())
             got = extract(rows, name)
-            fresh = [r for r in got if key(r) not in seen]
-            for r in fresh:
-                seen.add(key(r))
+            # дедуп і проти бази, і всередині самого архіву (seen оновлюється по ходу)
+            fresh = []
+            for r in got:
+                if key(r) not in seen:
+                    seen.add(key(r))
+                    fresh.append(r)
             d["records"].extend(fresh)
             total_new += len(fresh)
             print(f"   +{len(fresh)} (у файлі по місту: {len(got)})")
@@ -533,11 +536,18 @@ def main():
         return 0
 
     recalc(d)
-    CALC.write_text(json.dumps(d, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    ARCHIVE.write_text(json.dumps(d, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-
     proc["processed"] = sorted(set(proc["processed"]))
     proc["last_run"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+    d["auto_update"] = {"last_archive": Path(todo[-1].split("?")[0]).stem,
+                        "added": total_new, "ran": proc["last_run"]}
+    # обидва файли — з ОДНОГО буфера (інваріант: побайтово ідентичні)
+    blob = json.dumps(d, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+    CALC.write_bytes(blob)
+    ARCHIVE.write_bytes(blob)
+    if hashlib.md5(CALC.read_bytes()).digest() != hashlib.md5(ARCHIVE.read_bytes()).digest():
+        print("! MD5 calc_data.json != archive_calc_data.json — зупинка")
+        return 1
+
     PROCESSED.write_text(json.dumps(proc, ensure_ascii=False, indent=2), encoding="utf-8")
 
     if cols:
@@ -551,9 +561,6 @@ def main():
                                      ensure_ascii=False, indent=2), encoding="utf-8")
 
     write_readme(d, proc["processed"])
-    d["auto_update"] = {"last_archive": Path(todo[-1].split("?")[0]).stem,
-                        "added": total_new, "ran": proc["last_run"]}
-    CALC.write_text(json.dumps(d, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 
     print(f"\nДодано записів: {total_new}")
     print(f"Усього в базі: {d['count']}")
