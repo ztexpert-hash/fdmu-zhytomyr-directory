@@ -1,16 +1,16 @@
 {
- "generated": "02.11.2026 15:29",
- "date": "2026-11-02",
+ "generated": "16.11.2026 23:05",
+ "date": "2026-11-16",
  "source": "активні оголошення про продаж, м. Житомир",
- "total": 1604,
- "used": 1279,
- "excluded": 325,
+ "total": 1776,
+ "used": 1324,
+ "excluded": 452,
  "no_floors_data": 0,
- "no_rooms_data": 72,
+ "no_rooms_data": 67,
  "min_n": 30,
  "city": {
-  "median_usd": 1146,
-  "median_uah": 51467
+  "median_usd": 1147,
+  "median_uah": 51632
  },
  "rooms_axis": [
   "1",
@@ -27,150 +27,150 @@
   {
    "rooms": "1",
    "floors": "до 5",
-   "n": 91,
-   "median_usd": 1300,
-   "median_uah": 58738,
+   "n": 88,
+   "median_usd": 1288,
+   "median_uah": 58466,
    "low_n": false
   },
   {
    "rooms": "1",
    "floors": "6-9",
-   "n": 85,
-   "median_usd": 1238,
-   "median_uah": 55959,
+   "n": 94,
+   "median_usd": 1262,
+   "median_uah": 57104,
    "low_n": false
   },
   {
    "rooms": "1",
    "floors": "10+",
-   "n": 268,
-   "median_usd": 1175,
-   "median_uah": 53128,
+   "n": 280,
+   "median_usd": 1193,
+   "median_uah": 53704,
    "low_n": false
   },
   {
    "rooms": "2",
    "floors": "до 5",
-   "n": 178,
-   "median_usd": 1189,
-   "median_uah": 53403,
+   "n": 189,
+   "median_usd": 1179,
+   "median_uah": 53453,
    "low_n": false
   },
   {
    "rooms": "2",
    "floors": "6-9",
-   "n": 81,
-   "median_usd": 1200,
-   "median_uah": 54008,
-   "low_n": false
-  },
-  {
-   "rooms": "2",
-   "floors": "10+",
-   "n": 231,
-   "median_usd": 1130,
-   "median_uah": 50897,
-   "low_n": false
-  },
-  {
-   "rooms": "3",
-   "floors": "до 5",
    "n": 75,
-   "median_usd": 1113,
-   "median_uah": 50162,
+   "median_usd": 1157,
+   "median_uah": 52646,
+   "low_n": false
+  },
+  {
+   "rooms": "2",
+   "floors": "10+",
+   "n": 237,
+   "median_usd": 1120,
+   "median_uah": 50248,
+   "low_n": false
+  },
+  {
+   "rooms": "3",
+   "floors": "до 5",
+   "n": 83,
+   "median_usd": 1120,
+   "median_uah": 50509,
    "low_n": false
   },
   {
    "rooms": "3",
    "floors": "6-9",
-   "n": 68,
-   "median_usd": 1061,
-   "median_uah": 47651,
+   "n": 71,
+   "median_usd": 1075,
+   "median_uah": 48772,
    "low_n": false
   },
   {
    "rooms": "3",
    "floors": "10+",
-   "n": 67,
-   "median_usd": 960,
-   "median_uah": 42849,
+   "n": 80,
+   "median_usd": 1021,
+   "median_uah": 46042,
    "low_n": false
   },
   {
    "rooms": "4+",
    "floors": "до 5",
    "n": 19,
-   "median_usd": 1042,
-   "median_uah": 47443,
+   "median_usd": 992,
+   "median_uah": 45007,
    "low_n": true
   },
   {
    "rooms": "4+",
    "floors": "6-9",
-   "n": 22,
-   "median_usd": 1194,
-   "median_uah": 53625,
+   "n": 21,
+   "median_usd": 1049,
+   "median_uah": 46775,
    "low_n": true
   },
   {
    "rooms": "4+",
    "floors": "10+",
-   "n": 22,
-   "median_usd": 911,
-   "median_uah": 40768,
+   "n": 20,
+   "median_usd": 912,
+   "median_uah": 40806,
    "low_n": true
   }
  ],
  "by_rooms": [
   {
    "name": "1",
-   "n": 444,
-   "median_usd": 1197,
-   "median_uah": 53843,
+   "n": 462,
+   "median_usd": 1218,
+   "median_uah": 55023,
    "low_n": false
   },
   {
    "name": "2",
-   "n": 490,
-   "median_usd": 1160,
-   "median_uah": 52252,
+   "n": 501,
+   "median_usd": 1152,
+   "median_uah": 51803,
    "low_n": false
   },
   {
    "name": "3",
-   "n": 210,
-   "median_usd": 1041,
-   "median_uah": 47002,
+   "n": 234,
+   "median_usd": 1063,
+   "median_uah": 47938,
    "low_n": false
   },
   {
    "name": "4+",
-   "n": 63,
-   "median_usd": 940,
-   "median_uah": 42024,
+   "n": 60,
+   "median_usd": 944,
+   "median_uah": 42638,
    "low_n": false
   }
  ],
  "by_floors": [
   {
    "name": "до 5",
-   "n": 388,
+   "n": 401,
    "median_usd": 1167,
-   "median_uah": 52561,
+   "median_uah": 52949,
    "low_n": false
   },
   {
    "name": "6-9",
-   "n": 281,
-   "median_usd": 1160,
-   "median_uah": 52198,
+   "n": 285,
+   "median_usd": 1153,
+   "median_uah": 52002,
    "low_n": false
   },
   {
    "name": "10+",
-   "n": 610,
-   "median_usd": 1116,
-   "median_uah": 50338,
+   "n": 638,
+   "median_usd": 1129,
+   "median_uah": 51000,
    "low_n": false
   }
  ],
@@ -178,274 +178,245 @@
   {
    "m": "2020-07",
    "med_usd": 1018,
-   "med_uah": 45905,
-   "n": 1,
-   "low": true
-  },
-  {
-   "m": "2020-10",
-   "med_usd": 1130,
-   "med_uah": 50960,
+   "med_uah": 46215,
    "n": 1,
    "low": true
   },
   {
    "m": "2021-01",
    "med_usd": 947,
-   "med_uah": 42490,
-   "n": 1,
-   "low": true
-  },
-  {
-   "m": "2021-06",
-   "med_usd": 714,
-   "med_uah": 32200,
+   "med_uah": 42985,
    "n": 1,
    "low": true
   },
   {
    "m": "2021-07",
    "med_usd": 900,
-   "med_uah": 41033,
+   "med_uah": 40846,
    "n": 1,
    "low": true
   },
   {
    "m": "2022-02",
    "med_usd": 1905,
-   "med_uah": 86722,
+   "med_uah": 86447,
    "n": 1,
    "low": true
   },
   {
    "m": "2022-05",
-   "med_usd": 1953,
-   "med_uah": 87581,
-   "n": 1,
+   "med_usd": 1566,
+   "med_uah": 71065,
+   "n": 2,
    "low": true
   },
   {
    "m": "2022-12",
-   "med_usd": 649,
-   "med_uah": 29237,
-   "n": 12,
+   "med_usd": 641,
+   "med_uah": 29085,
+   "n": 15,
    "low": true
   },
   {
    "m": "2023-01",
-   "med_usd": 657,
-   "med_uah": 29618,
-   "n": 2,
-   "low": true
-  },
-  {
-   "m": "2023-09",
-   "med_usd": 772,
-   "med_uah": 34748,
-   "n": 2,
-   "low": true
-  },
-  {
-   "m": "2023-12",
-   "med_usd": 882,
-   "med_uah": 39777,
+   "med_usd": 648,
+   "med_uah": 29416,
    "n": 1,
    "low": true
   },
   {
    "m": "2024-02",
-   "med_usd": 1100,
-   "med_uah": 49266,
-   "n": 5,
+   "med_usd": 1122,
+   "med_uah": 50932,
+   "n": 3,
    "low": true
   },
   {
    "m": "2024-03",
-   "med_usd": 1157,
-   "med_uah": 51876,
-   "n": 2,
+   "med_usd": 777,
+   "med_uah": 35259,
+   "n": 3,
    "low": true
   },
   {
    "m": "2024-05",
-   "med_usd": 1885,
-   "med_uah": 84975,
-   "n": 2,
+   "med_usd": 2165,
+   "med_uah": 98271,
+   "n": 1,
    "low": true
   },
   {
    "m": "2024-07",
    "med_usd": 1604,
-   "med_uah": 72292,
-   "n": 1,
-   "low": true
-  },
-  {
-   "m": "2024-08",
-   "med_usd": 1255,
-   "med_uah": 56574,
+   "med_uah": 72781,
    "n": 1,
    "low": true
   },
   {
    "m": "2024-10",
-   "med_usd": 883,
-   "med_uah": 39784,
-   "n": 4,
+   "med_usd": 903,
+   "med_uah": 41000,
+   "n": 5,
+   "low": true
+  },
+  {
+   "m": "2024-11",
+   "med_usd": 1106,
+   "med_uah": 50232,
+   "n": 1,
    "low": true
   },
   {
    "m": "2024-12",
-   "med_usd": 1103,
-   "med_uah": 49136,
+   "med_usd": 1105,
+   "med_uah": 50134,
    "n": 1,
    "low": true
   },
   {
    "m": "2025-02",
-   "med_usd": 1067,
-   "med_uah": 48122,
-   "n": 3,
+   "med_usd": 1207,
+   "med_uah": 54771,
+   "n": 4,
    "low": true
   },
   {
    "m": "2025-03",
-   "med_usd": 1135,
-   "med_uah": 51178,
-   "n": 8,
+   "med_usd": 1188,
+   "med_uah": 53936,
+   "n": 7,
    "low": true
   },
   {
    "m": "2025-04",
    "med_usd": 901,
-   "med_uah": 40520,
+   "med_uah": 40892,
    "n": 6,
    "low": true
   },
   {
    "m": "2025-05",
    "med_usd": 1114,
-   "med_uah": 50214,
+   "med_uah": 50553,
    "n": 6,
    "low": true
   },
   {
    "m": "2025-06",
    "med_usd": 1203,
-   "med_uah": 54862,
+   "med_uah": 54613,
    "n": 1,
    "low": true
   },
   {
    "m": "2025-07",
-   "med_usd": 1252,
-   "med_uah": 56617,
+   "med_usd": 1207,
+   "med_uah": 54798,
    "n": 8,
    "low": true
   },
   {
    "m": "2025-08",
-   "med_usd": 1094,
-   "med_uah": 49282,
-   "n": 4,
+   "med_usd": 1057,
+   "med_uah": 47990,
+   "n": 3,
    "low": true
   },
   {
    "m": "2025-09",
-   "med_usd": 1010,
-   "med_uah": 45504,
-   "n": 14,
-   "low": true
-  },
-  {
-   "m": "2025-10",
-   "med_usd": 935,
-   "med_uah": 42152,
-   "n": 9,
-   "low": true
-  },
-  {
-   "m": "2025-11",
-   "med_usd": 1016,
-   "med_uah": 45342,
-   "n": 13,
-   "low": true
-  },
-  {
-   "m": "2025-12",
-   "med_usd": 1015,
-   "med_uah": 45605,
+   "med_usd": 1000,
+   "med_uah": 45401,
    "n": 12,
    "low": true
   },
   {
+   "m": "2025-10",
+   "med_usd": 983,
+   "med_uah": 44323,
+   "n": 8,
+   "low": true
+  },
+  {
+   "m": "2025-11",
+   "med_usd": 1000,
+   "med_uah": 45086,
+   "n": 10,
+   "low": true
+  },
+  {
+   "m": "2025-12",
+   "med_usd": 1101,
+   "med_uah": 49330,
+   "n": 10,
+   "low": true
+  },
+  {
    "m": "2026-01",
-   "med_usd": 1040,
-   "med_uah": 46672,
-   "n": 17,
+   "med_usd": 1025,
+   "med_uah": 46488,
+   "n": 13,
    "low": true
   },
   {
    "m": "2026-02",
-   "med_usd": 1204,
-   "med_uah": 53924,
-   "n": 24,
+   "med_usd": 1164,
+   "med_uah": 52124,
+   "n": 23,
    "low": true
   },
   {
    "m": "2026-03",
-   "med_usd": 1155,
-   "med_uah": 51788,
+   "med_usd": 1163,
+   "med_uah": 52103,
    "n": 37
   },
   {
    "m": "2026-04",
-   "med_usd": 1088,
-   "med_uah": 48660,
-   "n": 45
+   "med_usd": 1086,
+   "med_uah": 48952,
+   "n": 36
   },
   {
    "m": "2026-05",
    "med_usd": 1094,
-   "med_uah": 49062,
-   "n": 151
+   "med_uah": 48986,
+   "n": 143
   },
   {
    "m": "2026-06",
-   "med_usd": 1156,
-   "med_uah": 51755,
-   "n": 77
+   "med_usd": 1141,
+   "med_uah": 51220,
+   "n": 69
   },
   {
    "m": "2026-07",
-   "med_usd": 1113,
-   "med_uah": 49875,
-   "n": 128
+   "med_usd": 1091,
+   "med_uah": 49328,
+   "n": 130
   },
   {
    "m": "2026-08",
    "med_usd": 1190,
-   "med_uah": 53531,
-   "n": 128
+   "med_uah": 53481,
+   "n": 119
   },
   {
    "m": "2026-09",
-   "med_usd": 1185,
-   "med_uah": 53208,
-   "n": 207
+   "med_usd": 1178,
+   "med_uah": 53131,
+   "n": 196
   },
   {
    "m": "2026-10",
-   "med_usd": 1195,
-   "med_uah": 54086,
-   "n": 332
+   "med_usd": 1184,
+   "med_uah": 53747,
+   "n": 274
   },
   {
    "m": "2026-11",
-   "med_usd": 1279,
-   "med_uah": 58025,
-   "n": 9,
-   "low": true,
+   "med_usd": 1230,
+   "med_uah": 55746,
+   "n": 172,
    "partial": true
   }
  ]
